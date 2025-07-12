@@ -93,3 +93,12 @@ export interface UpcomingMovies {
   total_results: number;
   results: BaseMovieProps[];
 }
+
+export interface FantasyMovieProps {
+  title: string;
+  overview: string;
+  genres: string[];
+  releaseDate: string;
+  runtime: number;
+  productionCompanies: string[];
+}
