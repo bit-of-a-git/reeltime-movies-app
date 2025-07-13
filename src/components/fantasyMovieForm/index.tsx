@@ -1,32 +1,31 @@
-import React, { useContext, useState, ChangeEvent } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import Spinner from "../spinner";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles";
-import { FantasyMovieProps } from "../../types/interfaces";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import productionCompanies from "./productionCompanies";
+import { FantasyMovieProps, GenreData } from "../../types/interfaces";
 import { useQuery } from "react-query";
+import DatePicker from "react-datepicker";
 import { getGenres } from "../../api/tmdb-api";
-import { GenreData } from "../types/interfaces";
 
 const FantasyMovieForm: React.FC = () => {
-  const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
-    "genres",
-    getGenres
-  );
-
   const defaultValues = {
     defaultValues: {
       title: "",
       overview: "",
       genres: [],
-      releaseDate: "",
+      releaseDate: null,
       runtime: 0,
       productionCompanies: [],
     },
@@ -43,6 +42,23 @@ const FantasyMovieForm: React.FC = () => {
   const context = useContext(MoviesContext);
   const [open, setOpen] = useState(false);
 
+  const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
+    "genres",
+    getGenres
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <h1>{(error as Error).message}</h1>;
+  }
+
+  const genres = data?.genres || [];
+  if (genres[0].name !== "All") {
+    genres.unshift({ id: "0", name: "All" });
+  }
+
   const handleSnackClose = () => {
     setOpen(false);
     navigate("/movies/favourites");
@@ -56,7 +72,7 @@ const FantasyMovieForm: React.FC = () => {
   return (
     <Box component="div" sx={styles.root}>
       <Typography component="h2" variant="h3">
-        Create a fantasy movie
+        Create a Fantasy Movie
       </Typography>
       <Snackbar
         sx={styles.snack}
@@ -65,9 +81,7 @@ const FantasyMovieForm: React.FC = () => {
         onClose={handleSnackClose}
       >
         <Alert severity="success" variant="filled" onClose={handleSnackClose}>
-          <Typography variant="h4">
-            Thank you for submitting a fantasy movie
-          </Typography>
+          <Typography variant="h4">Thank you for submitting a movie</Typography>
         </Alert>
       </Snackbar>
       <form style={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -85,7 +99,7 @@ const FantasyMovieForm: React.FC = () => {
               onChange={onChange}
               value={value}
               id="title"
-              label="Fantasy movie title"
+              label="Title"
               autoFocus
             />
           )}
@@ -95,6 +109,7 @@ const FantasyMovieForm: React.FC = () => {
             {errors.title.message}
           </Typography>
         )}
+
         <Controller
           name="overview"
           control={control}
@@ -111,10 +126,10 @@ const FantasyMovieForm: React.FC = () => {
               fullWidth
               value={value}
               onChange={onChange}
-              label="Review text"
+              label="Overview"
               id="review"
               multiline
-              minRows={10}
+              minRows={5}
             />
           )}
         />
@@ -123,31 +138,110 @@ const FantasyMovieForm: React.FC = () => {
             {errors.overview.message}
           </Typography>
         )}
+
         {/* Referred to https://github.com/eoinfennessy/movies-app/ here */}
+        <InputLabel id="genre-label">Genre(s)</InputLabel>
         <Controller
           control={control}
           name="genres"
           rules={{ required: "Genre is required" }}
           // defaultValue={[]}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="select-rating"
-              select
-              variant="outlined"
-              label="Rating Select"
-              value={rating}
-              onChange={handleRatingChange}
-              helperText="Don't forget your rating"
+          render={({ field: { onChange, value } }) => (
+            <Select
+              id="genre-select"
+              value={value}
+              label="Genre Select"
+              multiple
+              onChange={onChange}
             >
-              {ratings.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {genres.map((genre) => (
+                <MenuItem key={genre.id} value={genre.name}>
+                  {genre.name}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           )}
         />
+        {errors.genres && (
+          <Typography variant="h6" component="p">
+            {errors.genres.message}
+          </Typography>
+        )}
+
+        <InputLabel id="date-picker-label">Release Date</InputLabel>
+        <Controller
+          control={control}
+          name="releaseDate"
+          rules={{ required: "Release date is required" }}
+          render={({ field }) => (
+            <DatePicker
+              placeholderText="Select date"
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+            />
+          )}
+        />
+        {errors.releaseDate && (
+          <Typography variant="h6" component="p">
+            {errors.releaseDate.message}
+          </Typography>
+        )}
+
+        <Controller
+          name="runtime"
+          control={control}
+          rules={{ required: "Runtime is required" }}
+          defaultValue={0}
+          render={({ field: { onChange, value } }) => (
+            <TextField
+              variant="outlined"
+              type="number"
+              margin="normal"
+              required
+              onChange={onChange}
+              value={value}
+              id="runtime"
+              label="Movie runtime"
+            />
+          )}
+        />
+        {errors.runtime && (
+          <Typography variant="h6" component="p">
+            {errors.runtime.message}
+          </Typography>
+        )}
+
+        <InputLabel id="production-company-label">
+          Production Company(s)
+        </InputLabel>
+        <Controller
+          name="productionCompanies"
+          control={control}
+          rules={{ required: "Production company is required" }}
+          defaultValue={[]}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              labelId="production-company-label"
+              id="production-company-select"
+              value={value}
+              multiple
+              onChange={onChange}
+            >
+              {productionCompanies.map((company) => {
+                return (
+                  <MenuItem key={company.id} value={company.name}>
+                    {company.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          )}
+        />
+        {errors.productionCompanies && (
+          <Typography variant="h6" component="p">
+            {errors.productionCompanies.message}
+          </Typography>
+        )}
 
         <Box>
           <Button
@@ -165,8 +259,8 @@ const FantasyMovieForm: React.FC = () => {
             sx={styles.submit}
             onClick={() => {
               reset({
-                author: "",
-                content: "",
+                title: "",
+                overview: "",
               });
             }}
           >
