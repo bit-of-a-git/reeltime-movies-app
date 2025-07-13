@@ -18,6 +18,7 @@ import productionCompanies from "./productionCompanies";
 import { FantasyMovieProps, GenreData } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { getGenres } from "../../api/tmdb-api";
 
 const FantasyMovieForm: React.FC = () => {
@@ -27,7 +28,7 @@ const FantasyMovieForm: React.FC = () => {
       overview: "",
       genres: [],
       releaseDate: null,
-      runtime: 0,
+      runtime: null,
       productionCompanies: [],
     },
   };
@@ -191,24 +192,26 @@ const FantasyMovieForm: React.FC = () => {
           </Typography>
         )}
 
-        <Controller
-          name="runtime"
-          control={control}
-          rules={{ required: "Runtime is required" }}
-          defaultValue={0}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              variant="outlined"
-              type="number"
-              margin="normal"
-              required
-              onChange={onChange}
-              value={value}
-              id="runtime"
-              label="Movie runtime"
-            />
-          )}
-        />
+        <FormControl fullWidth margin="normal">
+          <Controller
+            name="runtime"
+            control={control}
+            rules={{ required: "Runtime is required" }}
+            defaultValue={0}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                id="runtime"
+                value={value}
+                variant="outlined"
+                type="number"
+                margin="normal"
+                required
+                onChange={onChange}
+                label="Movie runtime"
+              />
+            )}
+          />
+        </FormControl>
         {errors.runtime && (
           <Typography variant="h6" component="p">
             {errors.runtime.message}
