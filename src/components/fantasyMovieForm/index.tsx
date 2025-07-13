@@ -8,6 +8,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import FormControl from "@mui/material/FormControl";
 import Spinner from "../spinner";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -140,28 +141,31 @@ const FantasyMovieForm: React.FC = () => {
         )}
 
         {/* Referred to https://github.com/eoinfennessy/movies-app/ here */}
-        <InputLabel id="genre-label">Genre(s)</InputLabel>
-        <Controller
-          control={control}
-          name="genres"
-          rules={{ required: "Genre is required" }}
-          // defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              id="genre-select"
-              value={value}
-              label="Genre Select"
-              multiple
-              onChange={onChange}
-            >
-              {genres.map((genre) => (
-                <MenuItem key={genre.id} value={genre.name}>
-                  {genre.name}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="genre-label">Genre(s)</InputLabel>
+          <Controller
+            name="genres"
+            control={control}
+            rules={{ required: "Genre is required" }}
+            // defaultValue={[]}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                id="genre-select"
+                value={value}
+                label="Genre Select"
+                labelId="genre-label"
+                multiple
+                onChange={onChange}
+              >
+                {genres.map((genre) => (
+                  <MenuItem key={genre.id} value={genre.name}>
+                    {genre.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+        </FormControl>
         {errors.genres && (
           <Typography variant="h6" component="p">
             {errors.genres.message}
@@ -211,32 +215,35 @@ const FantasyMovieForm: React.FC = () => {
           </Typography>
         )}
 
-        <InputLabel id="production-company-label">
-          Production Company(s)
-        </InputLabel>
-        <Controller
-          name="productionCompanies"
-          control={control}
-          rules={{ required: "Production company is required" }}
-          defaultValue={[]}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              labelId="production-company-label"
-              id="production-company-select"
-              value={value}
-              multiple
-              onChange={onChange}
-            >
-              {productionCompanies.map((company) => {
-                return (
-                  <MenuItem key={company.id} value={company.name}>
-                    {company.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          )}
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="production-company-label">
+            Production Company(s)
+          </InputLabel>
+          <Controller
+            name="productionCompanies"
+            control={control}
+            rules={{ required: "Production company is required" }}
+            // defaultValue={[]}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                id="production-company-select"
+                value={value}
+                label="Production Company Select"
+                labelId="production-company-label"
+                multiple
+                onChange={onChange}
+              >
+                {productionCompanies.map((company) => {
+                  return (
+                    <MenuItem key={company.id} value={company.name}>
+                      {company.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          />
+        </FormControl>
         {errors.productionCompanies && (
           <Typography variant="h6" component="p">
             {errors.productionCompanies.message}
