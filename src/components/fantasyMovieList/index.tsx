@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
 import { Box, Card, CardContent, Chip, Grid, Typography } from "@mui/material";
-import { BaseMovieListProps } from "../../types/interfaces";
 import { MoviesContext } from "../../contexts/moviesContext";
 
-const FantasyMovieList: React.FC<BaseMovieListProps> = () => {
+const FantasyMovieList: React.FC = () => {
   const { fantasyMovies } = useContext(MoviesContext);
 
   // Code currently taken and slightly modified from https://github.com/eoinfennessy/movies-app/ to get started. Will be significantly changed later
   return (
     <>
-      <Typography variant="h3">My Fantasy Movies</Typography>
       <Box mt={2}>
+        <Typography variant="h3">My Fantasy Movies</Typography>
         <Grid container spacing={2}>
           {fantasyMovies.map((movie, index) => (
             <Grid item xs={4}>
@@ -22,7 +21,7 @@ const FantasyMovieList: React.FC<BaseMovieListProps> = () => {
                   ))}
                   <Typography variant="body2">{movie.overview}</Typography>
                   <Typography variant="body1">
-                    Release Date: {movie.releaseDate}
+                    Release Date: {movie.releaseDate?.toLocaleDateString()}
                   </Typography>
                   <Typography variant="body1">
                     Runtime: {movie.runtime} minutes
