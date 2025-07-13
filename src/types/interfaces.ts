@@ -98,7 +98,7 @@ export interface FantasyMovieProps {
   title: string;
   overview: string;
   genres: string[];
-  releaseDate: string;
+  releaseDate: Date | null;
   runtime: number;
   productionCompanies: string[];
 }
