@@ -12,7 +12,6 @@ import FormControl from "@mui/material/FormControl";
 import Spinner from "../spinner";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import productionCompanies from "./productionCompanies";
 import { FantasyMovieProps, GenreData } from "../../types/interfaces";
@@ -40,7 +39,6 @@ const FantasyMovieForm: React.FC = () => {
     reset,
   } = useForm<FantasyMovieProps>(defaultValues);
 
-  const navigate = useNavigate();
   const context = useContext(MoviesContext);
   const [open, setOpen] = useState(false);
 
@@ -63,7 +61,6 @@ const FantasyMovieForm: React.FC = () => {
 
   const handleSnackClose = () => {
     setOpen(false);
-    navigate("/movies/favourites");
   };
 
   const onSubmit: SubmitHandler<FantasyMovieProps> = (movie) => {
