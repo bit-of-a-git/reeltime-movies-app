@@ -3,6 +3,7 @@ import FilterCard from "../filterMoviesCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import { BaseMovieProps } from "../../types/interfaces";
+import SortCard from "../../components/sortMoviesCard";
 
 export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
@@ -28,16 +29,24 @@ const styles = {
 
 interface MovieFilterUIProps {
   onFilterValuesChange: (f: string, s: string) => void;
+  onSortChange: (sortOption: string) => void;
   titleFilter: string;
   genreFilter: string;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   onFilterValuesChange,
+  onSortChange,
   titleFilter,
   genreFilter,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sortOption, setSortOption] = useState<string>("none");
+
+  const handleSortChange = (sortOption: string) => {
+    onSortChange(sortOption);
+    setSortOption(sortOption);
+  };
 
   return (
     <>
@@ -47,7 +56,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
-        Filter
+        Filter/Sort
       </Fab>
       <Drawer
         anchor="left"
@@ -59,6 +68,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
           titleFilter={titleFilter}
           genreFilter={genreFilter}
         />
+        <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
       </Drawer>
     </>
   );
