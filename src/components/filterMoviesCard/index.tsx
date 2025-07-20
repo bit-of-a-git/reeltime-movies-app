@@ -8,7 +8,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getGenres } from "../../api/tmdb-api";
@@ -76,9 +75,13 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
     <>
       <Card sx={styles.root} variant="outlined">
         <CardContent>
-          <Typography variant="h5" component="h1">
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          >
             <FilterAltIcon fontSize="large" />
-            Filter the movies.
+            Filter
           </Typography>
           <TextField
             sx={styles.formControl}
