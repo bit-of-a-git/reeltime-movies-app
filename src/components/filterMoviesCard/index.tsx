@@ -31,12 +31,14 @@ interface FilterMoviesCardProps {
   onUserInput: (f: FilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
+  minRatingFilter: number;
 }
 
 const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   titleFilter,
   genreFilter,
   onUserInput,
+  minRatingFilter,
 }) => {
   const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
     "genres",
@@ -69,6 +71,10 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
 
   const handleGenreChange = (e: SelectChangeEvent) => {
     handleChange(e, "genre", e.target.value);
+  };
+
+  const handleMinRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleChange(e, "minRating", e.target.value);
   };
 
   return (
@@ -109,14 +115,15 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
               })}
             </Select>
           </FormControl>
-        </CardContent>
-      </Card>
-      <Card sx={styles.root} variant="outlined">
-        <CardContent>
-          <Typography variant="h5" component="h1">
-            <SortIcon fontSize="large" />
-            Sort the movies.
-          </Typography>
+          <TextField
+            sx={styles.formControl}
+            label="Minimum Rating"
+            id="minimum-rating"
+            type="number"
+            variant="filled"
+            value={minRatingFilter}
+            onChange={handleMinRatingChange}
+          />
         </CardContent>
       </Card>
     </>

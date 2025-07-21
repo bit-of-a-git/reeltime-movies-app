@@ -5,6 +5,7 @@ import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
+  minRatingFilter,
 } from "../components/movieFilterUI";
 import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
@@ -22,6 +23,12 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+const minRatingFiltering = {
+  name: "minRating",
+  value: 0,
+  condition: minRatingFilter,
+};
+
 const HomePage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
     "discover",
@@ -30,6 +37,7 @@ const HomePage: React.FC = () => {
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
+    minRatingFiltering,
   ]);
 
   // Referred to https://github.com/ki321g/MovieAPP for sort movies logic
@@ -44,12 +52,13 @@ const HomePage: React.FC = () => {
     return <h1>{error.message}</h1>;
   }
 
-  const changeFilterValues = (type: string, value: string) => {
-    const changedFilter = { name: type, value: value };
-    const updatedFilterSet =
-      type === "title"
-        ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+  // Loops through the filterValues array, checking if the filter's name matches the type provided
+  // If so, it creates a new filter object. If not, it leaves the filter unchanged. Produces a new
+  // array where only the target filter has its value updated.
+  const changeFilterValues = (type: string, value: string | number) => {
+    const updatedFilterSet = filterValues.map((filter) =>
+      filter.name === type ? { ...filter, value } : filter
+    );
     setFilterValues(updatedFilterSet);
   };
 
@@ -90,6 +99,7 @@ const HomePage: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        minRatingFilter={filterValues[2].value}
         onSortChange={changeSortOption}
       />
     </>

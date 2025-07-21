@@ -15,6 +15,10 @@ export const genreFilter = (movie: BaseMovieProps, value: string) => {
   return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
 };
 
+export const minRatingFilter = (movie: BaseMovieProps, value: number) => {
+  return movie.vote_average >= value;
+};
+
 const styles = {
   root: {
     backgroundColor: "#bfbfbf",
@@ -32,6 +36,7 @@ interface MovieFilterUIProps {
   onSortChange: (sortOption: string) => void;
   titleFilter: string;
   genreFilter: string;
+  minRatingFilter: number;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
@@ -39,6 +44,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   onSortChange,
   titleFilter,
   genreFilter,
+  minRatingFilter,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>("none");
@@ -67,6 +73,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
           onUserInput={onFilterValuesChange}
           titleFilter={titleFilter}
           genreFilter={genreFilter}
+          minRatingFilter={minRatingFilter}
         />
         <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
       </Drawer>
