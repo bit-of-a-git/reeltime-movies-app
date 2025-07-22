@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Link } from "react-router-dom";
 
 const styles = {
   title: {
@@ -31,6 +32,7 @@ const SiteHeader: React.FC = () => {
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Favorites", path: "/movies/favourites" },
+    { label: "Must Watch", path: "/my-must-watch-movies" },
     { label: "Fantasy Movie Maker", path: "/my-fantasy-movies" },
   ];
 
@@ -47,7 +49,9 @@ const SiteHeader: React.FC = () => {
       <AppBar position="fixed" elevation={0} color="primary">
         <Toolbar>
           <Typography variant="h4" sx={styles.title}>
-            TMDB Client
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              TMDB Client
+            </Link>
           </Typography>
           <Typography variant="h6" sx={styles.title}>
             All you ever wanted to know about Movies!
