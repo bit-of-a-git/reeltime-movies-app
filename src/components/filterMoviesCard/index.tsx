@@ -73,7 +73,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
     handleChange(e, "genre", e.target.value);
   };
 
-  const handleMinRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleMinRatingChange = (e: SelectChangeEvent) => {
     handleChange(e, "minRating", e.target.value);
   };
 
@@ -115,15 +115,21 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
               })}
             </Select>
           </FormControl>
-          <TextField
+          <Select
             sx={styles.formControl}
             label="Minimum Rating"
             id="minimum-rating"
             type="number"
             variant="filled"
-            value={minRatingFilter}
+            value={minRatingFilter.toString()}
             onChange={handleMinRatingChange}
-          />
+          >
+            {Array.from({ length: 10 }, (_, i) => i).map((num) => (
+              <MenuItem key={num} value={num.toString()}>
+                {num}+
+              </MenuItem>
+            ))}
+          </Select>
         </CardContent>
       </Card>
     </>
