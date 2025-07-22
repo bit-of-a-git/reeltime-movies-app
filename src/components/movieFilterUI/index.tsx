@@ -5,6 +5,11 @@ import Drawer from "@mui/material/Drawer";
 import { BaseMovieProps } from "../../types/interfaces";
 import SortCard from "../../components/sortMoviesCard";
 
+export const dateToYear = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.getFullYear();
+};
+
 export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
@@ -17,6 +22,10 @@ export const genreFilter = (movie: BaseMovieProps, value: string) => {
 
 export const minRatingFilter = (movie: BaseMovieProps, value: number) => {
   return movie.vote_average >= value;
+};
+
+export const yearToFilter = (movie: BaseMovieProps, value: number) => {
+  return dateToYear(movie.release_date) <= value;
 };
 
 const styles = {
@@ -37,6 +46,7 @@ interface MovieFilterUIProps {
   titleFilter: string;
   genreFilter: string;
   minRatingFilter: number;
+  yearToFilter: number;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
@@ -45,6 +55,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   titleFilter,
   genreFilter,
   minRatingFilter,
+  yearToFilter,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>("none");
@@ -74,6 +85,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
           titleFilter={titleFilter}
           genreFilter={genreFilter}
           minRatingFilter={minRatingFilter}
+          yearToFilter={yearToFilter}
         />
         <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
       </Drawer>

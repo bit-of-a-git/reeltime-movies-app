@@ -32,6 +32,7 @@ interface FilterMoviesCardProps {
   titleFilter: string;
   genreFilter: string;
   minRatingFilter: number;
+  yearToFilter: number;
 }
 
 const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
@@ -39,6 +40,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   genreFilter,
   onUserInput,
   minRatingFilter,
+  yearToFilter,
 }) => {
   const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
     "genres",
@@ -55,6 +57,12 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   if (genres[0].name !== "All") {
     genres.unshift({ id: "0", name: "All" });
   }
+
+  const currentYear = new Date().getFullYear();
+  const yearOptions = Array.from(
+    { length: currentYear - 1888 + 1 },
+    (_, i) => currentYear - i
+  );
 
   const handleChange = (
     e: SelectChangeEvent,
@@ -75,6 +83,10 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
 
   const handleMinRatingChange = (e: SelectChangeEvent) => {
     handleChange(e, "minRating", e.target.value);
+  };
+
+  const handleYearToChange = (e: SelectChangeEvent) => {
+    handleChange(e, "yearTo", e.target.value);
   };
 
   return (
@@ -127,6 +139,21 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
             {Array.from({ length: 10 }, (_, i) => i).map((num) => (
               <MenuItem key={num} value={num.toString()}>
                 {num}+
+              </MenuItem>
+            ))}
+          </Select>
+          <Select
+            sx={styles.formControl}
+            label="Year To"
+            id="year-to"
+            type="number"
+            variant="filled"
+            value={yearToFilter.toString()}
+            onChange={handleYearToChange}
+          >
+            {yearOptions.map((year) => (
+              <MenuItem key={year} value={year.toString()}>
+                {year}
               </MenuItem>
             ))}
           </Select>

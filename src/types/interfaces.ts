@@ -49,7 +49,7 @@ export interface MoviePageProps {
   images: MovieImage[];
 }
 
-export type FilterOption = "title" | "genre" | "minRating";
+export type FilterOption = "title" | "genre" | "minRating" | "yearTo";
 
 export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
