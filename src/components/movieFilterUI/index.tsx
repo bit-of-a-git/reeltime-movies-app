@@ -28,6 +28,10 @@ export const yearToFilter = (movie: BaseMovieProps, value: number) => {
   return dateToYear(movie.release_date) <= value;
 };
 
+export const yearFromFilter = (movie: BaseMovieProps, value: number) => {
+  return dateToYear(movie.release_date) >= value;
+};
+
 const styles = {
   root: {
     backgroundColor: "#bfbfbf",
@@ -47,6 +51,7 @@ interface MovieFilterUIProps {
   genreFilter: string;
   minRatingFilter: number;
   yearToFilter: number;
+  yearFromFilter: number;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
@@ -56,6 +61,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   genreFilter,
   minRatingFilter,
   yearToFilter,
+  yearFromFilter,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>("none");
@@ -86,6 +92,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
           genreFilter={genreFilter}
           minRatingFilter={minRatingFilter}
           yearToFilter={yearToFilter}
+          yearFromFilter={yearFromFilter}
         />
         <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
       </Drawer>

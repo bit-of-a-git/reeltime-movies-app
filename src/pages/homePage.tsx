@@ -7,6 +7,7 @@ import MovieFilterUI, {
   genreFilter,
   minRatingFilter,
   yearToFilter,
+  yearFromFilter,
 } from "../components/movieFilterUI";
 import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
@@ -36,6 +37,12 @@ const yearToFiltering = {
   condition: yearToFilter,
 };
 
+const yearFromFiltering = {
+  name: "yearFrom",
+  value: 1888,
+  condition: yearFromFilter,
+};
+
 const HomePage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
     "discover",
@@ -46,6 +53,7 @@ const HomePage: React.FC = () => {
     genreFiltering,
     minRatingFiltering,
     yearToFiltering,
+    yearFromFiltering,
   ]);
 
   // Referred to https://github.com/ki321g/MovieAPP for sort movies logic
@@ -109,6 +117,7 @@ const HomePage: React.FC = () => {
         genreFilter={filterValues[1].value}
         minRatingFilter={filterValues[2].value}
         yearToFilter={filterValues[3].value}
+        yearFromFilter={filterValues[4].value}
         onSortChange={changeSortOption}
       />
     </>
