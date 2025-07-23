@@ -9,7 +9,12 @@ import { MovieDetailsProps } from "../../types/interfaces";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
 import MovieReviews from "../movieReviews";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardMedia } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { ExpandMore } from "@mui/icons-material";
 
 const styles = {
   chipSet: {
@@ -28,6 +33,25 @@ const styles = {
     position: "fixed",
     top: 50,
     right: 2,
+  },
+  similarMoviesBox: {
+    maxWidth: "100%",
+    overflowX: "auto",
+    whiteSpace: "nowrap",
+    paddingY: "10px",
+  },
+  similarMovieCard: {
+    display: "inline-block",
+    margin: "0 10px",
+    textAlign: "center",
+    cursor: "pointer",
+    overflow: "hidden",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0)",
+    transition: "transform 0.3s, box-shadow 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
+    },
   },
 };
 
@@ -82,6 +106,53 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
       >
         <MovieReviews {...movie} />
       </Drawer>
+      <>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel2-content"
+            id="panel2-header"
+          >
+            <Typography variant="h5">Similar Movies</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {/* I referred to the movie detail page of https://github.com/ki321g/MovieAPP, modifying the code for similar movies instead of cast 
+            I combined this with the accordion feature I saw in https://github.com/eoinfennessy/movies-app/ */}
+            <Box sx={styles.similarMoviesBox}>
+              {movie.similar.results
+                // The below filters out any movie without a profile_path (picture)
+                .filter((movie) => movie.poster_path)
+                .map((movie) => (
+                  <Link key={movie.id} to={`/movies/${movie.id}`}>
+                    <Card sx={{ ...styles.similarMovieCard, width: 200 }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={styles.similarMovieTitle}
+                      >
+                        {movie.title}
+                      </Typography>
+                      <CardMedia
+                        component="img"
+                        image={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                        alt={movie.title}
+                        style={styles.similarMovieImage}
+                      />
+                      <CardContent>
+                        <Typography
+                          variant="body2"
+                          style={styles.similarMovieInfo}
+                        >
+                          {movie.vote_average}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      </>
     </>
   );
 };
