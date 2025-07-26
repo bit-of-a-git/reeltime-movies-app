@@ -37,7 +37,7 @@ const styles = {
     top: 50,
     right: 2,
   },
-  similarMoviesBox: {
+  genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
     overflowY: "hidden",
