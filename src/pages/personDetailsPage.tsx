@@ -54,6 +54,7 @@ const PersonDetailsPage = () => {
                       {person.biography}
                     </Typography>
                   </Box>
+                  <PersonCredits person={person} />
                 </Paper>
               </Grid>
             </Grid>
