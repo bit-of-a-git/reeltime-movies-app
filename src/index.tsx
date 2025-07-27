@@ -14,6 +14,8 @@ import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
 import PersonDetailsPage from "./pages/personDetailsPage";
 import MustWatchPage from "./pages/mustWatchPage";
+import LoginPage from "./pages/login";
+import ProtectedRoute from "./components/protectedRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,10 +41,32 @@ const App = () => {
             />
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-            <Route path="/my-fantasy-movies" element={<FantasyMoviePage />} />
+            <Route
+              path="/reviews/form"
+              element={
+                <ProtectedRoute>
+                  <AddMovieReviewPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-fantasy-movies"
+              element={
+                <ProtectedRoute>
+                  <FantasyMoviePage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/person/:id" element={<PersonDetailsPage />} />
-            <Route path="/my-must-watch-movies" element={<MustWatchPage />} />
+            <Route
+              path="/my-must-watch-movies"
+              element={
+                <ProtectedRoute>
+                  <MustWatchPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
