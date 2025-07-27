@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { auth, googleProvider } from "../../config/firebase";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -20,6 +21,7 @@ import {
 } from "@mui/material";
 import styles from "./styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import GoogleButton from "react-google-button";
 
 // For the Auth function, I referred to: https://www.freecodecamp.org/news/use-firebase-authentication-in-a-react-app/
 // and subsequently https://github.com/ki321g/MovieAPP
@@ -57,6 +59,19 @@ const Login = () => {
       .catch((error) => {
         setErrorMessage("Error signing up. Please try again");
         // ..
+      });
+  };
+
+  const loginWithGoogle = async () => {
+    signInWithPopup(auth, googleProvider)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/");
+        console.log(user);
+      })
+      .catch((error) => {
+        setErrorMessage("Error logging in. Please try again");
       });
   };
 
