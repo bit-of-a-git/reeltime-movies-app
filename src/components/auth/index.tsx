@@ -175,6 +175,10 @@ const Login = () => {
             >
               {action === "login" ? "Sign Up" : "Log In"}
             </Button>
+            <GoogleButton
+              onClick={loginWithGoogle}
+              style={{ marginTop: "1em", width: "100%" }}
+            />
           </Stack>
         </Paper>
       </Box>
