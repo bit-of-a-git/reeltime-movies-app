@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
+import { auth } from "../../config/firebase";
 
 const styles = {
   title: {
@@ -30,10 +31,14 @@ const SiteHeader: React.FC = () => {
 
   const menuOptions = [
     { label: "Home", path: "/" },
-    { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Favorites", path: "/movies/favourites" },
-    { label: "Must Watch", path: "/my-must-watch-movies" },
-    { label: "Fantasy Movie Maker", path: "/my-fantasy-movies" },
+    { label: "Upcoming Movies", path: "/movies/upcoming" },
+    ...(auth.currentUser
+      ? [
+          { label: "Favorites", path: "/movies/favourites" },
+          { label: "Must Watch", path: "/my-must-watch-movies" },
+          { label: "Fantasy Movie Maker", path: "/my-fantasy-movies" },
+        ]
+      : [{ label: "Log In", path: "/login" }]),
   ];
 
   const handleMenuSelect = (pageURL: string) => {
