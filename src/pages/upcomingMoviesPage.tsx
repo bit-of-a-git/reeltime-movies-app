@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { BaseMovieProps, UpcomingMovies } from "../types/interfaces";
@@ -7,9 +7,12 @@ import Spinner from "../components/spinner";
 import AddToMustWatchIcon from "../components/cardIcons/addToMustWatch";
 
 const UpcomingMoviesPage: React.FC = () => {
+  const [page, setPage] = useState(1);
+
   const { data, error, isLoading, isError } = useQuery<UpcomingMovies, Error>(
-    "upcoming",
-    getUpcomingMovies
+    ["upcoming", page],
+    () => getUpcomingMovies(page),
+    { keepPreviousData: true }
   );
 
   if (isLoading) {
@@ -22,6 +25,13 @@ const UpcomingMoviesPage: React.FC = () => {
 
   const movies = data ? data.results : [];
 
+  const changePage = (delta: number) => {
+    const newPage = page + delta;
+    if (newPage > 0 && newPage <= data.total_pages) {
+      setPage(newPage);
+    }
+  };
+
   return (
     <PageTemplate
       title="Upcoming Movies"
@@ -29,6 +39,7 @@ const UpcomingMoviesPage: React.FC = () => {
       action={(movie: BaseMovieProps) => {
         return <AddToMustWatchIcon {...movie} />;
       }}
+      changePage={changePage}
     />
   );
 };

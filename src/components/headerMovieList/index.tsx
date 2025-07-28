@@ -17,21 +17,29 @@ const styles = {
 
 interface HeaderProps {
   title: string;
+  changePage?: (delta: number) => void;
 }
 
 const Header: React.FC<HeaderProps> = (headerProps) => {
   const title = headerProps.title;
+  const changePage = headerProps.changePage;
 
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton aria-label="go back">
+      <IconButton
+        aria-label="go back"
+        onClick={() => changePage && changePage(-1)}
+      >
         <ArrowBackIcon color="primary" fontSize="large" />
       </IconButton>
 
       <Typography variant="h4" component="h3">
         {title}
       </Typography>
-      <IconButton aria-label="go forward">
+      <IconButton
+        aria-label="go forward"
+        onClick={() => changePage && changePage(1)}
+      >
         <ArrowForwardIcon color="primary" fontSize="large" />
       </IconButton>
     </Paper>
