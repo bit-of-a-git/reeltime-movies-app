@@ -93,6 +93,7 @@ export type FilterOption =
 
 export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
+  changePage?: (delta: number) => void;
 }
 
 export interface Review {

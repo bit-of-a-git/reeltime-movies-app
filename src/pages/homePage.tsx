@@ -44,9 +44,12 @@ const yearFromFiltering = {
 };
 
 const HomePage: React.FC = () => {
+  const [page, setPage] = useState(1);
+
   const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
-    "discover",
-    getMovies
+    ["discover", page],
+    () => getMovies(page),
+    { keepPreviousData: true }
   );
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
@@ -95,6 +98,14 @@ const HomePage: React.FC = () => {
   const movies = data ? data.results : [];
   const displayedMovies = filterFunction(movies);
 
+  // I referred to https://github.com/eoinfennessy/movies-app/ for the pagination
+  const changePage = (delta: number) => {
+    const newPage = page + delta;
+    if (newPage > 0 && newPage <= data.total_pages) {
+      setPage(newPage);
+    }
+  };
+
   // If sortOption is none, returns displayedMovies as is. Otherwise sorts displayedMovies
   // using the function found for the sortOption key.
   const sortedMovies =
@@ -110,6 +121,7 @@ const HomePage: React.FC = () => {
         action={(movie: BaseMovieProps) => {
           return <AddToFavouritesIcon {...movie} />;
         }}
+        changePage={changePage}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
