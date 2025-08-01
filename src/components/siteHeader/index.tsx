@@ -35,6 +35,7 @@ const SiteHeader: React.FC = () => {
     ...(auth.currentUser
       ? [
           { label: "Favorites", path: "/movies/favourites" },
+          { label: "Favorite Actors", path: "/actors/favourites" },
           { label: "Must Watch", path: "/my-must-watch-movies" },
           { label: "Fantasy Movie Maker", path: "/my-fantasy-movies" },
         ]
