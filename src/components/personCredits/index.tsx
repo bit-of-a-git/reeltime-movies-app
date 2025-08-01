@@ -86,8 +86,8 @@ export default function PersonCredits({ person }) {
           <Box sx={styles.genericBox}>
             {person.movie_credits.cast
               .filter((credit) => credit.poster_path)
-              .map((credit) => (
-                <Link key={credit.id} to={`/movies/${credit.id}`}>
+              .map((credit, index) => (
+                <Link key={`cast-${index}`} to={`/movies/${credit.id}`}>
                   <Card sx={{ ...styles.genericCard, width: 200 }}>
                     <Typography
                       variant="h6"
@@ -127,8 +127,8 @@ export default function PersonCredits({ person }) {
           <Box sx={styles.genericBox}>
             {person.movie_credits.crew
               .filter((credit) => credit.poster_path)
-              .map((credit) => (
-                <Link key={credit.id} to={`/movies/${credit.id}`}>
+              .map((credit, index) => (
+                <Link key={`crew-${index}`} to={`/movies/${credit.id}`}>
                   <Card sx={{ ...styles.genericCard, width: 200 }}>
                     <Typography
                       variant="h6"

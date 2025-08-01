@@ -96,12 +96,6 @@ export interface MovieListPageTemplateProps extends BaseMovieListProps {
   changePage?: (delta: number) => void;
 }
 
-export interface Review {
-  id: string;
-  content: string;
-  author: string;
-}
-
 export interface GenreData {
   genres: {
     id: string;

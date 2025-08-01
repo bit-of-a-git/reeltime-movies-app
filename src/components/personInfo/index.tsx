@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import AddToFavouritesIcon from "../cardIcons/addToFavouritesPerson";
 
 // https://dev.to/mhmdjaw/an-alternative-to-the-javascript-switch-statement-1kah
 const getGender = (genderId: number) => {
@@ -15,8 +16,17 @@ const getGender = (genderId: number) => {
 export default function PersonalInfo({ person }) {
   return (
     <>
-      <Typography variant="h5" paddingTop={"10px"}>
+      <Typography
+        variant="h5"
+        paddingTop={"10px"}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         {person.name}
+        <AddToFavouritesIcon {...person} />
       </Typography>
       <Typography variant="body1" paddingTop="10px">
         <strong>Gender</strong>
