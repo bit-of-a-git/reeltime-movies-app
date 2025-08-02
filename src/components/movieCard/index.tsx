@@ -31,8 +31,7 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
-  const { favourites, addToFavourites, mustWatch, addToMustWatch } =
-    useContext(MoviesContext);
+  const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.find((id) => id === movie.id) ? true : false;
   const isMustWatch = mustWatch.find((id) => id === movie.id) ? true : false;
 
@@ -72,10 +71,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {movie.vote_average} <StarRateIcon fontSize="small" />
             </Typography>
           </Grid>
         </Grid>

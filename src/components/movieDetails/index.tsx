@@ -109,13 +109,15 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
       </Paper>
       <Paper component="ul" sx={styles.chipSet}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
+        {movie.revenue > 0 && (
+          <Chip
+            icon={<MonetizationIcon />}
+            label={`${movie.revenue.toLocaleString()}`}
+          />
+        )}
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
+          label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
@@ -151,54 +153,54 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={styles.genericBox}>
-              {movie.credits.cast
-                // The below filters out any actor without a profile_path (picture)
-                .filter((actor) => actor.profile_path)
-                .map((actor) => (
-                  <Link key={actor.id} to={`/person/${actor.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={styles.cardTitle}
-                      >
-                        {actor.name}
+              {movie.credits.cast.map((actor) => (
+                <Link key={actor.id} to={`/person/${actor.id}`}>
+                  <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={styles.cardTitle}
+                    >
+                      {actor.name}
+                    </Typography>
+                    <CardMedia
+                      component="img"
+                      image={
+                        actor.profile_path
+                          ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                          : "/no-image-available.jpg"
+                      }
+                      alt={movie.title}
+                      style={styles.creditsImage}
+                    />
+                    <CardContent>
+                      <Typography variant="body2" style={styles.cardSubtitle}>
+                        {actor.character}
                       </Typography>
-                      <CardMedia
-                        component="img"
-                        image={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-                        alt={movie.title}
-                        style={styles.creditsImage}
-                      />
-                      <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {actor.character}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
             </Box>
           </AccordionDetails>
         </Accordion>
-        <Accordion
-          disableGutters
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls="crew-content"
-            id="crew-header"
+        {movie.credits.crew.length > 0 && (
+          <Accordion
+            disableGutters
+            expanded={expanded === "panel2"}
+            onChange={handleChange("panel2")}
           >
-            <CameraIndoorOutlinedIcon />
-            <Typography variant="h5">Crew</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={styles.genericBox}>
-              {uniqueCrewList
-                .filter((crewMember) => crewMember.profile_path)
-                .map((crewMember) => (
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="crew-content"
+              id="crew-header"
+            >
+              <CameraIndoorOutlinedIcon />
+              <Typography variant="h5">Crew</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={styles.genericBox}>
+                {uniqueCrewList.map((crewMember) => (
                   <Link key={crewMember.id} to={`/person/${crewMember.id}`}>
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
@@ -210,7 +212,11 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                       </Typography>
                       <CardMedia
                         component="img"
-                        image={`https://image.tmdb.org/t/p/w200${crewMember.profile_path}`}
+                        image={
+                          crewMember.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
+                            : "/no-image-available.jpg"
+                        }
                         alt={movie.title}
                         style={styles.creditsImage}
                       />
@@ -222,29 +228,29 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                     </Card>
                   </Link>
                 ))}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion
-          disableGutters
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls="panel2-content"
-            id="panel2-header"
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
+        {movie.similar.results.length > 0 && (
+          <Accordion
+            disableGutters
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
           >
-            <LocalMoviesIcon />
-            <Typography variant="h5">Similar Movies</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {/* I referred to the movie detail page of https://github.com/ki321g/MovieAPP, modifying the code for similar movies instead of cast 
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="panel2-content"
+              id="panel2-header"
+            >
+              <LocalMoviesIcon />
+              <Typography variant="h5">Similar Movies</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* I referred to the movie detail page of https://github.com/ki321g/MovieAPP, modifying the code for similar movies instead of cast 
             I combined this with the accordion feature I saw in https://github.com/eoinfennessy/movies-app/ */}
-            <Box sx={styles.genericBox}>
-              {movie.similar.results
-                .filter((movie) => movie.poster_path)
-                .map((movie) => (
+              <Box sx={styles.genericBox}>
+                {movie.similar.results.map((movie) => (
                   <Link key={movie.id} to={`/movies/${movie.id}`}>
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
@@ -268,9 +274,10 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                     </Card>
                   </Link>
                 ))}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
       </>
     </>
   );

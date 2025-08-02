@@ -36,14 +36,22 @@ export default function PersonalInfo({ person }) {
         <strong>Known For</strong>
       </Typography>
       <Typography variant="body1">{person.known_for_department}</Typography>
-      <Typography variant="body1" paddingTop="10px">
-        <strong>Date of Birth</strong>
-      </Typography>
-      <Typography variant="body1">{person.birthday}</Typography>
-      <Typography variant="body1" paddingTop="10px">
-        <strong>Place of Birth</strong>
-      </Typography>
-      <Typography variant="body1">{person.place_of_birth}</Typography>
+      {person.birthday && (
+        <>
+          <Typography variant="body1" paddingTop="10px">
+            <strong>Date of Birth</strong>
+          </Typography>
+          <Typography variant="body1">{person.birthday}</Typography>
+        </>
+      )}
+      {person.place_of_birth && (
+        <>
+          <Typography variant="body1" paddingTop="10px">
+            <strong>Place of Birth</strong>
+          </Typography>
+          <Typography variant="body1">{person.place_of_birth}</Typography>
+        </>
+      )}
       {person.deathday && (
         <>
           <Typography variant="body1" paddingTop="10px">
