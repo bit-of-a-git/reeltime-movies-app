@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
@@ -47,7 +45,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
             <Avatar sx={styles.avatar}>
               <AddToQueueIcon />
             </Avatar>
-          ) : null
+          ) : (
+            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
+          )
         }
         title={
           <Typography variant="h5" component="p" align="center">
@@ -55,14 +55,16 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           </Typography>
         }
       />
-      <CardMedia
-        sx={styles.media}
-        image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-            : img
-        }
-      />
+      <Link to={`/movies/${movie.id}`}>
+        <CardMedia
+          sx={styles.media}
+          image={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+              : img
+          }
+        />
+      </Link>
       <CardContent>
         <Grid container>
           <Grid item xs={6}>
@@ -82,14 +84,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
     </Card>
   );
 };
