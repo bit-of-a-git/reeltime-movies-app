@@ -11,6 +11,7 @@ import MovieFilterUI, {
 } from "../components/movieFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 import WriteReview from "../components/cardIcons/writeReview";
+import { Typography, Box } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -61,18 +62,29 @@ const FavouriteMoviesPage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Favourite Movies"
-        movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavourites {...movie} />
-              <WriteReview {...movie} />
-            </>
-          );
-        }}
-      />
+      {displayedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            You have no favourite movies yet.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Browse movies and add some to your favourites!
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Favourite Movies"
+          movies={displayedMovies}
+          action={(movie) => {
+            return (
+              <>
+                <RemoveFromFavourites {...movie} />
+                <WriteReview {...movie} />
+              </>
+            );
+          }}
+        />
+      )}
 
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

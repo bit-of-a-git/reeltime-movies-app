@@ -10,6 +10,7 @@ import MovieFilterUI, {
   genreFilter,
 } from "../components/movieFilterUI";
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
+import { Typography, Box } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -62,17 +63,28 @@ const MustWatchPage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Must Watch List"
-        movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromMustWatch {...movie} />
-            </>
-          );
-        }}
-      />
+      {displayedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            You have no must watch movies yet.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Browse movies and add some to your favourites!
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Must Watch List"
+          movies={displayedMovies}
+          action={(movie) => {
+            return (
+              <>
+                <RemoveFromMustWatch {...movie} />
+              </>
+            );
+          }}
+        />
+      )}
 
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

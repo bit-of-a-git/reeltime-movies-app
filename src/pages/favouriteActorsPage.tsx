@@ -5,6 +5,7 @@ import { useQueries } from "react-query";
 import { getPerson } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPerson";
+import { Typography, Box } from "@mui/material";
 
 const FavouritePeoplePage: React.FC = () => {
   const { favourites: peopleIds } = useContext(PersonContext);
@@ -31,17 +32,28 @@ const FavouritePeoplePage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Favourite Cast/Crew"
-        people={allFavourites}
-        action={(person) => {
-          return (
-            <>
-              <RemoveFromFavourites {...person} />
-            </>
-          );
-        }}
-      />
+      {allFavourites.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            You have no favourite actors yet.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Browse and add some of your favourites!
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Favourite Cast/Crew"
+          people={allFavourites}
+          action={(person) => {
+            return (
+              <>
+                <RemoveFromFavourites {...person} />
+              </>
+            );
+          }}
+        />
+      )}
     </>
   );
 };

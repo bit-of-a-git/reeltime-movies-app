@@ -103,11 +103,9 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
       <Typography variant="h5" component="h3">
         Overview
       </Typography>
-
       <Typography variant="h6" component="p">
         {movie.overview}
       </Typography>
-
       <Paper component="ul" sx={styles.chipSet}>
         <li>
           <Chip label="Genres" sx={styles.chipLabel} color="primary" />

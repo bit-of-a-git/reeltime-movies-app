@@ -9,30 +9,36 @@ const FantasyMovieList: React.FC = () => {
   return (
     <Box mt={2}>
       <Typography variant="h3">My Fantasy Movies</Typography>
-      <Box>
-        {[...fantasyMovies].reverse().map((movie, index) => (
-          <Box key={index} mb={2}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">{movie.title}</Typography>
-                {movie.genres.map((genre) => (
-                  <Chip key={genre} label={genre} color="primary" />
-                ))}
-                <Typography variant="body2">{movie.overview}</Typography>
-                <Typography variant="body1">
-                  Release Date: {movie.releaseDate?.toLocaleDateString()}
-                </Typography>
-                <Typography variant="body1">
-                  Runtime: {movie.runtime} minutes
-                </Typography>
-                {movie.productionCompanies.map((company) => (
-                  <Chip key={company} label={company} color="secondary" />
-                ))}
-              </CardContent>
-            </Card>
-          </Box>
-        ))}
-      </Box>
+      {fantasyMovies.length > 0 ? (
+        <Box>
+          {[...fantasyMovies].reverse().map((movie, index) => (
+            <Box key={index} mb={2}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5">{movie.title}</Typography>
+                  {movie.genres.map((genre) => (
+                    <Chip key={genre} label={genre} color="primary" />
+                  ))}
+                  <Typography variant="body2">{movie.overview}</Typography>
+                  <Typography variant="body1">
+                    Release Date: {movie.releaseDate?.toLocaleDateString()}
+                  </Typography>
+                  <Typography variant="body1">
+                    Runtime: {movie.runtime} minutes
+                  </Typography>
+                  {movie.productionCompanies.map((company) => (
+                    <Chip key={company} label={company} color="secondary" />
+                  ))}
+                </CardContent>
+              </Card>
+            </Box>
+          ))}
+        </Box>
+      ) : (
+        <Typography variant="subtitle1" color="textSecondary" sx={{ mt: 2 }}>
+          You have no fantasy movies yet. Create one using the form!
+        </Typography>
+      )}
     </Box>
   );
 };
