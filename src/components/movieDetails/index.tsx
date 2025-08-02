@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
@@ -94,10 +93,6 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
       setExpanded(isExpanded ? panel : false);
     };
 
-  const ids = new Set();
-  const uniqueCrewList = movie.credits.crew.filter(
-    ({ id }) => !ids.has(id) && ids.add(id)
-  );
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -106,7 +101,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
       <Typography variant="h6" component="p">
         {movie.overview}
       </Typography>
-      <Paper component="ul" sx={styles.chipSet}>
+      <Box component="ul" sx={styles.chipSet}>
         <li>
           <Chip label="Genres" sx={styles.chipLabel} color="primary" />
         </li>
@@ -115,8 +110,8 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             <Chip label={g.name} />
           </li>
         ))}
-      </Paper>
-      <Paper component="ul" sx={styles.chipSet}>
+      </Box>
+      <Box component="ul" sx={styles.chipSet}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         {movie.revenue > 0 && (
           <Chip
@@ -129,9 +124,9 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
           label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
-      </Paper>
+      </Box>
       {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}
-      <Paper sx={styles.chipSet}>
+      <Box sx={styles.chipSet}>
         {trailer && (
           <>
             <Fab
@@ -170,7 +165,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </Modal>
           </>
         )}
-      </Paper>
+      </Box>
       <Fab
         color="secondary"
         variant="extended"
@@ -192,6 +187,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
           disableGutters
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
+          elevation={0}
         >
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -239,6 +235,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             disableGutters
             expanded={expanded === "panel2"}
             onChange={handleChange("panel2")}
+            elevation={0}
           >
             <AccordionSummary
               expandIcon={<ExpandMore />}
@@ -250,7 +247,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={styles.genericBox}>
-                {uniqueCrewList.map((crewMember) => (
+                {movie.credits.crew.map((crewMember) => (
                   <Link key={crewMember.id} to={`/person/${crewMember.id}`}>
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
@@ -287,6 +284,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             disableGutters
             expanded={expanded === "panel3"}
             onChange={handleChange("panel3")}
+            elevation={0}
           >
             <AccordionSummary
               expandIcon={<ExpandMore />}
