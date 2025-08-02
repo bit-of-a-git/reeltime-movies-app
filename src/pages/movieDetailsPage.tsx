@@ -26,12 +26,16 @@ const MovieDetailsPage: React.FC = () => {
     return <h1>{(error as Error).message}</h1>;
   }
 
+  const trailer = movie.videos.results.find(
+    (item) => item.type === "Trailer" && item.site === "YouTube"
+  );
+
   return (
     <>
       {movie ? (
         <>
           <PageTemplate movie={movie}>
-            <MovieDetails {...movie} />
+            <MovieDetails movie={movie} trailer={trailer} />
           </PageTemplate>
         </>
       ) : (

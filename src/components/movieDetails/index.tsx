@@ -5,7 +5,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { MovieDetailsProps } from "../../types/interfaces";
+import { MovieDetailsProps, Video } from "../../types/interfaces";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
@@ -18,6 +18,8 @@ import { ExpandMore } from "@mui/icons-material";
 import TheaterComedyOutlinedIcon from "@mui/icons-material/TheaterComedyOutlined";
 import CameraIndoorOutlinedIcon from "@mui/icons-material/CameraIndoorOutlined";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import Modal from "@mui/material/Modal";
 
 const styles = {
   chipSet: {
@@ -72,8 +74,17 @@ const styles = {
   cardSubtitle: {},
 };
 
-const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
+interface MovieDetailsComponentProps {
+  movie: MovieDetailsProps;
+  trailer?: Video;
+}
+
+const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
+  movie,
+  trailer,
+}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [trailerOpen, setTrailerOpen] = useState(false);
 
   // https://mui.com/material-ui/react-accordion/
   const [expanded, setExpanded] = useState<string | false>(false);
@@ -120,6 +131,47 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
           label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
+      </Paper>
+      {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}
+      <Paper sx={styles.chipSet}>
+        {trailer && (
+          <>
+            <Fab
+              color="primary"
+              variant="extended"
+              onClick={() => setTrailerOpen(true)}
+            >
+              <YouTubeIcon fontSize="large" />
+              Watch Trailer
+            </Fab>
+            <Modal open={trailerOpen} onClose={() => setTrailerOpen(false)}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "50%",
+                  bgcolor: "background.paper",
+                  border: "2px solid #000",
+                  boxShadow: 24,
+                  p: 4,
+                  aspectRatio: "16/9",
+                }}
+              >
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+                  title="Trailer"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ border: "none" }}
+                />
+              </Box>
+            </Modal>
+          </>
+        )}
       </Paper>
       <Fab
         color="secondary"
