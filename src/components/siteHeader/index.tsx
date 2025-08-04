@@ -78,7 +78,7 @@ const SiteHeader: React.FC = () => {
       </AppBar>
       <Offset />
       <Drawer
-        variant="persistent"
+        variant="temporary"
         open={drawerOpen}
         onClose={toggleDrawer}
         sx={{
