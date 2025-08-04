@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebase";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Divider from "@mui/material/Divider";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 // To implement this menu drawer, I referenced and took code from https://github.com/ki321g/MovieAPP
 // modifying it to suit my app and desired functionality
@@ -81,8 +83,16 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
       : []),
     ...(auth.currentUser
       ? [
-          { label: "Fantasy Movies", path: "/my-fantasy-movies" },
-          { label: "Must Watch", path: "/my-must-watch-movies" },
+          {
+            label: "Fantasy Movies",
+            icon: <AutoAwesomeIcon />,
+            path: "/my-fantasy-movies",
+          },
+          {
+            label: "Must Watch",
+            icon: <PlaylistAddIcon />,
+            path: "/my-must-watch-movies",
+          },
         ]
       : []),
   ];
