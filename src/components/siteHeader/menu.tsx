@@ -79,6 +79,12 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
           },
         ]
       : []),
+    ...(auth.currentUser
+      ? [
+          { label: "Fantasy Movies", path: "/my-fantasy-movies" },
+          { label: "Must Watch", path: "/my-must-watch-movies" },
+        ]
+      : []),
   ];
 
   return (
