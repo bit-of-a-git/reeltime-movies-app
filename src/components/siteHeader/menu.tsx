@@ -57,13 +57,10 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
       onClick: () => handleToggleSection("movies"),
       children: [
         { label: "Discover", path: "/" },
+        { label: "Popular", path: "/movies/popular" },
         { label: "Upcoming", path: "/movies/upcoming" },
-        ...(auth.currentUser
-          ? [
-              { label: "Must Watch", path: "/my-must-watch-movies" },
-              { label: "Fantasy Movies", path: "/my-fantasy-movies" },
-            ]
-          : []),
+        { label: "Top Rated", path: "/movies/top-rated" },
+        { label: "Now Playing", path: "/movies/now-playing" },
       ],
       open: openSections.movies,
     },

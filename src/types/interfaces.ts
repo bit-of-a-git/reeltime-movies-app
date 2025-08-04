@@ -103,7 +103,7 @@ export interface GenreData {
   }[];
 }
 
-export interface DiscoverMovies {
+export interface MovieApiResults {
   page: number;
   total_pages: number;
   total_results: number;
