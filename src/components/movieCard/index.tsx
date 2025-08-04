@@ -63,6 +63,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
               ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
               : img
           }
+          alt={`${movie.title} poster`}
         />
       </Link>
       <CardContent>

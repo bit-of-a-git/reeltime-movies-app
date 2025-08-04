@@ -116,7 +116,7 @@ const TopRatedMoviesPage: React.FC = () => {
   return (
     <>
       <PageTemplate
-        title="Discover Movies"
+        title="Top Rated Movies"
         movies={sortedMovies}
         action={(movie: BaseMovieProps) => {
           return <AddToFavouritesIcon {...movie} />;

@@ -116,7 +116,7 @@ const NowPlayingMoviesPage: React.FC = () => {
   return (
     <>
       <PageTemplate
-        title="Discover Movies"
+        title="Now Playing Movies"
         movies={sortedMovies}
         action={(movie: BaseMovieProps) => {
           return <AddToFavouritesIcon {...movie} />;

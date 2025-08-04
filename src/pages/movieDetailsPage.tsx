@@ -26,7 +26,7 @@ const MovieDetailsPage: React.FC = () => {
     return <h1>{(error as Error).message}</h1>;
   }
 
-  const trailer = movie.videos.results.find(
+  const trailer = movie?.videos?.results?.find(
     (item) => item.type === "Trailer" && item.site === "YouTube"
   );
 

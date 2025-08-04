@@ -69,7 +69,7 @@ const MustWatchPage: React.FC = () => {
             You have no must watch movies yet.
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Browse movies and add some to your favourites!
+            Browse movies and add some to your must-watch list!
           </Typography>
         </Box>
       ) : (
