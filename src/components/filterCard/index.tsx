@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-interface FilterMoviesCardProps {
+interface FilterCardProps {
   onUserInput: (f: FilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
@@ -36,7 +36,7 @@ interface FilterMoviesCardProps {
   yearFromFilter: number;
 }
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
+const FilterCard: React.FC<FilterCardProps> = ({
   titleFilter,
   genreFilter,
   onUserInput,
@@ -184,4 +184,4 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   );
 };
 
-export default FilterMoviesCard;
+export default FilterCard;
