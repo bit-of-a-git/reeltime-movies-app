@@ -16,6 +16,40 @@ export const getMovies = (page: number) => {
     });
 };
 
+export const fetchMoviePage = (endpoint: string, page: number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${endpoint}?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&language=en-US&page=${page}`
+  )
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          `Unable to fetch movies. Response status: ${response.status}`
+        );
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getUpcomingMovies = (page: number) => {
+  return fetchMoviePage("upcoming", page);
+};
+
+export const getNowPlayingMovies = (page: number) => {
+  return fetchMoviePage("now_playing", page);
+};
+
+export const getPopularMovies = (page: number) => {
+  return fetchMoviePage("popular", page);
+};
+
+export const getTopRatedMovies = (page: number) => {
+  return fetchMoviePage("top_rated", page);
+};
+
 export const getMovie = (id: string) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${
@@ -81,78 +115,6 @@ export const getMovieReviews = (id: string | number) => {
     .then((json) => {
       // console.log(json.results);
       return json.results;
-    });
-};
-
-export const getUpcomingMovies = (page: number) => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
-  )
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          `Unable to fetch movies. Response status: ${response.status}`
-        );
-      return response.json();
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const getNowPlayingMovies = (page: number) => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/now_playing?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
-  )
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          `Unable to fetch movies. Response status: ${response.status}`
-        );
-      return response.json();
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const getPopularMovies = (page: number) => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
-  )
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          `Unable to fetch movies. Response status: ${response.status}`
-        );
-      return response.json();
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
-
-export const getTopRatedMovies = (page: number) => {
-  return fetch(
-    `https://api.themoviedb.org/3/movie/top_rated?api_key=${
-      import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
-  )
-    .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          `Unable to fetch movies. Response status: ${response.status}`
-        );
-      return response.json();
-    })
-    .catch((error) => {
-      throw error;
     });
 };
 
