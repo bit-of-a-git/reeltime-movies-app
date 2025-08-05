@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 import MovieIcon from "@mui/icons-material/Movie";
@@ -13,6 +11,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Divider from "@mui/material/Divider";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 // To implement this menu drawer, I referenced and took code from https://github.com/ki321g/MovieAPP
 // modifying it to suit my app and desired functionality
@@ -29,12 +28,12 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
     favourites: false,
   });
 
-  const handleToggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
-    }));
-  };
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
   const handleMenuSelect = (pageURL: string) => {
     handleDrawerToggle();
@@ -96,56 +95,89 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
 
   return (
     <List>
-      {menuOptions.map((opt) => (
-        <React.Fragment key={opt.label}>
-          <ListItem
-            onClick={
-              opt.onClick ? opt.onClick : () => handleMenuSelect(opt.path!)
-            }
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                backgroundColor: "info.dark",
-              },
-            }}
-            aria-expanded={opt.children ? opt.open : undefined}
-          >
-            {opt.icon}
-            <ListItemText primary={opt.label} sx={{ pl: 2 }} />
-            {opt.children ? opt.open ? <ExpandLess /> : <ExpandMore /> : null}
-          </ListItem>
-          <Divider
-            sx={{
-              my: 1,
-              borderColor: "#fff",
-              backgroundColor: "#fff",
-            }}
-          />
-          {opt.children && (
-            <Collapse in={opt.open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {opt.children.map((child) => (
-                  <ListItem
-                    key={child.label}
-                    onClick={() => {
-                      handleMenuSelect(child.path);
-                    }}
-                    sx={{
-                      cursor: "pointer",
-                      pl: 5,
-                      "&:hover": {
-                        backgroundColor: "info.dark",
-                      },
-                    }}
-                  >
-                    <ListItemText primary={child.label} />
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
-          )}
-        </React.Fragment>
-      ))}
+      {menuOptions.map((opt) =>
+        opt.children ? (
+          <>
+            <Accordion
+              key={opt.label}
+              disableGutters
+              expanded={expanded === opt.label}
+              onChange={handleChange(opt.label)}
+              elevation={0}
+              sx={{
+                backgroundColor: "primary.light",
+                // https://stackoverflow.com/questions/63488140/how-can-i-remove-line-above-the-accordion-of-material-ui
+                color: "primary.contrastText",
+                "&:before": {
+                  display: "none",
+                },
+              }}
+            >
+              <AccordionSummary
+                expandIcon={
+                  <ExpandMore sx={{ color: "primary.contrastText" }} />
+                }
+                aria-controls={`${opt.label}-content`}
+                id={`${opt.label}-header`}
+                sx={{ cursor: "pointer" }}
+              >
+                {opt.icon}
+                <ListItemText primary={opt.label} sx={{ pl: 2 }} />
+              </AccordionSummary>
+              <AccordionDetails sx={{ p: 0 }}>
+                <List component="div" disablePadding>
+                  {opt.children.map((child) => (
+                    <ListItem
+                      key={child.label}
+                      onClick={() => {
+                        handleMenuSelect(child.path);
+                      }}
+                      sx={{
+                        cursor: "pointer",
+                        pl: 5,
+                        "&:hover": {
+                          backgroundColor: "info.dark",
+                        },
+                      }}
+                    >
+                      <ListItemText primary={child.label} />
+                    </ListItem>
+                  ))}
+                </List>
+              </AccordionDetails>
+            </Accordion>
+            <Divider
+              sx={{
+                my: 1,
+                borderColor: "#fff",
+                backgroundColor: "#fff",
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <ListItem
+              onClick={() => handleMenuSelect(opt.path!)}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "info.dark",
+                },
+              }}
+            >
+              {opt.icon}
+              <ListItemText primary={opt.label} sx={{ pl: 2 }} />
+            </ListItem>
+            <Divider
+              sx={{
+                my: 1,
+                borderColor: "primary.contrastText",
+                backgroundColor: "primary.contrastText",
+              }}
+            />
+          </>
+        )
+      )}
     </List>
   );
 };
