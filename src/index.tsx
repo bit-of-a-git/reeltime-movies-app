@@ -16,6 +16,8 @@ import MustWatchPage from "./pages/mustWatchPage";
 import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
 import FavouriteActorsPage from "./pages/favouriteActorsPage";
+import Spinner from "./components/spinner";
+
 const DiscoverMoviesPage = React.lazy(
   () => import("./pages/discoverMoviesPage")
 );
@@ -61,7 +63,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <PersonContextProvider>
-            <React.Suspense fallback={<div>Loading...</div>}>
+            <React.Suspense fallback={<Spinner />}>
               <Routes>
                 <Route path="/reviews/:id" element={<MovieReviewPage />} />
                 <Route

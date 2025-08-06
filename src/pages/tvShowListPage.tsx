@@ -118,7 +118,7 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
     <>
       <PageTemplate
         title={title}
-        tvShows={displayedTvShows}
+        tvShows={sortedTvShows}
         action={(tvShow: BaseTvShowProps) => {
           return <AddToFavouritesIcon {...tvShow} />;
         }}

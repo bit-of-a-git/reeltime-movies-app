@@ -1,3 +1,4 @@
+import React from "react";
 import TvShowListPage from "./tvShowListPage";
 import { getPopularTvShows } from "../api/tmdb-api";
 

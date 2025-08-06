@@ -92,7 +92,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        aria-labelledby="filter-sort-drawer"
+        aria-label="Filter and sort options drawer"
       >
         <FilterCard
           onUserInput={onFilterValuesChange}

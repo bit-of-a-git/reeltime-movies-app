@@ -120,6 +120,7 @@ const FilterCard: React.FC<FilterCardProps> = ({
             <Select
               labelId="genre-label"
               id="genre-select"
+              label="Genre"
               value={genreFilter}
               onChange={handleGenreChange}
             >
@@ -133,12 +134,12 @@ const FilterCard: React.FC<FilterCardProps> = ({
             </Select>
           </FormControl>
           <FormControl sx={styles.formControl}>
+            <InputLabel id="minimum-rating-label">Minimum Rating</InputLabel>
             <Select
-              sx={styles.formControl}
+              labelId="rating-label"
               label="Minimum Rating"
               id="minimum-rating"
               type="number"
-              variant="filled"
               value={minRatingFilter.toString()}
               onChange={handleMinRatingChange}
             >
@@ -150,13 +151,14 @@ const FilterCard: React.FC<FilterCardProps> = ({
             </Select>
           </FormControl>
           <FormControl sx={styles.formControl}>
-            <InputLabel id="year-to-label">Year To</InputLabel>
+            <InputLabel id="year-to-label" htmlFor="year-to">
+              Year To
+            </InputLabel>
             <Select
-              sx={styles.formControl}
+              labelId="year-to-label"
               label="Year To"
               id="year-to"
               type="number"
-              variant="filled"
               value={yearToFilter.toString()}
               onChange={handleYearToChange}
             >
@@ -168,13 +170,14 @@ const FilterCard: React.FC<FilterCardProps> = ({
             </Select>
           </FormControl>
           <FormControl sx={styles.formControl}>
-            <InputLabel id="year-to-label">Year From</InputLabel>
+            <InputLabel id="year-from-label" htmlFor="year-from">
+              Year From
+            </InputLabel>
             <Select
-              sx={styles.formControl}
+              labelId="year-from-label"
               label="Year From"
               id="year-from"
               type="number"
-              variant="filled"
               value={yearFromFilter.toString()}
               onChange={handleYearFromChange}
             >

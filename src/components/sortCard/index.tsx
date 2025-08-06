@@ -46,7 +46,7 @@ const SortCard: React.FC<SortCardProps> = ({ onSortChange, sortOption }) => {
           <InputLabel id="sort-label">Sort By</InputLabel>
           <Select
             labelId="sort-label"
-            label="Sort"
+            label="Sort By"
             id="sort-select"
             value={sortOption}
             onChange={handleSortChange}

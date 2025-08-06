@@ -1,3 +1,4 @@
+import React from "react";
 import MovieListPage from "./movieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
 

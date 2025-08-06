@@ -101,7 +101,7 @@ const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        aria-labelledby="filter-sort-drawer"
+        aria-label="filter-sort-drawer"
       >
         <FilterCard
           onUserInput={onFilterValuesChange}
