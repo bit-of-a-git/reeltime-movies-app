@@ -16,7 +16,9 @@ import MustWatchPage from "./pages/mustWatchPage";
 import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
 import FavouriteActorsPage from "./pages/favouriteActorsPage";
-const HomePage = React.lazy(() => import("./pages/homePage"));
+const DiscoverMoviesPage = React.lazy(
+  () => import("./pages/discoverMoviesPage")
+);
 const UpcomingMoviesPage = React.lazy(
   () => import("./pages/upcomingMoviesPage")
 );
@@ -121,7 +123,7 @@ const App = () => {
                 <Route path="/tv/popular" element={<PopularTvShowsPage />} />
                 <Route path="/tv/top-rated" element={<TopRatedTvShowsPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<DiscoverMoviesPage />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </React.Suspense>

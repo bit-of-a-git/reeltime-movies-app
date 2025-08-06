@@ -24,11 +24,6 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
   const navigate = useNavigate();
 
-  const [openSections, setOpenSections] = useState({
-    movies: false,
-    favourites: false,
-  });
-
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
@@ -38,13 +33,6 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
 
   const handleMenuSelect = (pageURL: string) => {
     handleDrawerToggle();
-
-    for (const section in openSections) {
-      setOpenSections((prevState) => ({
-        ...prevState,
-        [section]: false,
-      }));
-    }
 
     navigate(pageURL);
   };

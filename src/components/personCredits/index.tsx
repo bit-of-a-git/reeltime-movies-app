@@ -127,32 +127,30 @@ export default function PersonCredits({ person }) {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={styles.genericBox}>
-              {person.movie_credits.crew
-                .filter((credit) => credit.poster_path)
-                .map((credit, index) => (
-                  <Link key={`crew-${index}`} to={`/movies/${credit.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={styles.cardTitle}
-                      >
-                        {credit.title}
+              {person.movie_credits.crew.map((credit, index) => (
+                <Link key={`crew-${index}`} to={`/movies/${credit.id}`}>
+                  <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={styles.cardTitle}
+                    >
+                      {credit.title}
+                    </Typography>
+                    <CardMedia
+                      component="img"
+                      image={`https://image.tmdb.org/t/p/w200${credit.poster_path}`}
+                      alt={credit.title}
+                      sx={styles.similarMovieImage}
+                    />
+                    <CardContent>
+                      <Typography variant="body2" style={styles.cardSubtitle}>
+                        {credit.job}
                       </Typography>
-                      <CardMedia
-                        component="img"
-                        image={`https://image.tmdb.org/t/p/w200${credit.poster_path}`}
-                        alt={credit.title}
-                        sx={styles.similarMovieImage}
-                      />
-                      <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {credit.job}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
             </Box>
           </AccordionDetails>
         </Accordion>

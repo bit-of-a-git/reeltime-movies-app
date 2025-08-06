@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
               <AddToQueueIcon />
             </Avatar>
           ) : (
-            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
+            action(movie)
           )
         }
         title={
