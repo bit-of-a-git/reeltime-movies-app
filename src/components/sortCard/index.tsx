@@ -20,15 +20,12 @@ const styles = {
   },
 };
 
-interface SortMoviesCardProps {
+interface SortCardProps {
   onSortChange: (sortOption: string) => void;
   sortOption: string;
 }
 
-const SortMoviesCard: React.FC<SortMoviesCardProps> = ({
-  onSortChange,
-  sortOption,
-}) => {
+const SortCard: React.FC<SortCardProps> = ({ onSortChange, sortOption }) => {
   const handleSortChange = (e: SelectChangeEvent) => {
     onSortChange(e.target.value);
   };
@@ -66,4 +63,4 @@ const SortMoviesCard: React.FC<SortMoviesCardProps> = ({
   );
 };
 
-export default SortMoviesCard;
+export default SortCard;
