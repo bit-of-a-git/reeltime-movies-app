@@ -118,7 +118,7 @@ export const getMovieReviews = (id: string | number) => {
     });
 };
 
-export const getTvShows = (page: number) => {
+export const getDiscoverTvShows = (page: number) => {
   return fetch(
     `https://api.themoviedb.org/3/discover/tv?api_key=${
       import.meta.env.VITE_TMDB_KEY
