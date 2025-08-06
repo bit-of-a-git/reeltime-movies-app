@@ -21,6 +21,11 @@ import FavouriteActorsPage from "./pages/favouriteActorsPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import PopularMoviesPage from "./pages/popularMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
+import AiringTodayTvShowsPage from "./pages/airingTodayTvShows";
+import DiscoverTvShowsPage from "./pages/discoverTvShowsPage";
+import OnTheAirTVShowsPage from "./pages/onTheAirTvShows";
+import PopularTvShowsPage from "./pages/popularTvShowsPage";
+import TopRatedTvShowsPage from "./pages/topRatedTvShowsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -85,6 +90,14 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/tv/airing-today"
+                element={<AiringTodayTvShowsPage />}
+              />
+              <Route path="/tv/discover" element={<DiscoverTvShowsPage />} />
+              <Route path="/tv/on-the-air" element={<OnTheAirTVShowsPage />} />
+              <Route path="/tv/popular" element={<PopularTvShowsPage />} />
+              <Route path="/tv/top-rated" element={<TopRatedTvShowsPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" />} />

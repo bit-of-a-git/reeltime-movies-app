@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseTvShowProps } from "../../types/interfaces";
 import SortCard from "../../components/sortCard";
 
 export const dateToYear = (dateString: string) => {
@@ -10,26 +10,29 @@ export const dateToYear = (dateString: string) => {
   return date.getFullYear();
 };
 
-export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
-  return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
+export const titleFilter = (
+  tvShow: BaseTvShowProps,
+  value: string
+): boolean => {
+  return tvShow.name.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter = (movie: BaseMovieProps, value: string) => {
+export const genreFilter = (tvShow: BaseTvShowProps, value: string) => {
   const genreId = Number(value);
-  const genreIds = movie.genre_ids;
+  const genreIds = tvShow.genre_ids;
   return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
 };
 
-export const minRatingFilter = (movie: BaseMovieProps, value: number) => {
-  return movie.vote_average >= value;
+export const minRatingFilter = (tvShow: BaseTvShowProps, value: number) => {
+  return tvShow.vote_average >= value;
 };
 
-export const yearToFilter = (movie: BaseMovieProps, value: number) => {
-  return dateToYear(movie.release_date) <= value;
+export const yearToFilter = (tvShow: BaseTvShowProps, value: number) => {
+  return dateToYear(tvShow.first_air_date) <= value;
 };
 
-export const yearFromFilter = (movie: BaseMovieProps, value: number) => {
-  return dateToYear(movie.release_date) >= value;
+export const yearFromFilter = (tvShow: BaseTvShowProps, value: number) => {
+  return dateToYear(tvShow.first_air_date) >= value;
 };
 
 const styles = {
@@ -44,7 +47,7 @@ const styles = {
   },
 };
 
-interface MovieFilterUIProps {
+interface TvShowFilterUIProps {
   onFilterValuesChange: (f: string, s: string) => void;
   onSortChange: (sortOption: string) => void;
   titleFilter: string;
@@ -54,7 +57,7 @@ interface MovieFilterUIProps {
   yearFromFilter: number;
 }
 
-const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
+const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
   onFilterValuesChange,
   onSortChange,
   titleFilter,
@@ -100,4 +103,4 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   );
 };
 
-export default MovieFilterUI;
+export default TvShowFilterUI;

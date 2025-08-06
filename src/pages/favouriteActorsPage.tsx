@@ -38,7 +38,7 @@ const FavouritePeoplePage: React.FC = () => {
             You have no favourite actors yet.
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Browse and add some of your favourites!
+            Why not browse and add to your list?
           </Typography>
         </Box>
       ) : (

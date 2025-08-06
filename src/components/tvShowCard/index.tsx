@@ -10,10 +10,10 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseTvShowProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import { MoviesContext } from "../../contexts/moviesContext";
+import { TvShowContext } from "../../contexts/tvShowContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -23,15 +23,15 @@ const styles = {
   },
 };
 
-interface MovieCardProps {
-  movie: BaseMovieProps;
-  action: (m: BaseMovieProps) => React.ReactNode;
+interface TvShowCardProps {
+  tvShow: BaseTvShowProps;
+  action: (t: BaseTvShowProps) => React.ReactNode;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
-  const { favourites, mustWatch } = useContext(MoviesContext);
-  const isFavourite = favourites.find((id) => id === movie.id) ? true : false;
-  const isMustWatch = mustWatch.find((id) => id === movie.id) ? true : false;
+const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
+  const { favourites, mustWatch } = useContext(TvShowContext);
+  const isFavourite = favourites.find((id) => id === tvShow.id) ? true : false;
+  const isMustWatch = mustWatch.find((id) => id === tvShow.id) ? true : false;
 
   return (
     <Card sx={styles.card}>
@@ -46,25 +46,25 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
               <AddToQueueIcon />
             </Avatar>
           ) : (
-            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
+            <Avatar sx={{ bgcolor: "transparent" }}>{action(tvShow)}</Avatar>
           )
         }
         title={
           <Typography variant="h5" component="p" align="center">
-            {movie.title}
+            {tvShow.name}
           </Typography>
         }
       />
-      <Link to={`/movies/${movie.id}`}>
+      <Link to={`/tv/${tvShow.id}`}>
         <CardMedia
           component="img"
           sx={styles.media}
           image={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+            tvShow.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${tvShow.poster_path}`
               : img
           }
-          alt={`${movie.title} poster`}
+          alt={`${tvShow.name} poster`}
         />
       </Link>
       <CardContent>
@@ -72,7 +72,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {movie.release_date}
+              {tvShow.first_air_date}
             </Typography>
           </Grid>
           <Grid
@@ -81,7 +81,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
             <Typography variant="h6" component="p">
-              {movie.vote_average} <StarRateIcon fontSize="small" />
+              {tvShow.vote_average} <StarRateIcon fontSize="small" />
             </Typography>
           </Grid>
         </Grid>
@@ -90,4 +90,4 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
   );
 };
 
-export default MovieCard;
+export default TvShowCard;

@@ -138,6 +138,40 @@ export interface FantasyMovieProps {
   productionCompanies: string[];
 }
 
+export interface BaseTvShowProps {
+  adult: boolean;
+  backdrop_path: string;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  name: string;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface BaseTvShowListProps {
+  tvShows: BaseTvShowProps[];
+  action: (t: BaseTvShowProps) => React.ReactNode;
+}
+
+export interface TvShowListPageTemplateProps extends BaseTvShowListProps {
+  title: string;
+  changePage?: (delta: number) => void;
+}
+
+export interface TvShowApiResults {
+  page: number;
+  total_pages: number;
+  total_results: number;
+  results: BaseTvShowProps[];
+}
+
 export interface Person {
   adult: boolean;
   also_known_as: string[];

@@ -118,6 +118,58 @@ export const getMovieReviews = (id: string | number) => {
     });
 };
 
+export const getTvShows = (page: number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/discover/tv?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&language=en-US&include_adult=false&include_video=false&page=${page}`
+  )
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          `Unable to fetch TV Shows. Response status: ${response.status}`
+        );
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const fetchTvShowPage = (endpoint: string, page: number) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${endpoint}?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&language=en-US&page=${page}`
+  )
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          `Unable to fetch TV Shows. Response status: ${response.status}`
+        );
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getAiringTodayTvShows = (page: number) => {
+  return fetchTvShowPage("airing_today", page);
+};
+
+export const getOnTheAirTvShows = (page: number) => {
+  return fetchTvShowPage("on_the_air", page);
+};
+
+export const getPopularTvShows = (page: number) => {
+  return fetchTvShowPage("popular", page);
+};
+
+export const getTopRatedTvShows = (page: number) => {
+  return fetchTvShowPage("top_rated", page);
+};
+
 export const getPerson = (id: string) => {
   return fetch(
     `https://api.themoviedb.org/3/person/${id}?api_key=${

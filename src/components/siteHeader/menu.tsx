@@ -12,6 +12,7 @@ import Divider from "@mui/material/Divider";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
 
 // To implement this menu drawer, I referenced and took code from https://github.com/ki321g/MovieAPP
 // modifying it to suit my app and desired functionality
@@ -53,7 +54,6 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
     {
       label: "Movies",
       icon: <MovieIcon />,
-      onClick: () => handleToggleSection("movies"),
       children: [
         { label: "Discover", path: "/" },
         { label: "Popular", path: "/movies/popular" },
@@ -61,19 +61,28 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
         { label: "Top Rated", path: "/movies/top-rated" },
         { label: "Now Playing", path: "/movies/now-playing" },
       ],
-      open: openSections.movies,
+    },
+    {
+      label: "TV Shows",
+      icon: <LiveTvIcon />,
+      children: [
+        { label: "Discover", path: "/tv/discover" },
+        { label: "Popular", path: "/tv/popular" },
+        { label: "Airing Today", path: "/tv/airing-today" },
+        { label: "Top Rated", path: "/tv/top-rated" },
+        { label: "On the Air", path: "/tv/on-the-air" },
+      ],
     },
     ...(auth.currentUser
       ? [
           {
             label: "Favourites",
             icon: <FavoriteIcon />,
-            onClick: () => handleToggleSection("favourites"),
             children: [
               { label: "Movies", path: "/movies/favourites" },
+              { label: "TV Shows", path: "/tv/favourites" },
               { label: "Actors", path: "/actors/favourites" },
             ],
-            open: openSections.favourites,
           },
         ]
       : []),
