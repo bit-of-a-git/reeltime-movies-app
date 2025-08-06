@@ -12,7 +12,11 @@ const AddToFavouritesIcon: React.FC<BaseTvShowProps> = (tvShow) => {
     context.addToFavourites(tvShow);
   };
   return (
-    <IconButton aria-label="add to favorites" onClick={onUserSelect}>
+    <IconButton
+      aria-label="add to favorites"
+      onClick={onUserSelect}
+      title="Add this TV show to your favorites"
+    >
       <FavoriteIcon color="primary" fontSize="large" />
     </IconButton>
   );

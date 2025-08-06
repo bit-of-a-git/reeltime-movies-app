@@ -14,21 +14,27 @@ export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter = (movie: BaseMovieProps, value: string) => {
+export const genreFilter = (movie: BaseMovieProps, value: string): boolean => {
   const genreId = Number(value);
-  const genreIds = movie.genre_ids;
-  return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
+  if (genreId <= 0) return true; // Show all if no valid genre selected
+  return movie.genre_ids?.includes(genreId) ?? true;
 };
 
-export const minRatingFilter = (movie: BaseMovieProps, value: number) => {
+export const minRatingFilter = (
+  movie: BaseMovieProps,
+  value: number
+): boolean => {
   return movie.vote_average >= value;
 };
 
-export const yearToFilter = (movie: BaseMovieProps, value: number) => {
+export const yearToFilter = (movie: BaseMovieProps, value: number): boolean => {
   return dateToYear(movie.release_date) <= value;
 };
 
-export const yearFromFilter = (movie: BaseMovieProps, value: number) => {
+export const yearFromFilter = (
+  movie: BaseMovieProps,
+  value: number
+): boolean => {
   return dateToYear(movie.release_date) >= value;
 };
 
@@ -78,6 +84,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         variant="extended"
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
+        aria-label="Open filter and sort options"
       >
         Filter/Sort
       </Fab>
@@ -85,6 +92,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
+        aria-labelledby="filter-sort-drawer"
       >
         <FilterCard
           onUserInput={onFilterValuesChange}

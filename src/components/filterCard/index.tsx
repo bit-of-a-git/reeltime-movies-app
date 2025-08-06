@@ -56,9 +56,8 @@ const FilterCard: React.FC<FilterCardProps> = ({
     return <h1>{(error as Error).message}</h1>;
   }
   const genres = data?.genres || [];
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
-  }
+  const genresWithAll =
+    genres[0]?.name === "All" ? genres : [{ id: "0", name: "All" }, ...genres];
 
   const currentYear = new Date().getFullYear();
   const yearOptions = Array.from(
@@ -124,7 +123,7 @@ const FilterCard: React.FC<FilterCardProps> = ({
               value={genreFilter}
               onChange={handleGenreChange}
             >
-              {genres.map((genre) => {
+              {genresWithAll.map((genre) => {
                 return (
                   <MenuItem key={genre.id} value={genre.id}>
                     {genre.name}
@@ -133,51 +132,59 @@ const FilterCard: React.FC<FilterCardProps> = ({
               })}
             </Select>
           </FormControl>
-          <Select
-            sx={styles.formControl}
-            label="Minimum Rating"
-            id="minimum-rating"
-            type="number"
-            variant="filled"
-            value={minRatingFilter.toString()}
-            onChange={handleMinRatingChange}
-          >
-            {Array.from({ length: 10 }, (_, i) => i).map((num) => (
-              <MenuItem key={num} value={num.toString()}>
-                {num}+
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            sx={styles.formControl}
-            label="Year To"
-            id="year-to"
-            type="number"
-            variant="filled"
-            value={yearToFilter.toString()}
-            onChange={handleYearToChange}
-          >
-            {yearOptions.map((year) => (
-              <MenuItem key={year} value={year.toString()}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            sx={styles.formControl}
-            label="Year From"
-            id="year-from"
-            type="number"
-            variant="filled"
-            value={yearFromFilter.toString()}
-            onChange={handleYearFromChange}
-          >
-            {yearOptions.map((year) => (
-              <MenuItem key={year} value={year.toString()}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl sx={styles.formControl}>
+            <Select
+              sx={styles.formControl}
+              label="Minimum Rating"
+              id="minimum-rating"
+              type="number"
+              variant="filled"
+              value={minRatingFilter.toString()}
+              onChange={handleMinRatingChange}
+            >
+              {Array.from({ length: 10 }, (_, i) => i).map((num) => (
+                <MenuItem key={num} value={num}>
+                  {num}+
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="year-to-label">Year To</InputLabel>
+            <Select
+              sx={styles.formControl}
+              label="Year To"
+              id="year-to"
+              type="number"
+              variant="filled"
+              value={yearToFilter.toString()}
+              onChange={handleYearToChange}
+            >
+              {yearOptions.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="year-to-label">Year From</InputLabel>
+            <Select
+              sx={styles.formControl}
+              label="Year From"
+              id="year-from"
+              type="number"
+              variant="filled"
+              value={yearFromFilter.toString()}
+              onChange={handleYearFromChange}
+            >
+              {yearOptions.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </CardContent>
       </Card>
     </>

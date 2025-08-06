@@ -17,21 +17,33 @@ export const titleFilter = (
   return tvShow.name.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter = (tvShow: BaseTvShowProps, value: string) => {
+export const genreFilter = (
+  tvShow: BaseTvShowProps,
+  value: string
+): boolean => {
   const genreId = Number(value);
-  const genreIds = tvShow.genre_ids;
-  return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
+  if (genreId <= 0) return true; // Show all if no valid genre selected
+  return tvShow.genre_ids?.includes(genreId) ?? true;
 };
 
-export const minRatingFilter = (tvShow: BaseTvShowProps, value: number) => {
+export const minRatingFilter = (
+  tvShow: BaseTvShowProps,
+  value: number
+): boolean => {
   return tvShow.vote_average >= value;
 };
 
-export const yearToFilter = (tvShow: BaseTvShowProps, value: number) => {
+export const yearToFilter = (
+  tvShow: BaseTvShowProps,
+  value: number
+): boolean => {
   return dateToYear(tvShow.first_air_date) <= value;
 };
 
-export const yearFromFilter = (tvShow: BaseTvShowProps, value: number) => {
+export const yearFromFilter = (
+  tvShow: BaseTvShowProps,
+  value: number
+): boolean => {
   return dateToYear(tvShow.first_air_date) >= value;
 };
 
@@ -81,6 +93,7 @@ const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
         variant="extended"
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
+        aria-label="Open filter and sort options"
       >
         Filter/Sort
       </Fab>
@@ -88,6 +101,7 @@ const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
+        aria-labelledby="filter-sort-drawer"
       >
         <FilterCard
           onUserInput={onFilterValuesChange}

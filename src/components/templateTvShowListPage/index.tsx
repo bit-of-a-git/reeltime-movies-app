@@ -21,7 +21,7 @@ const TvShowListPageTemplate: React.FC<TvShowListPageTemplateProps> = ({
       <Grid item xs={12}>
         <Header title={title} changePage={changePage} />
       </Grid>
-      <Grid item container spacing={2.5}>
+      <Grid item container spacing={2.5} xs={12}>
         <TvShowList action={action} tvShows={tvShows}></TvShowList>
       </Grid>
     </Grid>

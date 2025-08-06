@@ -66,7 +66,7 @@ const MustWatchPage: React.FC = () => {
       {displayedMovies.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
-            You have no must watch movies yet.
+            You have no must-watch movies yet.
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Why not browse and add to your list?

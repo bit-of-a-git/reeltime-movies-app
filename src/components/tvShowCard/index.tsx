@@ -30,8 +30,8 @@ interface TvShowCardProps {
 
 const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
   const { favourites, mustWatch } = useContext(TvShowContext);
-  const isFavourite = favourites.find((id) => id === tvShow.id) ? true : false;
-  const isMustWatch = mustWatch.find((id) => id === tvShow.id) ? true : false;
+  const isFavourite = favourites.includes(tvShow.id);
+  const isMustWatch = mustWatch.includes(tvShow.id);
 
   return (
     <Card sx={styles.card}>

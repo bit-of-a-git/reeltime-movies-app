@@ -14,9 +14,8 @@ const initialContextState: TvShowContextInterface = {
   favourites: [],
   addToFavourites: () => {},
   removeFromFavourites: () => {},
-  addReview: (tvShow, review) => {
-    tvShow.id, review;
-  },
+  addReview: () => {},
+
   mustWatch: [],
   addToMustWatch: () => {},
   removeFromMustWatch: () => {},

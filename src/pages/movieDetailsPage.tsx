@@ -27,7 +27,10 @@ const MovieDetailsPage: React.FC = () => {
   }
 
   const trailer = movie?.videos?.results?.find(
-    (item) => item.type === "Trailer" && item.site === "YouTube"
+    (item) =>
+      item.type === "Trailer" &&
+      item.site === "YouTube" &&
+      (item.official ?? true) // Falls back to true if the "official" flag is absent
   );
 
   return (
