@@ -11,7 +11,7 @@ import MovieFilterUI, {
 import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";
 
 const titleFiltering = {
   name: "title",
