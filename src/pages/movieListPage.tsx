@@ -11,7 +11,6 @@ import MovieFilterUI, {
 import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";
 
 const titleFiltering = {
   name: "title",
@@ -46,12 +45,14 @@ interface MovieListPageProps {
   title: string;
   queryKey: string;
   fetchFunction: (page: number) => Promise<MovieApiResults>;
+  action: (movie: BaseMovieProps) => React.ReactNode;
 }
 
 const MovieListPage: React.FC<MovieListPageProps> = ({
   title,
   queryKey,
   fetchFunction,
+  action,
 }) => {
   const [page, setPage] = useState(1);
 
@@ -127,9 +128,7 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
       <PageTemplate
         title={title}
         movies={sortedMovies}
-        action={(movie: BaseMovieProps) => {
-          return <AddToFavouritesIcon {...movie} />;
-        }}
+        action={action}
         changePage={changePage}
       />
       <MovieFilterUI
