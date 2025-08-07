@@ -9,7 +9,7 @@ import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/movieFilterUI";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
 import WriteReview from "../components/cardIcons/writeReview";
 import { Typography, Box } from "@mui/material";
 
