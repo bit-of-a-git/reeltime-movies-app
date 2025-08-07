@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import { MovieDetailsProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   root: {
@@ -20,10 +21,8 @@ const styles = {
 };
 
 const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
-  const favourites = JSON.parse(localStorage.getItem("favourites") || "[]");
-  const isFavourite = favourites.some(
-    (fav: { id: number }) => fav.id === movie.id
-  );
+  const { favourites } = useContext(MoviesContext);
+  const isFavourite = favourites.includes(movie.id);
 
   return (
     <Paper component="div" sx={styles.root}>

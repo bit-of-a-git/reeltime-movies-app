@@ -13,7 +13,11 @@ const RemoveFromMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
   };
 
   return (
-    <IconButton aria-label="remove from must watch" onClick={onUserRequest}>
+    <IconButton
+      aria-label="remove from must watch"
+      onClick={onUserRequest}
+      title="Remove this movie from your must-watch list"
+    >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>
   );

@@ -46,14 +46,16 @@ const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
           </Typography>
         }
       />
-      <CardMedia
-        sx={styles.media}
-        image={
-          person.profile_path
-            ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`
-            : img
-        }
-      />
+      <Link to={`/person/${person.id}`}>
+        <CardMedia
+          sx={styles.media}
+          image={
+            person.profile_path
+              ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`
+              : img
+          }
+        />
+      </Link>
       <CardActions disableSpacing>
         <Grid container alignItems="center">
           <Grid item xs={6}>
@@ -63,13 +65,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
             item
             xs={6}
             sx={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <Link to={`/person/${person.id}`}>
-              <Button variant="outlined" size="medium" color="primary">
-                More Info ...
-              </Button>
-            </Link>
-          </Grid>
+          ></Grid>
         </Grid>
       </CardActions>
     </Card>

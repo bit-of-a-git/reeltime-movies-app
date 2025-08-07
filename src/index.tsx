@@ -8,6 +8,7 @@ import SiteHeader from "./components/siteHeader";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
+import TvShowContextProvider from "./contexts/tvShowContext";
 import PersonContextProvider from "./contexts/personContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
@@ -16,6 +17,7 @@ import MustWatchPage from "./pages/mustWatchPage";
 import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
 import FavouriteActorsPage from "./pages/favouriteActorsPage";
+import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
 import Spinner from "./components/spinner";
 
 const DiscoverMoviesPage = React.lazy(
@@ -62,74 +64,89 @@ const App = () => {
       <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
-          <PersonContextProvider>
-            <React.Suspense fallback={<Spinner />}>
-              <Routes>
-                <Route path="/reviews/:id" element={<MovieReviewPage />} />
-                <Route
-                  path="/movies/favourites"
-                  element={<FavouriteMoviesPage />}
-                />
-                <Route
-                  path="/actors/favourites"
-                  element={<FavouriteActorsPage />}
-                />
-                <Route path="/movies/:id" element={<MoviePage />} />
-                <Route
-                  path="/movies/upcoming"
-                  element={<UpcomingMoviesPage />}
-                />
-                <Route
-                  path="/movies/now-playing"
-                  element={<NowPlayingMoviesPage />}
-                />
-                <Route path="/movies/popular" element={<PopularMoviesPage />} />
-                <Route
-                  path="/movies/top-rated"
-                  element={<TopRatedMoviesPage />}
-                />
-                <Route
-                  path="/reviews/form"
-                  element={
-                    <ProtectedRoute>
-                      <AddMovieReviewPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/my-fantasy-movies"
-                  element={
-                    <ProtectedRoute>
-                      <FantasyMoviePage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/person/:id" element={<PersonDetailsPage />} />
-                <Route
-                  path="/my-must-watch-movies"
-                  element={
-                    <ProtectedRoute>
-                      <MustWatchPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/tv/airing-today"
-                  element={<AiringTodayTvShowsPage />}
-                />
-                <Route path="/tv/discover" element={<DiscoverTvShowsPage />} />
-                <Route
-                  path="/tv/on-the-air"
-                  element={<OnTheAirTVShowsPage />}
-                />
-                <Route path="/tv/popular" element={<PopularTvShowsPage />} />
-                <Route path="/tv/top-rated" element={<TopRatedTvShowsPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/" element={<DiscoverMoviesPage />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </React.Suspense>
-          </PersonContextProvider>
+          <TvShowContextProvider>
+            <PersonContextProvider>
+              <React.Suspense fallback={<Spinner />}>
+                <Routes>
+                  <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                  <Route
+                    path="/movies/favourites"
+                    element={<FavouriteMoviesPage />}
+                  />
+                  <Route
+                    path="/actors/favourites"
+                    element={<FavouriteActorsPage />}
+                  />
+                  <Route
+                    path="/tv/favourites"
+                    element={<FavouriteTvShowsPage />}
+                  />
+                  <Route path="/movies/:id" element={<MoviePage />} />
+                  <Route
+                    path="/movies/upcoming"
+                    element={<UpcomingMoviesPage />}
+                  />
+                  <Route
+                    path="/movies/now-playing"
+                    element={<NowPlayingMoviesPage />}
+                  />
+                  <Route
+                    path="/movies/popular"
+                    element={<PopularMoviesPage />}
+                  />
+                  <Route
+                    path="/movies/top-rated"
+                    element={<TopRatedMoviesPage />}
+                  />
+                  <Route
+                    path="/reviews/form"
+                    element={
+                      <ProtectedRoute>
+                        <AddMovieReviewPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/my-fantasy-movies"
+                    element={
+                      <ProtectedRoute>
+                        <FantasyMoviePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/person/:id" element={<PersonDetailsPage />} />
+                  <Route
+                    path="/my-must-watch-movies"
+                    element={
+                      <ProtectedRoute>
+                        <MustWatchPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/tv/airing-today"
+                    element={<AiringTodayTvShowsPage />}
+                  />
+                  <Route
+                    path="/tv/discover"
+                    element={<DiscoverTvShowsPage />}
+                  />
+                  <Route
+                    path="/tv/on-the-air"
+                    element={<OnTheAirTVShowsPage />}
+                  />
+                  <Route path="/tv/popular" element={<PopularTvShowsPage />} />
+                  <Route
+                    path="/tv/top-rated"
+                    element={<TopRatedTvShowsPage />}
+                  />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/" element={<DiscoverMoviesPage />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </React.Suspense>
+            </PersonContextProvider>
+          </TvShowContextProvider>
         </MoviesContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

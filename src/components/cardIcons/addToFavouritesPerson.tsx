@@ -12,7 +12,11 @@ const AddToFavouritesPersonIcon: React.FC<Person> = (person) => {
     context.addToFavourites(person);
   };
   return (
-    <IconButton aria-label="add to favorites" onClick={onUserSelect}>
+    <IconButton
+      aria-label="add to favorites"
+      onClick={onUserSelect}
+      title="Add this person to your favorites"
+    >
       <FavoriteIcon color="primary" fontSize="large" />
     </IconButton>
   );

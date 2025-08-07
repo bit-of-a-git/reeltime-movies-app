@@ -20,7 +20,7 @@ export const fetchMoviePage = (endpoint: string, page: number) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${endpoint}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
+    }&language=en-US&include_adult=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok)
@@ -140,7 +140,7 @@ export const fetchTvShowPage = (endpoint: string, page: number) => {
   return fetch(
     `https://api.themoviedb.org/3/tv/${endpoint}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=${page}`
+    }&language=en-US&include_adult=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok)
@@ -168,6 +168,25 @@ export const getPopularTvShows = (page: number) => {
 
 export const getTopRatedTvShows = (page: number) => {
   return fetchTvShowPage("top_rated", page);
+};
+
+export const getTvShow = (id: string) => {
+  return fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&append_to_response=credits,similar,videos`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Failed to get movie data. Response status: ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const getPerson = (id: string) => {

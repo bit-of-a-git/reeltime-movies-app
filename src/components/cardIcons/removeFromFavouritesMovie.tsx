@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { BaseMovieProps } from "../../types/interfaces";
 
-const RemoveFromFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
+const RemoveFromFavouritesMovieIcon: React.FC<BaseMovieProps> = (movie) => {
   const context = useContext(MoviesContext);
 
   const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
@@ -13,10 +13,14 @@ const RemoveFromFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
   };
 
   return (
-    <IconButton aria-label="remove from favorites" onClick={onUserRequest}>
+    <IconButton
+      aria-label="remove from favorites"
+      onClick={onUserRequest}
+      title="Remove this movie from your must-watch list"
+    >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>
   );
 };
 
-export default RemoveFromFavouritesIcon;
+export default RemoveFromFavouritesMovieIcon;
