@@ -87,8 +87,8 @@ export default function PersonCredits({ person }) {
             <Box sx={styles.genericBox}>
               {person.movie_credits.cast
                 .filter((credit) => credit.poster_path)
-                .map((credit, index) => (
-                  <Link key={`cast-${index}`} to={`/movies/${credit.id}`}>
+                .map((credit) => (
+                  <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
                         variant="h6"
@@ -127,8 +127,8 @@ export default function PersonCredits({ person }) {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={styles.genericBox}>
-              {person.movie_credits.crew.map((credit, index) => (
-                <Link key={`crew-${index}`} to={`/movies/${credit.id}`}>
+              {person.movie_credits.crew.map((credit) => (
+                <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
                   <Card sx={{ ...styles.genericCard, width: 200 }}>
                     <Typography
                       variant="h6"

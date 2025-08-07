@@ -248,7 +248,10 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             <AccordionDetails>
               <Box sx={styles.genericBox}>
                 {movie.credits.crew.map((crewMember) => (
-                  <Link key={crewMember.id} to={`/person/${crewMember.id}`}>
+                  <Link
+                    key={crewMember.credit_id}
+                    to={`/person/${crewMember.id}`}
+                  >
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
                         variant="h6"

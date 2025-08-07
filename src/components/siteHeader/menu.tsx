@@ -92,9 +92,9 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
 
   return (
     <List>
-      {menuOptions.map((opt) =>
-        opt.children ? (
-          <>
+      {menuOptions.map((opt) => (
+        <React.Fragment key={opt.label}>
+          {opt.children ? (
             <Accordion
               key={opt.label}
               disableGutters
@@ -143,16 +143,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
                 </List>
               </AccordionDetails>
             </Accordion>
-            <Divider
-              sx={{
-                my: 1,
-                borderColor: "#fff",
-                backgroundColor: "#fff",
-              }}
-            />
-          </>
-        ) : (
-          <>
+          ) : (
             <ListItem
               onClick={() => handleMenuSelect(opt.path!)}
               sx={{
@@ -165,16 +156,16 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
               {opt.icon}
               <ListItemText primary={opt.label} sx={{ pl: 2 }} />
             </ListItem>
-            <Divider
-              sx={{
-                my: 1,
-                borderColor: "primary.contrastText",
-                backgroundColor: "primary.contrastText",
-              }}
-            />
-          </>
-        )
-      )}
+          )}
+          <Divider
+            sx={{
+              my: 1,
+              borderColor: "primary.contrastText",
+              backgroundColor: "primary.contrastText",
+            }}
+          />
+        </React.Fragment>
+      ))}
     </List>
   );
 };
