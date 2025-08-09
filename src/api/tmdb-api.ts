@@ -179,7 +179,7 @@ export const getTvShow = (id: string) => {
     .then((response) => {
       if (!response.ok) {
         throw new Error(
-          `Failed to get movie data. Response status: ${response.status}`
+          `Failed to get TV show data. Response status: ${response.status}`
         );
       }
       return response.json();

@@ -14,7 +14,7 @@ const AddToMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
   };
   return (
     <IconButton
-      aria-label="add to favorites"
+      aria-label="add to must-watch"
       onClick={onUserSelect}
       title="Add this movie to your must-watch list"
     >

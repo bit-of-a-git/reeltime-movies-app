@@ -2,7 +2,7 @@ import React from "react";
 import TvShowListPage from "./tvShowListPage";
 import { getPopularTvShows } from "../api/tmdb-api";
 
-const PopularTVShows: React.FC = () => (
+const PopularTVShowsPage: React.FC = () => (
   <TvShowListPage
     title="Popular TV Shows"
     queryKey="popularTvShows"
@@ -10,4 +10,4 @@ const PopularTVShows: React.FC = () => (
   />
 );
 
-export default PopularTVShows;
+export default PopularTVShowsPage;

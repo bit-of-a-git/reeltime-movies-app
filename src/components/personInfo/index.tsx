@@ -1,5 +1,17 @@
+import { useContext } from "react";
 import { Typography } from "@mui/material";
 import AddToFavouritesIcon from "../cardIcons/addToFavouritesPerson";
+import { PeopleContext } from "../../contexts/peopleContext";
+import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+const styles = {
+  card: { maxWidth: 345 },
+  media: { height: 500 },
+  avatar: {
+    backgroundColor: "rgb(255, 0, 0)",
+  },
+};
 
 // https://dev.to/mhmdjaw/an-alternative-to-the-javascript-switch-statement-1kah
 const getGender = (genderId: number) => {
@@ -14,6 +26,9 @@ const getGender = (genderId: number) => {
 };
 
 export default function PersonalInfo({ person }) {
+  const { favourites } = useContext(PeopleContext);
+  const isFavourite = favourites.includes(person.id);
+
   return (
     <>
       <Typography
@@ -26,7 +41,15 @@ export default function PersonalInfo({ person }) {
         }}
       >
         {person.name}
-        <AddToFavouritesIcon {...person} />
+        {isFavourite ? (
+          <Avatar sx={styles.avatar}>
+            <FavoriteIcon />
+          </Avatar>
+        ) : (
+          <Avatar sx={{ bgcolor: "transparent" }}>
+            <AddToFavouritesIcon {...person} />
+          </Avatar>
+        )}
       </Typography>
       <Typography variant="body1" paddingTop="10px">
         <strong>Gender</strong>

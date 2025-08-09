@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templatePeopleListPage";
-import { PersonContext } from "../contexts/personContext";
+import { PeopleContext } from "../contexts/peopleContext";
 import { useQueries } from "react-query";
 import { getPerson } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
@@ -8,8 +8,7 @@ import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPe
 import { Typography, Box } from "@mui/material";
 
 const FavouritePeoplePage: React.FC = () => {
-  const { favourites: peopleIds } = useContext(PersonContext);
-  console.log("Favourite actors page is working", peopleIds);
+  const { favourites: peopleIds } = useContext(PeopleContext);
 
   // Create an array of queries and run them in parallel.
   const favouritePeopleQueries = useQueries(

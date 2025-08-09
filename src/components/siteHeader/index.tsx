@@ -89,6 +89,8 @@ const SiteHeader: React.FC = () => {
             boxSizing: "border-box",
             bgcolor: "primary.light",
             color: "secondary.contrastText",
+            overflowY: "auto",
+            scrollbarWidth: "none",
           },
         }}
       >

@@ -24,7 +24,7 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
-const FavouriteMoviesPage: React.FC = () => {
+const FavouriteTvShowsPage: React.FC = () => {
   const { favourites: tvShowIds } = useContext(TvShowContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
@@ -95,4 +95,4 @@ const FavouriteMoviesPage: React.FC = () => {
   );
 };
 
-export default FavouriteMoviesPage;
+export default FavouriteTvShowsPage;

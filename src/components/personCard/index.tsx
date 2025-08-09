@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Grid from "@mui/material/Grid";
@@ -11,7 +10,7 @@ import img from "../../images/film-poster-placeholder.png";
 import { Person } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import { PersonContext } from "../../contexts/personContext";
+import { PeopleContext } from "../../contexts/peopleContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -27,7 +26,7 @@ interface ActorCardProps {
 }
 
 const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
-  const { favourites } = useContext(PersonContext);
+  const { favourites } = useContext(PeopleContext);
   const isFavourite = favourites.find((id) => id === person.id) ? true : false;
 
   return (
@@ -46,14 +45,20 @@ const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
           </Typography>
         }
       />
-      <Link to={`/person/${person.id}`}>
+      <Link
+        to={`/person/${person.id}`}
+        aria-label={`View details for ${person.name}`}
+      >
         <CardMedia
+          component="img"
           sx={styles.media}
           image={
             person.profile_path
               ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`
               : img
           }
+          alt={`${person.name} profile image`}
+          loading="lazy"
         />
       </Link>
       <CardActions disableSpacing>

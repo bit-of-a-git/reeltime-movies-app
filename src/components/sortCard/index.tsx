@@ -50,6 +50,7 @@ const SortCard: React.FC<SortCardProps> = ({ onSortChange, sortOption }) => {
             id="sort-select"
             value={sortOption}
             onChange={handleSortChange}
+            inputProps={{ "aria-label": "sort movies" }}
           >
             <MenuItem value="none">None</MenuItem>
             <MenuItem value="date">Date</MenuItem>

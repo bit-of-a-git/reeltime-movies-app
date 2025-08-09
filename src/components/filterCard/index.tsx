@@ -70,7 +70,6 @@ const FilterCard: React.FC<FilterCardProps> = ({
     type: FilterOption,
     value: string
   ) => {
-    e.preventDefault();
     onUserInput(type, value);
   };
 

@@ -14,7 +14,7 @@ const RemoveFromFavouritesTvShowIcon: React.FC<BaseTvShowProps> = (movie) => {
 
   return (
     <IconButton
-      aria-label="remove from favorites"
+      aria-label="remove from favourites"
       onClick={onUserRequest}
       title="Remove this TV show from your favourites"
     >

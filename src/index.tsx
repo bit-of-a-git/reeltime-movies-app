@@ -9,14 +9,14 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
 import TvShowContextProvider from "./contexts/tvShowContext";
-import PersonContextProvider from "./contexts/personContext";
+import PeopleContextProvider from "./contexts/peopleContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
 import PersonDetailsPage from "./pages/personDetailsPage";
 import MustWatchPage from "./pages/mustWatchPage";
 import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
-import FavouriteActorsPage from "./pages/favouriteActorsPage";
+import FavouritePeoplePage from "./pages/favouritePeoplePage";
 import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
 import Spinner from "./components/spinner";
 
@@ -35,12 +35,14 @@ const TopRatedMoviesPage = React.lazy(
 );
 
 const AiringTodayTvShowsPage = React.lazy(
-  () => import("./pages/airingTodayTvShows")
+  () => import("./pages/airingTodayTvShowsPage")
 );
 const DiscoverTvShowsPage = React.lazy(
   () => import("./pages/discoverTvShowsPage")
 );
-const OnTheAirTVShowsPage = React.lazy(() => import("./pages/onTheAirTvShows"));
+const OnTheAirTVShowsPage = React.lazy(
+  () => import("./pages/onTheAirTvShowsPage")
+);
 const PopularTvShowsPage = React.lazy(
   () => import("./pages/popularTvShowsPage")
 );
@@ -65,7 +67,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <TvShowContextProvider>
-            <PersonContextProvider>
+            <PeopleContextProvider>
               <React.Suspense fallback={<Spinner />}>
                 <Routes>
                   <Route path="/reviews/:id" element={<MovieReviewPage />} />
@@ -74,8 +76,8 @@ const App = () => {
                     element={<FavouriteMoviesPage />}
                   />
                   <Route
-                    path="/actors/favourites"
-                    element={<FavouriteActorsPage />}
+                    path="/people/favourites"
+                    element={<FavouritePeoplePage />}
                   />
                   <Route
                     path="/tv/favourites"
@@ -145,7 +147,7 @@ const App = () => {
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </React.Suspense>
-            </PersonContextProvider>
+            </PeopleContextProvider>
           </TvShowContextProvider>
         </MoviesContextProvider>
       </BrowserRouter>

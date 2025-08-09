@@ -216,7 +216,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                           ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
                           : "/no-image-available.jpg"
                       }
-                      alt={movie.title}
+                      alt={actor.name}
                       style={styles.creditsImage}
                     />
                     <CardContent>
@@ -267,7 +267,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                             ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
                             : "/no-image-available.jpg"
                         }
-                        alt={movie.title}
+                        alt={crewMember.name}
                         style={styles.creditsImage}
                       />
                       <CardContent>
