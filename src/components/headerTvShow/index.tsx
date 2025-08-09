@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { MovieDetailsProps } from "../../types/interfaces";
+import { BaseTvShowProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { MoviesContext } from "../../contexts/moviesContext";
+import { TvShowContext } from "../../contexts/tvShowContext";
 
 const styles = {
   root: {
@@ -20,9 +20,9 @@ const styles = {
   },
 };
 
-const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
-  const { favourites } = useContext(MoviesContext);
-  const isFavourite = favourites.includes(movie.id);
+const TvShowHeader: React.FC<BaseTvShowProps> = (tvShow) => {
+  const { favourites } = useContext(TvShowContext);
+  const isFavourite = favourites.includes(tvShow.id);
 
   return (
     <Paper component="div" sx={styles.root}>
@@ -32,15 +32,15 @@ const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
         </Avatar>
       )}
       <Typography variant="h4" component="h3">
-        {movie.title}
+        {tvShow.name}
       </Typography>
-      {movie.tagline && (
+      {tvShow.tagline && (
         <Typography variant="h5" component="h3">
-          {movie.tagline}
+          {tvShow.tagline}
         </Typography>
       )}
-      {movie.homepage && (
-        <a href={movie.homepage} target="_blank" rel="noopener noreferrer">
+      {tvShow.homepage && (
+        <a href={tvShow.homepage} target="_blank" rel="noopener noreferrer">
           <HomeIcon color="primary" fontSize="large" />
         </a>
       )}
@@ -48,4 +48,4 @@ const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
   );
 };
 
-export default MovieHeader;
+export default TvShowHeader;

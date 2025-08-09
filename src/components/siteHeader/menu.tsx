@@ -43,7 +43,7 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
       label: "Movies",
       icon: <MovieIcon />,
       children: [
-        { label: "Discover", path: "/" },
+        { label: "Discover", path: "/movies/discover" },
         { label: "Popular", path: "/movies/popular" },
         { label: "Upcoming", path: "/movies/upcoming" },
         { label: "Top Rated", path: "/movies/top-rated" },

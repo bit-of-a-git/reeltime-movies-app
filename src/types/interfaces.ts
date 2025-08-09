@@ -69,7 +69,7 @@ export interface BaseMovieListProps {
   action: (m: BaseMovieProps) => React.ReactNode;
 }
 
-export interface MovieImage {
+export interface Image {
   file_path: string;
   aspect_ratio?: number;
   height?: number;
@@ -81,7 +81,7 @@ export interface MovieImage {
 
 export interface MoviePageProps {
   movie: MovieDetailsProps;
-  images: MovieImage[];
+  images: Image[];
 }
 
 export type FilterOption =

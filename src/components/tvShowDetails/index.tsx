@@ -4,12 +4,12 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { MovieDetailsProps, Video } from "../../types/interfaces";
+import { TvShowDetailsProps, Video } from "../../types/interfaces";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import MovieReviews from "../movieReviews";
+import TvShowReviews from "../tvShowReviews";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
@@ -35,7 +35,7 @@ const styles = {
   },
   fab: {
     position: "fixed",
-    top: 50,
+    top: 75,
     right: 2,
   },
   genericBox: {
@@ -43,7 +43,6 @@ const styles = {
     overflowX: "auto",
     overflowY: "hidden",
     whiteSpace: "nowrap",
-    paddingY: "10px",
   },
   genericCard: {
     display: "inline-block",
@@ -58,7 +57,7 @@ const styles = {
       boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
     },
   },
-  similarMovieImage: {
+  similarTvShowImage: {
     width: "100%",
     height: "300px",
     objectFit: "cover",
@@ -73,13 +72,13 @@ const styles = {
   cardSubtitle: {},
 };
 
-interface MovieDetailsComponentProps {
-  movie: MovieDetailsProps;
+interface TvShowDetailsComponentProps {
+  tvShow: TvShowDetailsProps;
   trailer?: Video;
 }
 
-const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
-  movie,
+const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
+  tvShow,
   trailer,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -99,37 +98,36 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         Overview
       </Typography>
       <Typography variant="h6" component="p">
-        {movie.overview}
+        {tvShow.overview}
       </Typography>
       <Box component="ul" sx={styles.chipSet}>
         <li>
           <Chip label="Genres" sx={styles.chipLabel} color="primary" />
         </li>
-        {movie.genres.map((g) => (
+        {tvShow.genres.map((g) => (
           <li key={g.name}>
             <Chip label={g.name} />
           </li>
         ))}
       </Box>
       <Box component="ul" sx={styles.chipSet}>
-        {movie.runtime > 0 && (
-          <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+        {tvShow.runtime && (
+          <Chip icon={<AccessTimeIcon />} label={`${tvShow.runtime} min.`} />
         )}
-        {movie.revenue > 0 && (
+        {tvShow.revenue > 0 && (
           <Chip
             icon={<MonetizationIcon />}
-            label={`${movie.revenue.toLocaleString()}`}
+            label={`${tvShow.revenue.toLocaleString()}`}
           />
         )}
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
+          label={`${tvShow.vote_average}/10 (${tvShow.vote_count} ratings)`}
         />
-        {movie.release_date && (
-          <Chip label={`Released: ${movie.release_date}`} />
+        {tvShow.release_date && (
+          <Chip label={`Released: ${tvShow.release_date}`} />
         )}
       </Box>
-      {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}
       <Box sx={styles.chipSet}>
         {trailer && (
           <>
@@ -184,7 +182,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
       >
-        <MovieReviews {...movie} />
+        <TvShowReviews {...tvShow} />
       </Drawer>
       <>
         <Accordion
@@ -203,7 +201,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={styles.genericBox}>
-              {movie.credits.cast.map((actor) => (
+              {tvShow.credits.cast.map((actor) => (
                 <Link key={actor.id} to={`/person/${actor.id}`}>
                   <Card sx={{ ...styles.genericCard, width: 200 }}>
                     <Typography
@@ -220,7 +218,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                           ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
                           : "/no-image-available.jpg"
                       }
-                      alt={actor.name}
+                      alt={tvShow.title}
                       style={styles.creditsImage}
                     />
                     <CardContent>
@@ -234,7 +232,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </Box>
           </AccordionDetails>
         </Accordion>
-        {movie.credits.crew.length > 0 && (
+        {tvShow.credits.crew.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel2"}
@@ -251,7 +249,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={styles.genericBox}>
-                {movie.credits.crew.map((crewMember) => (
+                {tvShow.credits.crew.map((crewMember) => (
                   <Link
                     key={crewMember.credit_id}
                     to={`/person/${crewMember.id}`}
@@ -271,7 +269,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                             ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
                             : "/no-image-available.jpg"
                         }
-                        alt={crewMember.name}
+                        alt={tvShow.title}
                         style={styles.creditsImage}
                       />
                       <CardContent>
@@ -286,7 +284,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </AccordionDetails>
           </Accordion>
         )}
-        {movie.similar.results.length > 0 && (
+        {tvShow.similar.results.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel3"}
@@ -299,35 +297,33 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               id="panel2-header"
             >
               <LocalMoviesIcon />
-              <Typography variant="h5">Similar Movies</Typography>
+              <Typography variant="h5">Similar TV Shows</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {/* I referred to the movie detail page of https://github.com/ki321g/MovieAPP, modifying the code for similar movies instead of cast 
-            I combined this with the accordion feature I saw in https://github.com/eoinfennessy/movies-app/ */}
               <Box sx={styles.genericBox}>
-                {movie.similar.results.map((movie) => (
-                  <Link key={movie.id} to={`/movies/${movie.id}`}>
+                {tvShow.similar.results.map((tvShow) => (
+                  <Link key={tvShow.id} to={`/tv/${tvShow.id}`}>
                     <Card sx={{ ...styles.genericCard, width: 200 }}>
                       <Typography
                         variant="h6"
                         component="div"
                         sx={styles.cardTitle}
                       >
-                        {movie.title}
+                        {tvShow.name}
                       </Typography>
                       <CardMedia
                         component="img"
                         image={
-                          movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+                          tvShow.poster_path
+                            ? `https://image.tmdb.org/t/p/w200${tvShow.poster_path}`
                             : "/no-image-available.jpg"
                         }
-                        alt={movie.title}
-                        sx={styles.similarMovieImage}
+                        alt={tvShow.title}
+                        sx={styles.similarTvShowImage}
                       />
                       <CardContent>
                         <Typography variant="body2" style={styles.cardSubtitle}>
-                          {movie.vote_average}
+                          {tvShow.vote_average}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -341,4 +337,4 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
     </>
   );
 };
-export default MovieDetails;
+export default TvShowDetails;

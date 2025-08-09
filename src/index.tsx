@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/protectedRoute";
 import FavouritePeoplePage from "./pages/favouritePeoplePage";
 import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
 import Spinner from "./components/spinner";
+import TvShowPage from "./pages/tvShowDetailsPage";
 
 const DiscoverMoviesPage = React.lazy(
   () => import("./pages/discoverMoviesPage")
@@ -85,6 +86,10 @@ const App = () => {
                   />
                   <Route path="/movies/:id" element={<MoviePage />} />
                   <Route
+                    path="/movies/discover"
+                    element={<DiscoverMoviesPage />}
+                  />
+                  <Route
                     path="/movies/upcoming"
                     element={<UpcomingMoviesPage />}
                   />
@@ -125,6 +130,7 @@ const App = () => {
                       </ProtectedRoute>
                     }
                   />
+                  <Route path="/tv/:id" element={<TvShowPage />} />
                   <Route
                     path="/tv/airing-today"
                     element={<AiringTodayTvShowsPage />}
