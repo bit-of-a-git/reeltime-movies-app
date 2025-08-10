@@ -42,7 +42,7 @@ const FavouriteMoviesPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = favouriteMovieQueries.some((m) => m.isLoading);
 
   if (isLoading) {
     return <Spinner />;

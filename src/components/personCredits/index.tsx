@@ -200,14 +200,14 @@ export default function PersonCredits({ person }) {
                 <AccordionDetails>
                   <Box sx={styles.genericBox}>
                     {person.tv_credits.cast.map((credit) => (
-                      <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
+                      <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
                         <Card sx={{ ...styles.genericCard, width: 200 }}>
                           <Typography
                             variant="h6"
                             component="div"
                             sx={styles.cardTitle}
                           >
-                            {credit.title}
+                            {credit.name}
                           </Typography>
                           <CardMedia
                             component="img"
@@ -216,7 +216,7 @@ export default function PersonCredits({ person }) {
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
                                 : "/no-image-available.jpg"
                             }
-                            alt={credit.title}
+                            alt={credit.name}
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>
@@ -247,14 +247,14 @@ export default function PersonCredits({ person }) {
                 <AccordionDetails>
                   <Box sx={styles.genericBox}>
                     {person.tv_credits.crew.map((credit) => (
-                      <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
+                      <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
                         <Card sx={{ ...styles.genericCard, width: 200 }}>
                           <Typography
                             variant="h6"
                             component="div"
                             sx={styles.cardTitle}
                           >
-                            {credit.title}
+                            {credit.name}
                           </Typography>
                           <CardMedia
                             component="img"
@@ -263,7 +263,7 @@ export default function PersonCredits({ person }) {
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
                                 : "/no-image-available.jpg"
                             }
-                            alt={credit.title}
+                            alt={credit.name}
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>

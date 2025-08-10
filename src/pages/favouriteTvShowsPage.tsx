@@ -42,7 +42,7 @@ const FavouriteTvShowsPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteTvShowQueries.find((t) => t.isLoading === true);
+  const isLoading = favouriteTvShowQueries.some((t) => t.isLoading);
 
   if (isLoading) {
     return <Spinner />;
@@ -65,10 +65,14 @@ const FavouriteTvShowsPage: React.FC = () => {
       {displayedTvShows.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
-            You have no favourite TV shows yet.
+            {allFavourites.length === 0
+              ? "You have no favourite TV shows yet."
+              : "No TV shows match the current filters."}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Why not browse and add to your list?
+            {allFavourites.length === 0
+              ? "Why not browse and add to your list?"
+              : "Try adjusting or clearing your filters."}
           </Typography>
         </Box>
       ) : (

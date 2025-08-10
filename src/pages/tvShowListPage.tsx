@@ -12,6 +12,7 @@ import { TvShowApiResults, BaseTvShowProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesTvShow";
+import { Typography } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -38,7 +39,7 @@ const yearToFiltering = {
 
 const yearFromFiltering = {
   name: "yearFrom",
-  value: 1888,
+  value: 1935,
   condition: yearFromFilter,
 };
 
@@ -75,7 +76,7 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   const changeFilterValues = (type: string, value: string | number) => {

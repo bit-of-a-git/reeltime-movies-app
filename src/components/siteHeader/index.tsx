@@ -34,7 +34,7 @@ const SiteHeader: React.FC = () => {
   ];
 
   const toggleDrawer = () => {
-    setDrawerOpen(!drawerOpen);
+    setDrawerOpen((prev) => !prev);
   };
 
   const handleMenuSelect = (pageURL: string) => {
@@ -48,9 +48,7 @@ const SiteHeader: React.FC = () => {
         <Toolbar>
           <IconButton
             edge="start"
-            aria-label="menu"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
+            aria-label="Open navigation drawer"
             onClick={toggleDrawer}
             color="inherit"
             size="large"
@@ -58,7 +56,15 @@ const SiteHeader: React.FC = () => {
             <MenuIcon fontSize="large" />
           </IconButton>
           <Typography variant="h4" sx={styles.title}>
-            <Box sx={{ display: "flex", alignItems: "center", ml: 23 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                ml: drawerOpen ? 23 : 0,
+                // https://www.w3schools.com/cssref/func_cubic-bezier.php - matches the curve of the menu drawer
+                transition: "margin-left 225ms cubic-bezier(0, 0, 0.2, 1)",
+              }}
+            >
               <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                 ReelTime
               </Link>
@@ -80,7 +86,7 @@ const SiteHeader: React.FC = () => {
       <Drawer
         variant="temporary"
         open={drawerOpen}
-        onClose={toggleDrawer}
+        onClose={() => setDrawerOpen(false)}
         sx={{
           width: drawerWidth,
           flexShrink: 0,

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { BaseTvShowProps } from "../../types/interfaces";
+import { TvShowDetailsProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TvShowContext } from "../../contexts/tvShowContext";
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-const TvShowHeader: React.FC<BaseTvShowProps> = (tvShow) => {
+const TvShowHeader: React.FC<TvShowDetailsProps> = (tvShow) => {
   const { favourites } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
 
@@ -40,7 +40,13 @@ const TvShowHeader: React.FC<BaseTvShowProps> = (tvShow) => {
         </Typography>
       )}
       {tvShow.homepage && (
-        <a href={tvShow.homepage} target="_blank" rel="noopener noreferrer">
+        <a
+          href={tvShow.homepage}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${tvShow.name} homepage`}
+          title={`Open ${tvShow.name} homepage`}
+        >
           <HomeIcon color="primary" fontSize="large" />
         </a>
       )}

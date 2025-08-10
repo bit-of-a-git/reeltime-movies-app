@@ -21,7 +21,7 @@ const FavouritePeoplePage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouritePeopleQueries.find((a) => a.isLoading === true);
+  const isLoading = favouritePeopleQueries.some((p) => p.isLoading);
 
   if (isLoading) {
     return <Spinner />;

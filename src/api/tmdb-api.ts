@@ -28,9 +28,15 @@ export const getReviews = (id: string | number, endpoint: string) => {
       import.meta.env.VITE_TMDB_KEY
     }`
   )
-    .then((res) => res.json())
-    .then((json) => {
-      return json.results;
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("failed to fetch reviews");
+      }
+      return response.json();
+    })
+    .then((json) => json.results)
+    .catch((error) => {
+      throw error;
     });
 };
 
@@ -135,7 +141,7 @@ export const getDiscoverTvShows = (page: number) => {
   return fetch(
     `https://api.themoviedb.org/3/discover/tv?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&include_adult=false&include_video=false&page=${page}`
+    }&language=en-US&include_adult=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok)
@@ -153,7 +159,7 @@ export const fetchTvShowPage = (endpoint: string, page: number) => {
   return fetch(
     `https://api.themoviedb.org/3/tv/${endpoint}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&include_adult=false&page=${page}`
+    }&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok)

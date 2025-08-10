@@ -7,7 +7,7 @@ import { getMovieImages } from "../../api/tmdb-api";
 import { Image, MovieDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 interface TemplateMoviePageProps {
   movie: MovieDetailsProps;
@@ -21,7 +21,7 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
   const { data, error, isLoading, isError } = useQuery<
     { backdrops: Image[]; id: number; logos: Image[]; posters: Image[] },
     Error
-  >(["images", movie.id], () =>
+  >(["images", movie.id, movie.original_language], () =>
     getMovieImages(movie.id, movie.original_language)
   );
 
@@ -30,20 +30,17 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
-  const { posters } = data as {
-    posters: Image[];
-  };
-
-  const movieImage: string = posters[0]?.file_path || movie.poster_path || "";
+  const movieImage: string =
+    data?.posters[0]?.file_path || movie.poster_path || "";
 
   return (
     <>
       <MovieHeader {...movie} />
 
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+      <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>
           <Paper elevation={5}>
             <ImageList cols={1}>
@@ -51,7 +48,7 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
                 <ImageListItem key={movieImage} cols={1}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${movieImage}`}
-                    alt={"Image alternative"}
+                    alt={`Poster for ${movie.title}`}
                   />
                 </ImageListItem>
               )}

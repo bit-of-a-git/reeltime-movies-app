@@ -4,6 +4,7 @@ import AddToFavouritesIcon from "../cardIcons/addToFavouritesPerson";
 import { PeopleContext } from "../../contexts/peopleContext";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Person } from "../../types/interfaces";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -25,7 +26,7 @@ const getGender = (genderId: number) => {
   return genderLabel;
 };
 
-export default function PersonalInfo({ person }) {
+export default function PersonalInfo({ person }: { person: Person }) {
   const { favourites } = useContext(PeopleContext);
   const isFavourite = favourites.includes(person.id);
 

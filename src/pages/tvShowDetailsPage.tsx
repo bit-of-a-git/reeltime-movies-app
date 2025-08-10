@@ -6,6 +6,7 @@ import { getTvShow } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { TvShowDetailsProps } from "../types/interfaces";
+import { Typography } from "@mui/material";
 
 const TvShowDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const TvShowDetailsPage: React.FC = () => {
   }
 
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   const trailer = tvShow?.videos?.results?.find(

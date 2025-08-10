@@ -7,6 +7,7 @@ import { getTvShowImages } from "../../api/tmdb-api";
 import { Image, TvShowDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
+import { Typography } from "@mui/material";
 
 interface TemplateTvShowPageProps {
   tvShow: TvShowDetailsProps;
@@ -20,7 +21,7 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
   const { data, error, isLoading, isError } = useQuery<
     { backdrops: Image[]; id: number; logos: Image[]; posters: Image[] },
     Error
-  >(["images", tvShow.id], () =>
+  >(["images", tvShow.id, tvShow.original_language], () =>
     getTvShowImages(tvShow.id, tvShow.original_language)
   );
 
@@ -29,20 +30,17 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
-  const { posters } = data as {
-    posters: Image[];
-  };
-
-  const tvShowImage: string = posters[0]?.file_path || tvShow.poster_path || "";
+  const tvShowImage: string =
+    data?.posters[0]?.file_path || tvShow.poster_path || "";
 
   return (
     <>
       <TvShowHeader {...tvShow} />
 
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+      <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>
           <div>
             <ImageList cols={1}>
@@ -50,7 +48,7 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
                 <ImageListItem key={tvShowImage} cols={1}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${tvShowImage}`}
-                    alt={"Image alternative"}
+                    alt={`Poster for ${tvShow.name}`}
                   />
                 </ImageListItem>
               )}

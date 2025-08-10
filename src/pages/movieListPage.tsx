@@ -11,6 +11,7 @@ import MovieFilterUI, {
 import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
+import { Box, Typography } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -78,7 +79,7 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   // Loops through the filterValues array, checking if the filter's name matches the type provided
@@ -125,12 +126,23 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
 
   return (
     <>
-      <PageTemplate
-        title={title}
-        movies={sortedMovies}
-        action={action}
-        changePage={changePage}
-      />
+      {sortedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            No movies match the current filters.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Try adjusting or clearing your filters.
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title={title}
+          movies={sortedMovies}
+          action={action}
+          changePage={changePage}
+        />
+      )}
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}

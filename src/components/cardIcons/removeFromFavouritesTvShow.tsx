@@ -4,12 +4,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { TvShowContext } from "../../contexts/tvShowContext";
 import { BaseTvShowProps } from "../../types/interfaces";
 
-const RemoveFromFavouritesTvShowIcon: React.FC<BaseTvShowProps> = (movie) => {
+const RemoveFromFavouritesTvShowIcon: React.FC<BaseTvShowProps> = (tvShow) => {
   const context = useContext(TvShowContext);
 
   const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    context.removeFromFavourites(movie);
+    context.removeFromFavourites(tvShow);
   };
 
   return (

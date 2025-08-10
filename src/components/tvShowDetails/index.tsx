@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Chip from "@mui/material/Chip";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import { TvShowDetailsProps, Video } from "../../types/interfaces";
@@ -19,6 +18,10 @@ import CameraIndoorOutlinedIcon from "@mui/icons-material/CameraIndoorOutlined";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "@mui/material/Modal";
+import PublicIcon from "@mui/icons-material/Public";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import TvIcon from "@mui/icons-material/Tv";
+import CreateIcon from "@mui/icons-material/Create";
 
 const styles = {
   chipSet: {
@@ -111,13 +114,25 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
         ))}
       </Box>
       <Box component="ul" sx={styles.chipSet}>
-        {tvShow.runtime && (
-          <Chip icon={<AccessTimeIcon />} label={`${tvShow.runtime} min.`} />
+        {tvShow.origin_country[0] && (
+          <Chip icon={<PublicIcon />} label={`${tvShow.origin_country}`} />
         )}
-        {tvShow.revenue > 0 && (
+        {tvShow.episode_run_time[0] && (
           <Chip
-            icon={<MonetizationIcon />}
-            label={`${tvShow.revenue.toLocaleString()}`}
+            icon={<AccessTimeIcon />}
+            label={`${tvShow.episode_run_time[0]} min`}
+          />
+        )}
+        {tvShow.number_of_seasons && (
+          <Chip
+            icon={<TvIcon />}
+            label={`${tvShow.number_of_seasons} seasons`}
+          />
+        )}
+        {tvShow.number_of_episodes && (
+          <Chip
+            icon={<PlaylistAddIcon />}
+            label={`${tvShow.number_of_episodes} episodes`}
           />
         )}
         <Chip
@@ -218,7 +233,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                           ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
                           : "/no-image-available.jpg"
                       }
-                      alt={tvShow.title}
+                      alt={actor.name}
                       style={styles.creditsImage}
                     />
                     <CardContent>
@@ -232,11 +247,60 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
             </Box>
           </AccordionDetails>
         </Accordion>
-        {tvShow.credits.crew.length > 0 && (
+        {tvShow.created_by.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel2"}
             onChange={handleChange("panel2")}
+            elevation={0}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="creators-content"
+              id="creators-header"
+            >
+              <CreateIcon />
+              <Typography variant="h5">Creators</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={styles.genericBox}>
+                {tvShow.created_by.map((creator) => (
+                  <Link key={creator.id} to={`/person/${creator.id}`}>
+                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={styles.cardTitle}
+                      >
+                        {creator.name}
+                      </Typography>
+                      <CardMedia
+                        component="img"
+                        image={
+                          creator.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${creator.profile_path}`
+                            : "/no-image-available.jpg"
+                        }
+                        alt={creator.name}
+                        style={styles.creditsImage}
+                      />
+                      <CardContent>
+                        <Typography variant="body2" style={styles.cardSubtitle}>
+                          {creator.character}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
+        {tvShow.credits.crew.length > 0 && (
+          <Accordion
+            disableGutters
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
             elevation={0}
           >
             <AccordionSummary
@@ -269,7 +333,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                             ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
                             : "/no-image-available.jpg"
                         }
-                        alt={tvShow.title}
+                        alt={crewMember.name}
                         style={styles.creditsImage}
                       />
                       <CardContent>
@@ -287,14 +351,14 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
         {tvShow.similar.results.length > 0 && (
           <Accordion
             disableGutters
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
+            expanded={expanded === "panel4"}
+            onChange={handleChange("panel4")}
             elevation={0}
           >
             <AccordionSummary
               expandIcon={<ExpandMore />}
-              aria-controls="panel2-content"
-              id="panel2-header"
+              aria-controls="similar-tv-content"
+              id="similar-tv-header"
             >
               <LocalMoviesIcon />
               <Typography variant="h5">Similar TV Shows</Typography>
@@ -308,6 +372,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         variant="h6"
                         component="div"
                         sx={styles.cardTitle}
+                        noWrap
                       >
                         {tvShow.name}
                       </Typography>
@@ -318,7 +383,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                             ? `https://image.tmdb.org/t/p/w200${tvShow.poster_path}`
                             : "/no-image-available.jpg"
                         }
-                        alt={tvShow.title}
+                        alt={tvShow.name}
                         sx={styles.similarTvShowImage}
                       />
                       <CardContent>

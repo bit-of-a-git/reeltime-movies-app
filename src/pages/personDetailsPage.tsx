@@ -23,7 +23,7 @@ const PersonDetailsPage = () => {
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   // Code currently taken and modified from https://github.com/eoinfennessy/movies-app/ to get started. Will be changed later

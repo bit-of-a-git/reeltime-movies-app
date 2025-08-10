@@ -35,7 +35,7 @@ const styles = {
   },
   fab: {
     position: "fixed",
-    top: 50,
+    top: 75,
     right: 2,
   },
   genericBox: {
@@ -314,6 +314,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         variant="h6"
                         component="div"
                         sx={styles.cardTitle}
+                        noWrap
                       >
                         {movie.title}
                       </Typography>

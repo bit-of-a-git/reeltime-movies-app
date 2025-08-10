@@ -41,7 +41,7 @@ const MustWatchPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = mustWatchMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = mustWatchMovieQueries.some((m) => m.isLoading);
 
   if (isLoading) {
     return <Spinner />;

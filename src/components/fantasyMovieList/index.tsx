@@ -35,7 +35,7 @@ const FantasyMovieList: React.FC = () => {
           ))}
         </Box>
       ) : (
-        <Typography variant="subtitle1" color="textSecondary" sx={{ mt: 2 }}>
+        <Typography variant="subtitle1" color="text.secondary" sx={{ mt: 2 }}>
           You have no fantasy movies yet. Create one using the form!
         </Typography>
       )}

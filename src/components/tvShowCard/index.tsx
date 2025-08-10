@@ -38,11 +38,11 @@ const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
       <CardHeader
         avatar={
           isFavourite ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Favourite TV show">
               <FavoriteIcon />
             </Avatar>
           ) : isMustWatch ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Must-watch TV show">
               <AddToQueueIcon />
             </Avatar>
           ) : (
@@ -69,19 +69,26 @@ const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
       </Link>
       <CardContent>
         <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {tvShow.first_air_date}
+          <Grid item xs={9}>
+            <Typography variant="body1" component="p">
+              <CalendarIcon fontSize="inherit" />
+              First aired: {tvShow.first_air_date}
             </Typography>
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={3}
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <Typography variant="h6" component="p">
-              {tvShow.vote_average} <StarRateIcon fontSize="small" />
+            <Typography variant="body1" component="p">
+              {tvShow.vote_average > 0 ? (
+                <>
+                  <StarRateIcon fontSize="inherit" />
+                  {tvShow.vote_average}
+                </>
+              ) : (
+                "N/A"
+              )}
             </Typography>
           </Grid>
         </Grid>

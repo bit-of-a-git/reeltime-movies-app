@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 import { FilterOption, GenreData } from "../../types/interfaces";
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -44,6 +44,14 @@ const FilterCard: React.FC<FilterCardProps> = ({
   yearToFilter,
   yearFromFilter,
 }) => {
+  const yearOptions = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    return Array.from(
+      { length: currentYear - 1888 + 1 },
+      (_, i) => currentYear - i
+    );
+  }, []);
+
   const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
     "genres",
     getGenres
@@ -53,44 +61,34 @@ const FilterCard: React.FC<FilterCardProps> = ({
     return <Spinner />;
   }
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
   const genres = data?.genres || [];
   const genresWithAll =
-    genres[0]?.name === "All" ? genres : [{ id: "0", name: "All" }, ...genres];
+    genres[0]?.name === "All" ? genres : [{ id: 0, name: "All" }, ...genres];
 
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from(
-    { length: currentYear - 1888 + 1 },
-    (_, i) => currentYear - i
-  );
-
-  const handleChange = (
-    e: SelectChangeEvent,
-    type: FilterOption,
-    value: string
-  ) => {
+  const handleChange = (type: FilterOption, value: string) => {
     onUserInput(type, value);
   };
 
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleChange(e, "title", e.target.value);
+    handleChange("title", e.target.value);
   };
 
   const handleGenreChange = (e: SelectChangeEvent) => {
-    handleChange(e, "genre", e.target.value);
+    handleChange("genre", e.target.value);
   };
 
   const handleMinRatingChange = (e: SelectChangeEvent) => {
-    handleChange(e, "minRating", e.target.value);
+    handleChange("minRating", e.target.value);
   };
 
   const handleYearToChange = (e: SelectChangeEvent) => {
-    handleChange(e, "yearTo", e.target.value);
+    handleChange("yearTo", e.target.value);
   };
 
   const handleYearFromChange = (e: SelectChangeEvent) => {
-    handleChange(e, "yearFrom", e.target.value);
+    handleChange("yearFrom", e.target.value);
   };
 
   return (
@@ -135,10 +133,9 @@ const FilterCard: React.FC<FilterCardProps> = ({
           <FormControl sx={styles.formControl}>
             <InputLabel id="minimum-rating-label">Minimum Rating</InputLabel>
             <Select
-              labelId="rating-label"
+              labelId="minimum-rating-label"
               label="Minimum Rating"
               id="minimum-rating"
-              type="number"
               value={minRatingFilter.toString()}
               onChange={handleMinRatingChange}
             >
@@ -157,7 +154,6 @@ const FilterCard: React.FC<FilterCardProps> = ({
               labelId="year-to-label"
               label="Year To"
               id="year-to"
-              type="number"
               value={yearToFilter.toString()}
               onChange={handleYearToChange}
             >
@@ -176,7 +172,6 @@ const FilterCard: React.FC<FilterCardProps> = ({
               labelId="year-from-label"
               label="Year From"
               id="year-from"
-              type="number"
               value={yearFromFilter.toString()}
               onChange={handleYearFromChange}
             >

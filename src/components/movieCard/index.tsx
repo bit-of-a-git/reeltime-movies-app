@@ -38,15 +38,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
       <CardHeader
         avatar={
           isFavourite ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Favourite movie">
               <FavoriteIcon />
             </Avatar>
           ) : isMustWatch ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Must-watch movie">
               <AddToQueueIcon />
             </Avatar>
           ) : (
-            action(movie)
+            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
           )
         }
         title={

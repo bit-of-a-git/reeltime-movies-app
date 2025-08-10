@@ -27,7 +27,7 @@ interface ActorCardProps {
 
 const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
   const { favourites } = useContext(PeopleContext);
-  const isFavourite = favourites.find((id) => id === person.id) ? true : false;
+  const isFavourite = favourites.includes(person.id);
 
   return (
     <Card sx={styles.card}>

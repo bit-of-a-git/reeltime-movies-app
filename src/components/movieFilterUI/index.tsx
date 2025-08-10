@@ -43,9 +43,8 @@ const styles = {
     backgroundColor: "#bfbfbf",
   },
   fab: {
-    marginTop: 8,
     position: "fixed",
-    top: 20,
+    top: 75,
     right: 2,
   },
 };
