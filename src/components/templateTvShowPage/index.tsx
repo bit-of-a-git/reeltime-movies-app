@@ -8,18 +8,6 @@ import { Image, TvShowDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
 
-const styles = {
-  gridListRoot: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-  },
-  gridListTile: {
-    width: 450,
-    height: "100vh",
-  },
-};
-
 interface TemplateTvShowPageProps {
   tvShow: TvShowDetailsProps;
   children: React.ReactElement;
@@ -29,9 +17,11 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
   tvShow,
   children,
 }) => {
-  const { data, error, isLoading, isError } = useQuery<Image[], Error>(
-    ["images", tvShow.id],
-    () => getTvShowImages(tvShow.id)
+  const { data, error, isLoading, isError } = useQuery<
+    { backdrops: Image[]; id: number; logos: Image[]; posters: Image[] },
+    Error
+  >(["images", tvShow.id], () =>
+    getTvShowImages(tvShow.id, tvShow.original_language)
   );
 
   if (isLoading) {
@@ -42,7 +32,11 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
     return <h1>{error.message}</h1>;
   }
 
-  const images = data as Image[];
+  const { posters } = data as {
+    posters: Image[];
+  };
+
+  const tvShowImage: string = posters[0]?.file_path || tvShow.poster_path || "";
 
   return (
     <>
@@ -52,18 +46,14 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
         <Grid item xs={3}>
           <div>
             <ImageList cols={1}>
-              {images.map((image: Image) => (
-                <ImageListItem
-                  key={image.file_path}
-                  sx={styles.gridListTile}
-                  cols={1}
-                >
+              {tvShowImage && (
+                <ImageListItem key={tvShowImage} cols={1}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${tvShowImage}`}
                     alt={"Image alternative"}
                   />
                 </ImageListItem>
-              ))}
+              )}
             </ImageList>
           </div>
         </Grid>

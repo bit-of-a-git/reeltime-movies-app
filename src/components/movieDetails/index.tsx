@@ -187,53 +187,55 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         <MovieReviews {...movie} />
       </Drawer>
       <>
-        <Accordion
-          disableGutters
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
-          elevation={0}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls="cast-content"
-            id="cast-header"
+        {movie.credits.cast.length > 0 && (
+          <Accordion
+            disableGutters
+            expanded={expanded === "panel1"}
+            onChange={handleChange("panel1")}
+            elevation={0}
           >
-            <TheaterComedyOutlinedIcon />
-            <Typography variant="h5">Cast</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={styles.genericBox}>
-              {movie.credits.cast.map((actor) => (
-                <Link key={actor.id} to={`/person/${actor.id}`}>
-                  <Card sx={{ ...styles.genericCard, width: 200 }}>
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={styles.cardTitle}
-                    >
-                      {actor.name}
-                    </Typography>
-                    <CardMedia
-                      component="img"
-                      image={
-                        actor.profile_path
-                          ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                          : "/no-image-available.jpg"
-                      }
-                      alt={actor.name}
-                      style={styles.creditsImage}
-                    />
-                    <CardContent>
-                      <Typography variant="body2" style={styles.cardSubtitle}>
-                        {actor.character}
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="cast-content"
+              id="cast-header"
+            >
+              <TheaterComedyOutlinedIcon />
+              <Typography variant="h5">Cast</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={styles.genericBox}>
+                {movie.credits.cast.map((actor) => (
+                  <Link key={actor.id} to={`/person/${actor.id}`}>
+                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={styles.cardTitle}
+                      >
+                        {actor.name}
                       </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
+                      <CardMedia
+                        component="img"
+                        image={
+                          actor.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                            : "/no-image-available.jpg"
+                        }
+                        alt={actor.name}
+                        style={styles.creditsImage}
+                      />
+                      <CardContent>
+                        <Typography variant="body2" style={styles.cardSubtitle}>
+                          {actor.character}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
         {movie.credits.crew.length > 0 && (
           <Accordion
             disableGutters

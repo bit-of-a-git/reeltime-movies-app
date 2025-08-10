@@ -7,18 +7,7 @@ import { getMovieImages } from "../../api/tmdb-api";
 import { Image, MovieDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
-
-const styles = {
-  gridListRoot: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-  },
-  gridListTile: {
-    width: 450,
-    height: "100vh",
-  },
-};
+import { Paper } from "@mui/material";
 
 interface TemplateMoviePageProps {
   movie: MovieDetailsProps;
@@ -29,9 +18,11 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
   movie,
   children,
 }) => {
-  const { data, error, isLoading, isError } = useQuery<Image[], Error>(
-    ["images", movie.id],
-    () => getMovieImages(movie.id)
+  const { data, error, isLoading, isError } = useQuery<
+    { backdrops: Image[]; id: number; logos: Image[]; posters: Image[] },
+    Error
+  >(["images", movie.id], () =>
+    getMovieImages(movie.id, movie.original_language)
   );
 
   if (isLoading) {
@@ -42,7 +33,11 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
     return <h1>{error.message}</h1>;
   }
 
-  const images = data as Image[];
+  const { posters } = data as {
+    posters: Image[];
+  };
+
+  const movieImage: string = posters[0]?.file_path || movie.poster_path || "";
 
   return (
     <>
@@ -50,22 +45,18 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid item xs={3}>
-          <div>
+          <Paper elevation={5}>
             <ImageList cols={1}>
-              {images.map((image: Image) => (
-                <ImageListItem
-                  key={image.file_path}
-                  sx={styles.gridListTile}
-                  cols={1}
-                >
+              {movieImage && (
+                <ImageListItem key={movieImage} cols={1}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${movieImage}`}
                     alt={"Image alternative"}
                   />
                 </ImageListItem>
-              ))}
+              )}
             </ImageList>
-          </div>
+          </Paper>
         </Grid>
 
         <Grid item xs={9}>

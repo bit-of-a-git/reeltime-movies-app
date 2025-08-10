@@ -51,7 +51,7 @@ const PersonDetailsPage = () => {
                       variant="body1"
                       style={{ whiteSpace: "pre-line" }}
                     >
-                      {person.biography}
+                      {person.biography || "Unavailable"}
                     </Typography>
                   </Box>
                   <PersonCredits person={person} />
