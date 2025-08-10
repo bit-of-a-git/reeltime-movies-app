@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
@@ -9,10 +8,10 @@ import MovieFilterUI, {
   yearToFilter,
   yearFromFilter,
 } from "../components/movieFilterUI";
-import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
+import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import { Box, Typography } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -43,12 +42,24 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const HomePage: React.FC = () => {
+interface MovieListPageProps {
+  title: string;
+  queryKey: string;
+  fetchFunction: (page: number) => Promise<MovieApiResults>;
+  action: (movie: BaseMovieProps) => React.ReactNode;
+}
+
+const MovieListPage: React.FC<MovieListPageProps> = ({
+  title,
+  queryKey,
+  fetchFunction,
+  action,
+}) => {
   const [page, setPage] = useState(1);
 
-  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
-    ["discover", page],
-    () => getMovies(page),
+  const { data, error, isLoading, isError } = useQuery<MovieApiResults, Error>(
+    [queryKey, page],
+    () => fetchFunction(page),
     { keepPreviousData: true }
   );
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
@@ -68,7 +79,7 @@ const HomePage: React.FC = () => {
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   // Loops through the filterValues array, checking if the filter's name matches the type provided
@@ -115,14 +126,23 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Discover Movies"
-        movies={sortedMovies}
-        action={(movie: BaseMovieProps) => {
-          return <AddToFavouritesIcon {...movie} />;
-        }}
-        changePage={changePage}
-      />
+      {sortedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            No movies match the current filters.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Try adjusting or clearing your filters.
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title={title}
+          movies={sortedMovies}
+          action={action}
+          changePage={changePage}
+        />
+      )}
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
@@ -135,4 +155,4 @@ const HomePage: React.FC = () => {
     </>
   );
 };
-export default HomePage;
+export default MovieListPage;

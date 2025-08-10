@@ -1,21 +1,21 @@
 import React, { useState, useCallback } from "react";
 import { Person } from "../types/interfaces";
 
-interface PersonContextInterface {
+interface PeopleContextInterface {
   favourites: number[];
   addToFavourites: (person: Person) => void;
   removeFromFavourites: (person: Person) => void;
 }
-const initialContextState: PersonContextInterface = {
+const initialContextState: PeopleContextInterface = {
   favourites: [],
   addToFavourites: () => {},
   removeFromFavourites: () => {},
 };
 
-export const PersonContext =
-  React.createContext<PersonContextInterface>(initialContextState);
+export const PeopleContext =
+  React.createContext<PeopleContextInterface>(initialContextState);
 
-const PersonContextProvider: React.FC<React.PropsWithChildren> = ({
+const PeopleContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [favourites, setFavourites] = useState<number[]>([]);
@@ -36,7 +36,7 @@ const PersonContextProvider: React.FC<React.PropsWithChildren> = ({
   }, []);
 
   return (
-    <PersonContext.Provider
+    <PeopleContext.Provider
       value={{
         favourites,
         addToFavourites,
@@ -44,8 +44,8 @@ const PersonContextProvider: React.FC<React.PropsWithChildren> = ({
       }}
     >
       {children}
-    </PersonContext.Provider>
+    </PeopleContext.Provider>
   );
 };
 
-export default PersonContextProvider;
+export default PeopleContextProvider;

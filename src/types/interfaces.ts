@@ -69,7 +69,7 @@ export interface BaseMovieListProps {
   action: (m: BaseMovieProps) => React.ReactNode;
 }
 
-export interface MovieImage {
+export interface Image {
   file_path: string;
   aspect_ratio?: number;
   height?: number;
@@ -81,7 +81,7 @@ export interface MovieImage {
 
 export interface MoviePageProps {
   movie: MovieDetailsProps;
-  images: MovieImage[];
+  images: Image[];
 }
 
 export type FilterOption =
@@ -103,7 +103,7 @@ export interface GenreData {
   }[];
 }
 
-export interface DiscoverMovies {
+export interface MovieApiResults {
   page: number;
   total_pages: number;
   total_results: number;
@@ -136,6 +136,40 @@ export interface FantasyMovieProps {
   releaseDate: Date | null;
   runtime: number | null;
   productionCompanies: string[];
+}
+
+export interface BaseTvShowProps {
+  adult: boolean;
+  backdrop_path: string;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  name: string;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface BaseTvShowListProps {
+  tvShows: BaseTvShowProps[];
+  action: (t: BaseTvShowProps) => React.ReactNode;
+}
+
+export interface TvShowListPageTemplateProps extends BaseTvShowListProps {
+  title: string;
+  changePage?: (delta: number) => void;
+}
+
+export interface TvShowApiResults {
+  page: number;
+  total_pages: number;
+  total_results: number;
+  results: BaseTvShowProps[];
 }
 
 export interface Person {

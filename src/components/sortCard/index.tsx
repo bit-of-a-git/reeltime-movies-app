@@ -20,15 +20,12 @@ const styles = {
   },
 };
 
-interface SortMoviesCardProps {
+interface SortCardProps {
   onSortChange: (sortOption: string) => void;
   sortOption: string;
 }
 
-const SortMoviesCard: React.FC<SortMoviesCardProps> = ({
-  onSortChange,
-  sortOption,
-}) => {
+const SortCard: React.FC<SortCardProps> = ({ onSortChange, sortOption }) => {
   const handleSortChange = (e: SelectChangeEvent) => {
     onSortChange(e.target.value);
   };
@@ -49,11 +46,11 @@ const SortMoviesCard: React.FC<SortMoviesCardProps> = ({
           <InputLabel id="sort-label">Sort By</InputLabel>
           <Select
             labelId="sort-label"
-            label="Sort"
+            label="Sort By"
             id="sort-select"
-            defaultValue="None"
             value={sortOption}
             onChange={handleSortChange}
+            inputProps={{ "aria-label": "sort movies" }}
           >
             <MenuItem value="none">None</MenuItem>
             <MenuItem value="date">Date</MenuItem>
@@ -66,4 +63,4 @@ const SortMoviesCard: React.FC<SortMoviesCardProps> = ({
   );
 };
 
-export default SortMoviesCard;
+export default SortCard;

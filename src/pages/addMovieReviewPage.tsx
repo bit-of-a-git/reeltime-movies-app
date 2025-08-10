@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import { MovieDetailsProps } from "../types/interfaces";
+import { Typography } from "@mui/material";
 
 const WriteReviewPage: React.FC = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const WriteReviewPage: React.FC = () => {
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 import { FilterOption, GenreData } from "../../types/interfaces";
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-interface FilterMoviesCardProps {
+interface FilterCardProps {
   onUserInput: (f: FilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
@@ -36,7 +36,7 @@ interface FilterMoviesCardProps {
   yearFromFilter: number;
 }
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
+const FilterCard: React.FC<FilterCardProps> = ({
   titleFilter,
   genreFilter,
   onUserInput,
@@ -44,6 +44,14 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
   yearToFilter,
   yearFromFilter,
 }) => {
+  const yearOptions = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    return Array.from(
+      { length: currentYear - 1888 + 1 },
+      (_, i) => currentYear - i
+    );
+  }, []);
+
   const { data, error, isLoading, isError } = useQuery<GenreData, Error>(
     "genres",
     getGenres
@@ -53,46 +61,34 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
     return <Spinner />;
   }
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
   const genres = data?.genres || [];
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
-  }
+  const genresWithAll =
+    genres[0]?.name === "All" ? genres : [{ id: 0, name: "All" }, ...genres];
 
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from(
-    { length: currentYear - 1888 + 1 },
-    (_, i) => currentYear - i
-  );
-
-  const handleChange = (
-    e: SelectChangeEvent,
-    type: FilterOption,
-    value: string
-  ) => {
-    e.preventDefault();
+  const handleChange = (type: FilterOption, value: string) => {
     onUserInput(type, value);
   };
 
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleChange(e, "title", e.target.value);
+    handleChange("title", e.target.value);
   };
 
   const handleGenreChange = (e: SelectChangeEvent) => {
-    handleChange(e, "genre", e.target.value);
+    handleChange("genre", e.target.value);
   };
 
   const handleMinRatingChange = (e: SelectChangeEvent) => {
-    handleChange(e, "minRating", e.target.value);
+    handleChange("minRating", e.target.value);
   };
 
   const handleYearToChange = (e: SelectChangeEvent) => {
-    handleChange(e, "yearTo", e.target.value);
+    handleChange("yearTo", e.target.value);
   };
 
   const handleYearFromChange = (e: SelectChangeEvent) => {
-    handleChange(e, "yearFrom", e.target.value);
+    handleChange("yearFrom", e.target.value);
   };
 
   return (
@@ -121,10 +117,11 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
             <Select
               labelId="genre-label"
               id="genre-select"
+              label="Genre"
               value={genreFilter}
               onChange={handleGenreChange}
             >
-              {genres.map((genre) => {
+              {genresWithAll.map((genre) => {
                 return (
                   <MenuItem key={genre.id} value={genre.id}>
                     {genre.name}
@@ -133,55 +130,62 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
               })}
             </Select>
           </FormControl>
-          <Select
-            sx={styles.formControl}
-            label="Minimum Rating"
-            id="minimum-rating"
-            type="number"
-            variant="filled"
-            value={minRatingFilter.toString()}
-            onChange={handleMinRatingChange}
-          >
-            {Array.from({ length: 10 }, (_, i) => i).map((num) => (
-              <MenuItem key={num} value={num.toString()}>
-                {num}+
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            sx={styles.formControl}
-            label="Year To"
-            id="year-to"
-            type="number"
-            variant="filled"
-            value={yearToFilter.toString()}
-            onChange={handleYearToChange}
-          >
-            {yearOptions.map((year) => (
-              <MenuItem key={year} value={year.toString()}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-          <Select
-            sx={styles.formControl}
-            label="Year From"
-            id="year-from"
-            type="number"
-            variant="filled"
-            value={yearFromFilter.toString()}
-            onChange={handleYearFromChange}
-          >
-            {yearOptions.map((year) => (
-              <MenuItem key={year} value={year.toString()}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="minimum-rating-label">Minimum Rating</InputLabel>
+            <Select
+              labelId="minimum-rating-label"
+              label="Minimum Rating"
+              id="minimum-rating"
+              value={minRatingFilter.toString()}
+              onChange={handleMinRatingChange}
+            >
+              {Array.from({ length: 10 }, (_, i) => i).map((num) => (
+                <MenuItem key={num} value={num}>
+                  {num}+
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="year-to-label" htmlFor="year-to">
+              Year To
+            </InputLabel>
+            <Select
+              labelId="year-to-label"
+              label="Year To"
+              id="year-to"
+              value={yearToFilter.toString()}
+              onChange={handleYearToChange}
+            >
+              {yearOptions.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="year-from-label" htmlFor="year-from">
+              Year From
+            </InputLabel>
+            <Select
+              labelId="year-from-label"
+              label="Year From"
+              id="year-from"
+              value={yearFromFilter.toString()}
+              onChange={handleYearFromChange}
+            >
+              {yearOptions.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </CardContent>
       </Card>
     </>
   );
 };
 
-export default FilterMoviesCard;
+export default FilterCard;

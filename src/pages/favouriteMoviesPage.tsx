@@ -9,8 +9,9 @@ import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/movieFilterUI";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
 import WriteReview from "../components/cardIcons/writeReview";
+import { Typography, Box } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -41,7 +42,7 @@ const FavouriteMoviesPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = favouriteMovieQueries.some((m) => m.isLoading);
 
   if (isLoading) {
     return <Spinner />;
@@ -61,18 +62,33 @@ const FavouriteMoviesPage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Favourite Movies"
-        movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavourites {...movie} />
-              <WriteReview {...movie} />
-            </>
-          );
-        }}
-      />
+      {displayedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            {allFavourites.length === 0
+              ? "You have no favourite movies yet."
+              : "No movies match the current filters."}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {allFavourites.length === 0
+              ? "Why not browse and add to your list?"
+              : "Try adjusting or clearing your filters."}
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Favourite Movies"
+          movies={displayedMovies}
+          action={(movie) => {
+            return (
+              <>
+                <RemoveFromFavourites {...movie} />
+                <WriteReview {...movie} />
+              </>
+            );
+          }}
+        />
+      )}
 
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

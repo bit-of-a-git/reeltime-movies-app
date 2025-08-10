@@ -6,13 +6,13 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
 import { auth } from "../../config/firebase";
+import MovieIcon from "@mui/icons-material/Movie";
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import SiteMenu from "./menu";
 
 const styles = {
   title: {
@@ -21,100 +21,87 @@ const styles = {
 };
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
+const drawerWidth = 250;
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const open = Boolean(anchorEl);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Upcoming Movies", path: "/movies/upcoming" },
+  const authOptions = [
     ...(auth.currentUser
-      ? [
-          { label: "Favorites", path: "/movies/favourites" },
-          { label: "Favorite Actors", path: "/actors/favourites" },
-          { label: "Must Watch", path: "/my-must-watch-movies" },
-          { label: "Fantasy Movie Maker", path: "/my-fantasy-movies" },
-        ]
+      ? [{ label: "Log Out", path: "/logout" }]
       : [{ label: "Log In", path: "/login" }]),
   ];
 
-  const handleMenuSelect = (pageURL: string) => {
-    navigate(pageURL);
+  const toggleDrawer = () => {
+    setDrawerOpen((prev) => !prev);
   };
 
-  const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuSelect = (pageURL: string) => {
+    navigate(pageURL);
+    setDrawerOpen(false);
   };
 
   return (
     <>
       <AppBar position="fixed" elevation={0} color="primary">
         <Toolbar>
+          <IconButton
+            edge="start"
+            aria-label="Open navigation drawer"
+            onClick={toggleDrawer}
+            color="inherit"
+            size="large"
+          >
+            <MenuIcon fontSize="large" />
+          </IconButton>
           <Typography variant="h4" sx={styles.title}>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              TMDB Client
-            </Link>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                ml: drawerOpen ? 23 : 0,
+                // https://www.w3schools.com/cssref/func_cubic-bezier.php - matches the curve of the menu drawer
+                transition: "margin-left 225ms cubic-bezier(0, 0, 0.2, 1)",
+              }}
+            >
+              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                ReelTime
+              </Link>
+              <MovieIcon fontSize="large" sx={{ ml: 1 }} />
+            </Box>
           </Typography>
-          <Typography variant="h6" sx={styles.title}>
-            All you ever wanted to know about Movies!
-          </Typography>
-          {isMobile ? (
-            <>
-              <IconButton
-                aria-label="menu"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-                size="large"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={open}
-                onClose={() => setAnchorEl(null)}
-              >
-                {menuOptions.map((opt) => (
-                  <MenuItem
-                    key={opt.label}
-                    onClick={() => handleMenuSelect(opt.path)}
-                  >
-                    {opt.label}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </>
-          ) : (
-            <>
-              {menuOptions.map((opt) => (
-                <Button
-                  key={opt.label}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(opt.path)}
-                >
-                  {opt.label}
-                </Button>
-              ))}
-            </>
-          )}
+          {authOptions.map((opt) => (
+            <Button
+              key={opt.label}
+              color="inherit"
+              onClick={() => handleMenuSelect(opt.path)}
+            >
+              {opt.label}
+            </Button>
+          ))}
         </Toolbar>
       </AppBar>
       <Offset />
+      <Drawer
+        variant="temporary"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            bgcolor: "primary.light",
+            color: "secondary.contrastText",
+            overflowY: "auto",
+            scrollbarWidth: "none",
+          },
+        }}
+      >
+        <SiteMenu handleDrawerToggle={toggleDrawer} />
+      </Drawer>
     </>
   );
 };

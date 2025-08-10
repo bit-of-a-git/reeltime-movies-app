@@ -51,7 +51,7 @@ const FantasyMovieForm: React.FC = () => {
     return <Spinner />;
   }
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   const genres = data?.genres || [];

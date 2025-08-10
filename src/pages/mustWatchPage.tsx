@@ -10,6 +10,7 @@ import MovieFilterUI, {
   genreFilter,
 } from "../components/movieFilterUI";
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
+import { Typography, Box } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -40,7 +41,7 @@ const MustWatchPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = mustWatchMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = mustWatchMovieQueries.some((m) => m.isLoading);
 
   if (isLoading) {
     return <Spinner />;
@@ -62,17 +63,28 @@ const MustWatchPage: React.FC = () => {
 
   return (
     <>
-      <PageTemplate
-        title="Must Watch List"
-        movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromMustWatch {...movie} />
-            </>
-          );
-        }}
-      />
+      {displayedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            You have no must-watch movies yet.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Why not browse and add to your list?
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Must Watch List"
+          movies={displayedMovies}
+          action={(movie) => {
+            return (
+              <>
+                <RemoveFromMustWatch {...movie} />
+              </>
+            );
+          }}
+        />
+      )}
 
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

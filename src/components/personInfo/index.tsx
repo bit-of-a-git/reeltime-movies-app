@@ -1,5 +1,18 @@
+import { useContext } from "react";
 import { Typography } from "@mui/material";
 import AddToFavouritesIcon from "../cardIcons/addToFavouritesPerson";
+import { PeopleContext } from "../../contexts/peopleContext";
+import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Person } from "../../types/interfaces";
+
+const styles = {
+  card: { maxWidth: 345 },
+  media: { height: 500 },
+  avatar: {
+    backgroundColor: "rgb(255, 0, 0)",
+  },
+};
 
 // https://dev.to/mhmdjaw/an-alternative-to-the-javascript-switch-statement-1kah
 const getGender = (genderId: number) => {
@@ -13,7 +26,10 @@ const getGender = (genderId: number) => {
   return genderLabel;
 };
 
-export default function PersonalInfo({ person }) {
+export default function PersonalInfo({ person }: { person: Person }) {
+  const { favourites } = useContext(PeopleContext);
+  const isFavourite = favourites.includes(person.id);
+
   return (
     <>
       <Typography
@@ -26,7 +42,15 @@ export default function PersonalInfo({ person }) {
         }}
       >
         {person.name}
-        <AddToFavouritesIcon {...person} />
+        {isFavourite ? (
+          <Avatar sx={styles.avatar}>
+            <FavoriteIcon />
+          </Avatar>
+        ) : (
+          <Avatar sx={{ bgcolor: "transparent" }}>
+            <AddToFavouritesIcon {...person} />
+          </Avatar>
+        )}
       </Typography>
       <Typography variant="body1" paddingTop="10px">
         <strong>Gender</strong>
@@ -36,14 +60,22 @@ export default function PersonalInfo({ person }) {
         <strong>Known For</strong>
       </Typography>
       <Typography variant="body1">{person.known_for_department}</Typography>
-      <Typography variant="body1" paddingTop="10px">
-        <strong>Date of Birth</strong>
-      </Typography>
-      <Typography variant="body1">{person.birthday}</Typography>
-      <Typography variant="body1" paddingTop="10px">
-        <strong>Place of Birth</strong>
-      </Typography>
-      <Typography variant="body1">{person.place_of_birth}</Typography>
+      {person.birthday && (
+        <>
+          <Typography variant="body1" paddingTop="10px">
+            <strong>Date of Birth</strong>
+          </Typography>
+          <Typography variant="body1">{person.birthday}</Typography>
+        </>
+      )}
+      {person.place_of_birth && (
+        <>
+          <Typography variant="body1" paddingTop="10px">
+            <strong>Place of Birth</strong>
+          </Typography>
+          <Typography variant="body1">{person.place_of_birth}</Typography>
+        </>
+      )}
       {person.deathday && (
         <>
           <Typography variant="body1" paddingTop="10px">

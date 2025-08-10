@@ -4,21 +4,10 @@ import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
-import { MovieImage, MovieDetailsProps } from "../../types/interfaces";
+import { Image, MovieDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
-
-const styles = {
-  gridListRoot: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-  },
-  gridListTile: {
-    width: 450,
-    height: "100vh",
-  },
-};
+import { Paper, Typography } from "@mui/material";
 
 interface TemplateMoviePageProps {
   movie: MovieDetailsProps;
@@ -29,9 +18,11 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
   movie,
   children,
 }) => {
-  const { data, error, isLoading, isError } = useQuery<MovieImage[], Error>(
-    ["images", movie.id],
-    () => getMovieImages(movie.id)
+  const { data, error, isLoading, isError } = useQuery<
+    { backdrops: Image[]; id: number; logos: Image[]; posters: Image[] },
+    Error
+  >(["images", movie.id, movie.original_language], () =>
+    getMovieImages(movie.id, movie.original_language)
   );
 
   if (isLoading) {
@@ -39,33 +30,30 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
-  const images = data as MovieImage[];
+  const movieImage: string =
+    data?.posters[0]?.file_path || movie.poster_path || "";
 
   return (
     <>
       <MovieHeader {...movie} />
 
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+      <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>
-          <div>
+          <Paper elevation={5}>
             <ImageList cols={1}>
-              {images.map((image: MovieImage) => (
-                <ImageListItem
-                  key={image.file_path}
-                  sx={styles.gridListTile}
-                  cols={1}
-                >
+              {movieImage && (
+                <ImageListItem key={movieImage} cols={1}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                    alt={"Image alternative"}
+                    src={`https://image.tmdb.org/t/p/w500/${movieImage}`}
+                    alt={`Poster for ${movie.title}`}
                   />
                 </ImageListItem>
-              ))}
+              )}
             </ImageList>
-          </div>
+          </Paper>
         </Grid>
 
         <Grid item xs={9}>

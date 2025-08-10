@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
@@ -31,24 +29,25 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
-  const { favourites, addToFavourites, mustWatch, addToMustWatch } =
-    useContext(MoviesContext);
-  const isFavourite = favourites.find((id) => id === movie.id) ? true : false;
-  const isMustWatch = mustWatch.find((id) => id === movie.id) ? true : false;
+  const { favourites, mustWatch } = useContext(MoviesContext);
+  const isFavourite = favourites.includes(movie.id);
+  const isMustWatch = mustWatch.includes(movie.id);
 
   return (
     <Card sx={styles.card}>
       <CardHeader
         avatar={
           isFavourite ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Favourite movie">
               <FavoriteIcon />
             </Avatar>
           ) : isMustWatch ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Must-watch movie">
               <AddToQueueIcon />
             </Avatar>
-          ) : null
+          ) : (
+            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
+          )
         }
         title={
           <Typography variant="h5" component="p" align="center">
@@ -56,14 +55,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           </Typography>
         }
       />
-      <CardMedia
-        sx={styles.media}
-        image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-            : img
-        }
-      />
+      <Link to={`/movies/${movie.id}`}>
+        <CardMedia
+          component="img"
+          sx={styles.media}
+          image={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+              : img
+          }
+          alt={`${movie.title} poster`}
+        />
+      </Link>
       <CardContent>
         <Grid container>
           <Grid item xs={6}>
@@ -72,22 +75,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {movie.vote_average} <StarRateIcon fontSize="small" />
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
     </Card>
   );
 };

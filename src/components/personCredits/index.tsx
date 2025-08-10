@@ -73,87 +73,217 @@ export default function PersonCredits({ person }) {
     };
   return (
     <>
-      <Accordion
-        disableGutters
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Person />
-          <Typography variant="h5">As Cast Member</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={styles.genericBox}>
-            {person.movie_credits.cast
-              .filter((credit) => credit.poster_path)
-              .map((credit, index) => (
-                <Link key={`cast-${index}`} to={`/movies/${credit.id}`}>
-                  <Card sx={{ ...styles.genericCard, width: 200 }}>
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={styles.cardTitle}
-                    >
-                      {credit.title}
-                    </Typography>
-                    <CardMedia
-                      component="img"
-                      image={`https://image.tmdb.org/t/p/w200${credit.poster_path}`}
-                      alt={credit.title}
-                      sx={styles.similarMovieImage}
-                    />
-                    <CardContent>
-                      <Typography variant="body2" style={styles.cardSubtitle}>
-                        {credit.character}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+      {(person.movie_credits.cast.length > 0 ||
+        person.movie_credits.crew.length > 0) && (
+        <Accordion disableGutters>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Movie />
+            <Typography variant="h5">Movies</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ p: 0 }}>
+            {person.movie_credits.cast.length > 0 && (
+              <Accordion
+                disableGutters
+                expanded={expanded === "panel0"}
+                onChange={handleChange("panel0")}
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Person />
+                  <Typography variant="h5">As Cast Member</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={styles.genericBox}>
+                    {person.movie_credits.cast.map((credit) => (
+                      <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
+                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            sx={styles.cardTitle}
+                          >
+                            {credit.title}
+                          </Typography>
+                          <CardMedia
+                            component="img"
+                            image={
+                              credit.poster_path
+                                ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
+                                : "/no-image-available.jpg"
+                            }
+                            alt={credit.title}
+                            sx={styles.similarMovieImage}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              style={styles.cardSubtitle}
+                            >
+                              {credit.character || "Unknown"}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+            )}
+            {person.movie_credits.crew.length > 0 && (
+              <Accordion
+                disableGutters
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Person />
+                  <Typography variant="h5">As Crew Member</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={styles.genericBox}>
+                    {person.movie_credits.crew.map((credit) => (
+                      <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
+                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            sx={styles.cardTitle}
+                          >
+                            {credit.title}
+                          </Typography>
+                          <CardMedia
+                            component="img"
+                            image={
+                              credit.poster_path
+                                ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
+                                : "/no-image-available.jpg"
+                            }
+                            alt={credit.title}
+                            sx={styles.similarMovieImage}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              style={styles.cardSubtitle}
+                            >
+                              {credit.job || "Unknown"}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+            )}
+          </AccordionDetails>
+        </Accordion>
+      )}
 
-      <Accordion
-        disableGutters
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Person />
-          <Typography variant="h5">As Crew Member</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={styles.genericBox}>
-            {person.movie_credits.crew
-              .filter((credit) => credit.poster_path)
-              .map((credit, index) => (
-                <Link key={`crew-${index}`} to={`/movies/${credit.id}`}>
-                  <Card sx={{ ...styles.genericCard, width: 200 }}>
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={styles.cardTitle}
-                    >
-                      {credit.title}
-                    </Typography>
-                    <CardMedia
-                      component="img"
-                      image={`https://image.tmdb.org/t/p/w200${credit.poster_path}`}
-                      alt={credit.title}
-                      sx={styles.similarMovieImage}
-                    />
-                    <CardContent>
-                      <Typography variant="body2" style={styles.cardSubtitle}>
-                        {credit.job}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+      {(person.tv_credits.cast.length > 0 ||
+        person.tv_credits.crew.length > 0) && (
+        <Accordion disableGutters>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <TvRounded />
+            <Typography variant="h5">TV</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ p: 0 }}>
+            {person.tv_credits.cast.length > 0 && (
+              <Accordion
+                disableGutters
+                expanded={expanded === "panel2"}
+                onChange={handleChange("panel2")}
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Person />
+                  <Typography variant="h5">As Cast Member</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={styles.genericBox}>
+                    {person.tv_credits.cast.map((credit) => (
+                      <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
+                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            sx={styles.cardTitle}
+                          >
+                            {credit.name}
+                          </Typography>
+                          <CardMedia
+                            component="img"
+                            image={
+                              credit.poster_path
+                                ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
+                                : "/no-image-available.jpg"
+                            }
+                            alt={credit.name}
+                            sx={styles.similarMovieImage}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              style={styles.cardSubtitle}
+                            >
+                              {credit.character || "Unknown"}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+            )}
+            {person.tv_credits.crew.length > 0 && (
+              <Accordion
+                disableGutters
+                expanded={expanded === "panel3"}
+                onChange={handleChange("panel3")}
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Person />
+                  <Typography variant="h5">As Crew Member</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={styles.genericBox}>
+                    {person.tv_credits.crew.map((credit) => (
+                      <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
+                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            sx={styles.cardTitle}
+                          >
+                            {credit.name}
+                          </Typography>
+                          <CardMedia
+                            component="img"
+                            image={
+                              credit.poster_path
+                                ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
+                                : "/no-image-available.jpg"
+                            }
+                            alt={credit.name}
+                            sx={styles.similarMovieImage}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              style={styles.cardSubtitle}
+                            >
+                              {credit.job || "Unknown"}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+            )}
+          </AccordionDetails>
+        </Accordion>
+      )}
     </>
   );
 }
