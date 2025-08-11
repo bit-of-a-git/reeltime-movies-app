@@ -10,7 +10,6 @@ const AddToMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     context.addToMustWatch(movie);
-    console.log(context.mustWatch);
   };
   return (
     <IconButton

@@ -14,6 +14,7 @@ import { BaseMovieProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { CardActions } from "@mui/material";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -26,9 +27,14 @@ const styles = {
 interface MovieCardProps {
   movie: BaseMovieProps;
   action: (m: BaseMovieProps) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
+const MovieCard: React.FC<MovieCardProps> = ({
+  movie,
+  action,
+  showFooterActions,
+}) => {
   const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.includes(movie.id);
   const isMustWatch = mustWatch.includes(movie.id);
@@ -86,6 +92,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, action }) => {
           </Grid>
         </Grid>
       </CardContent>
+      {showFooterActions && (
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            px: "8px",
+            pt: "0px",
+            pb: "4px",
+          }}
+        >
+          {action(movie)}
+        </CardActions>
+      )}
     </Card>
   );
 };
