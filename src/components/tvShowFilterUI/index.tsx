@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseTvShowProps } from "../../types/interfaces";
+import { BaseTvShowProps, TvShowDetailsProps } from "../../types/interfaces";
 import SortCard from "../../components/sortCard";
 
 export const dateToYear = (dateString: string) => {
@@ -18,12 +18,18 @@ export const titleFilter = (
 };
 
 export const genreFilter = (
-  tvShow: BaseTvShowProps,
+  tvShow: BaseTvShowProps | TvShowDetailsProps,
   value: string
 ): boolean => {
   const genreId = Number(value);
   if (genreId <= 0) return true; // Show all if no valid genre selected
-  return tvShow.genre_ids?.includes(genreId) ?? true;
+  if ((tvShow as BaseTvShowProps).genre_ids) {
+    return (tvShow as BaseTvShowProps).genre_ids?.includes(genreId) ?? true;
+  }
+  if ((tvShow as TvShowDetailsProps).genres) {
+    return (tvShow as TvShowDetailsProps).genres.some((g) => g.id === genreId);
+  }
+  return false;
 };
 
 export const minRatingFilter = (

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PageTemplate from "../components/templateTvShowListPage";
 import { TvShowContext } from "../contexts/tvShowContext";
 import { useQueries } from "react-query";
@@ -8,6 +8,9 @@ import useFiltering from "../hooks/useFiltering";
 import TvShowFilterUI, {
   titleFilter,
   genreFilter,
+  minRatingFilter,
+  yearToFilter,
+  yearFromFilter,
 } from "../components/tvShowFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesTvShow";
 import WriteReview from "../components/cardIcons/writeReviewTvShow";
@@ -24,11 +27,32 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+const minRatingFiltering = {
+  name: "minRating",
+  value: 0,
+  condition: minRatingFilter,
+};
+
+const yearToFiltering = {
+  name: "yearTo",
+  value: new Date().getFullYear(),
+  condition: yearToFilter,
+};
+
+const yearFromFiltering = {
+  name: "yearFrom",
+  value: 1888,
+  condition: yearFromFilter,
+};
+
 const FavouriteTvShowsPage: React.FC = () => {
   const { favourites: tvShowIds } = useContext(TvShowContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
+    minRatingFiltering,
+    yearToFiltering,
+    yearFromFiltering,
   ]);
 
   // Create an array of queries and run them in parallel.
@@ -44,25 +68,43 @@ const FavouriteTvShowsPage: React.FC = () => {
   // Check if any of the parallel queries is still loading.
   const isLoading = favouriteTvShowQueries.some((t) => t.isLoading);
 
+  const [sortOption, setSortOption] = useState<string>("none");
+
   if (isLoading) {
     return <Spinner />;
   }
 
-  const allFavourites = favouriteTvShowQueries.map((q) => q.data);
-  const displayedTvShows = allFavourites ? filterFunction(allFavourites) : [];
-
-  const changeFilterValues = (type: string, value: string) => {
-    const changedFilter = { name: type, value: value };
-    const updatedFilterSet =
-      type === "title"
-        ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+  const changeFilterValues = (type: string, value: string | number) => {
+    const updatedFilterSet = filterValues.map((filter) =>
+      filter.name === type ? { ...filter, value } : filter
+    );
     setFilterValues(updatedFilterSet);
   };
 
+  const sortFunctions: {
+    [key: string]: (a: BaseMovieProps, b: BaseMovieProps) => number;
+  } = {
+    date: (a, b) =>
+      new Date(b.release_date).getTime() - new Date(a.release_date).getTime(),
+    rating: (a, b) => b.vote_average - a.vote_average,
+    popularity: (a, b) => b.popularity - a.popularity,
+  };
+
+  const changeSortOption = (sort: string) => {
+    setSortOption(sort);
+  };
+
+  const allFavourites = favouriteTvShowQueries.map((q) => q.data);
+  const displayedTvShows = allFavourites ? filterFunction(allFavourites) : [];
+
+  const sortedTvShows =
+    sortOption === "none"
+      ? displayedTvShows
+      : [...displayedTvShows].sort(sortFunctions[sortOption]);
+
   return (
     <>
-      {displayedTvShows.length === 0 ? (
+      {sortedTvShows.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
             {allFavourites.length === 0
@@ -78,7 +120,7 @@ const FavouriteTvShowsPage: React.FC = () => {
       ) : (
         <PageTemplate
           title="Favourite TV Shows"
-          tvShows={displayedTvShows}
+          tvShows={sortedTvShows}
           action={(tvShow) => {
             return (
               <>
@@ -94,6 +136,10 @@ const FavouriteTvShowsPage: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        minRatingFilter={filterValues[2].value}
+        yearToFilter={filterValues[3].value}
+        yearFromFilter={filterValues[4].value}
+        onSortChange={changeSortOption}
       />
     </>
   );
