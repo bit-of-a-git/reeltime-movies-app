@@ -122,6 +122,7 @@ const FavouriteMoviesPage: React.FC = () => {
         <PageTemplate
           title="Favourite Movies"
           movies={sortedMovies}
+          showFooterActions={true}
           action={(movie) => {
             return (
               <>

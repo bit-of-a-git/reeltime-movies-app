@@ -123,6 +123,7 @@ const MustWatchPage: React.FC = () => {
         <PageTemplate
           title="Must Watch List"
           movies={sortedMovies}
+          showFooterActions={true}
           action={(movie) => {
             return (
               <>
