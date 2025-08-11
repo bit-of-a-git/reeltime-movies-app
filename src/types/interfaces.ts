@@ -32,6 +32,16 @@ export interface Credits {
   crew: CrewMember[];
 }
 
+export interface BasePeopleListProps {
+  people: Person[];
+  action: (m: Person) => React.ReactNode;
+}
+
+export interface PeopleListPageTemplateProps extends BasePeopleListProps {
+  title: string;
+  changePage?: (delta: number) => void;
+}
+
 export interface BaseMovieProps {
   title: string;
   budget: number;
@@ -54,14 +64,30 @@ export interface BaseMovieProps {
 }
 
 export interface MovieDetailsProps extends BaseMovieProps {
-  genres: {
-    id: number;
-    name: string;
-  }[];
+  genres: Genre[];
   production_countries: {
     iso_3166_1: string;
     name: string;
   }[];
+  videos: Videos;
+}
+
+export interface Videos {
+  results: Video[];
+}
+
+export interface Video {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
 }
 
 export interface BaseMovieListProps {
@@ -96,11 +122,9 @@ export interface MovieListPageTemplateProps extends BaseMovieListProps {
   changePage?: (delta: number) => void;
 }
 
-export interface GenreData {
-  genres: {
-    id: string;
-    name: string;
-  }[];
+export interface Genre {
+  id: number;
+  name: string;
 }
 
 export interface MovieApiResults {
@@ -153,6 +177,73 @@ export interface BaseTvShowProps {
   poster_path: string;
   vote_average: number;
   vote_count: number;
+}
+
+export interface TvShowDetailsProps extends BaseTvShowProps {
+  created_by: {
+    id: number;
+    credit_id: string;
+    name: string;
+    gender: number;
+    profile_path: string;
+  }[];
+  episode_run_time: number[];
+  genres: Genre[];
+  homepage: string;
+  in_production: boolean;
+  languages: string[];
+  last_air_date: string;
+  last_episode_to_air: {
+    id: string;
+    name: string;
+    overview: string;
+    vote_average: number;
+    vote_count: number;
+    air_date: string;
+    episode_number: number;
+    production_code: string;
+    runtime: number;
+    season_number: number;
+    show_id: number;
+    still_path: string;
+  };
+  next_episode_to_air: string;
+  networks: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  };
+  number_of_episodes: number;
+  number_of_seasons: number;
+  production_companies: {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  };
+  production_countries: {
+    iso_3166_1: string;
+    name: string;
+  };
+  seasons: {
+    air_date: string;
+    episode_count: number;
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string;
+    season_number: number;
+    vote_average: number;
+  };
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  };
+  status: string;
+  tagline: string;
+  type: string;
 }
 
 export interface BaseTvShowListProps {

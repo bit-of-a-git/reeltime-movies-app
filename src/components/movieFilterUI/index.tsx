@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseMovieProps, MovieDetailsProps } from "../../types/interfaces";
 import SortCard from "../../components/sortCard";
 
 export const dateToYear = (dateString: string) => {
@@ -14,10 +14,19 @@ export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter = (movie: BaseMovieProps, value: string): boolean => {
+export const genreFilter = (
+  movie: BaseMovieProps | MovieDetailsProps,
+  value: string
+): boolean => {
   const genreId = Number(value);
   if (genreId <= 0) return true; // Show all if no valid genre selected
-  return movie.genre_ids?.includes(genreId) ?? true;
+  if ((movie as BaseMovieProps).genre_ids) {
+    return (movie as BaseMovieProps).genre_ids?.includes(genreId) ?? true;
+  }
+  if ((movie as MovieDetailsProps).genres) {
+    return (movie as MovieDetailsProps).genres.some((g) => g.id === genreId);
+  }
+  return false;
 };
 
 export const minRatingFilter = (
