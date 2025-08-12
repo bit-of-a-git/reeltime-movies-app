@@ -12,7 +12,7 @@ import { TvShowApiResults, BaseTvShowProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesTvShow";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -101,6 +101,16 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
     setSortOption(sort);
   };
 
+  const handleResetFilters = () => {
+    setFilterValues([
+      { ...titleFiltering },
+      { ...genreFiltering },
+      { ...minRatingFiltering },
+      { ...yearToFiltering },
+      { ...yearFromFiltering },
+    ]);
+  };
+
   const tvShows = data ? data.results : [];
   const displayedTvShows = filterFunction(tvShows);
 
@@ -118,14 +128,25 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
 
   return (
     <>
-      <PageTemplate
-        title={title}
-        tvShows={sortedTvShows}
-        action={(tvShow: BaseTvShowProps) => {
-          return <AddToFavouritesIcon {...tvShow} />;
-        }}
-        changePage={changePage}
-      />
+      {sortedTvShows.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            No TV shows match the current filters.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Try adjusting or clearing your filters.
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title={title}
+          tvShows={sortedTvShows}
+          action={(tvShow: BaseTvShowProps) => {
+            return <AddToFavouritesIcon {...tvShow} />;
+          }}
+          changePage={changePage}
+        />
+      )}
       <TvShowFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
@@ -134,6 +155,7 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
         yearToFilter={filterValues[3].value}
         yearFromFilter={filterValues[4].value}
         onSortChange={changeSortOption}
+        onResetFilters={handleResetFilters}
       />
     </>
   );
