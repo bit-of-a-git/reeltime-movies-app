@@ -107,6 +107,16 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
     setSortOption(sort);
   };
 
+  const handleResetFilters = () => {
+    setFilterValues([
+      { ...titleFiltering },
+      { ...genreFiltering },
+      { ...minRatingFiltering },
+      { ...yearToFiltering },
+      { ...yearFromFiltering },
+    ]);
+  };
+
   const movies = data ? data.results : [];
   const displayedMovies = filterFunction(movies);
 
@@ -152,6 +162,7 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
         yearToFilter={filterValues[3].value}
         yearFromFilter={filterValues[4].value}
         onSortChange={changeSortOption}
+        onResetFilters={handleResetFilters}
       />
     </>
   );

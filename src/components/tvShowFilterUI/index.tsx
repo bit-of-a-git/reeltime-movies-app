@@ -4,6 +4,7 @@ import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import { BaseTvShowProps, TvShowDetailsProps } from "../../types/interfaces";
 import SortCard from "../../components/sortCard";
+import { Box, Button } from "@mui/material";
 
 export const dateToYear = (dateString: string) => {
   const date = new Date(dateString);
@@ -68,6 +69,7 @@ const styles = {
 interface TvShowFilterUIProps {
   onFilterValuesChange: (f: string, s: string) => void;
   onSortChange: (sortOption: string) => void;
+  onResetFilters: () => void;
   titleFilter: string;
   genreFilter: string;
   minRatingFilter: number;
@@ -78,6 +80,7 @@ interface TvShowFilterUIProps {
 const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
   onFilterValuesChange,
   onSortChange,
+  onResetFilters,
   titleFilter,
   genreFilter,
   minRatingFilter,
@@ -118,6 +121,16 @@ const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({
           yearFromFilter={yearFromFilter}
         />
         <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
+        <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+          <Button
+            type="reset"
+            variant="contained"
+            color="secondary"
+            onClick={onResetFilters}
+          >
+            Reset
+          </Button>
+        </Box>
       </Drawer>
     </>
   );

@@ -127,6 +127,10 @@ export interface Genre {
   name: string;
 }
 
+export interface GenreData {
+  genres: Genre[];
+}
+
 export interface MovieApiResults {
   page: number;
   total_pages: number;
