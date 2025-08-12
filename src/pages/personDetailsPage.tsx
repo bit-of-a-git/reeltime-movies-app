@@ -44,7 +44,7 @@ const PersonDetailsPage = () => {
               <Grid item xs={8.5}>
                 <Paper elevation={5}>
                   <Box padding={"20px"}>
-                    <Typography variant="h4" paddingBottom="20px">
+                    <Typography variant="h4" gutterBottom>
                       Biography
                     </Typography>
                     <Typography

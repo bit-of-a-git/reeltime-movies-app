@@ -19,6 +19,7 @@ import CameraIndoorOutlinedIcon from "@mui/icons-material/CameraIndoorOutlined";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "@mui/material/Modal";
+import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 
 const styles = {
   chipSet: {
@@ -31,7 +32,7 @@ const styles = {
     margin: 0,
   },
   chipLabel: {
-    margin: 0.5,
+    marginRight: 0.5,
   },
   fab: {
     position: "fixed",
@@ -95,12 +96,10 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h5" gutterBottom>
         Overview
       </Typography>
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
+      <Typography>{movie.overview}</Typography>
       <Box component="ul" sx={styles.chipSet}>
         <li>
           <Chip label="Genres" sx={styles.chipLabel} color="primary" />
@@ -126,7 +125,10 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
           label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
         />
         {movie.release_date && (
-          <Chip label={`Released: ${movie.release_date}`} />
+          <Chip
+            icon={<CalendarIcon fontSize="small" />}
+            label={`${movie.release_date}`}
+          />
         )}
       </Box>
       {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}

@@ -22,6 +22,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import TvIcon from "@mui/icons-material/Tv";
 import CreateIcon from "@mui/icons-material/Create";
+import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 
 const styles = {
   chipSet: {
@@ -34,7 +35,7 @@ const styles = {
     margin: 0,
   },
   chipLabel: {
-    margin: 0.5,
+    marginRight: 0.5,
   },
   fab: {
     position: "fixed",
@@ -139,8 +140,11 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
           icon={<StarRate />}
           label={`${tvShow.vote_average}/10 (${tvShow.vote_count} ratings)`}
         />
-        {tvShow.release_date && (
-          <Chip label={`Released: ${tvShow.release_date}`} />
+        {tvShow.first_air_date && (
+          <Chip
+            icon={<CalendarIcon fontSize="small" />}
+            label={`${tvShow.first_air_date}`}
+          />
         )}
       </Box>
       <Box sx={styles.chipSet}>

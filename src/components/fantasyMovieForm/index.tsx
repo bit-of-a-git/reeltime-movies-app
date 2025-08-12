@@ -55,9 +55,6 @@ const FantasyMovieForm: React.FC = () => {
   }
 
   const genres = data?.genres || [];
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
-  }
 
   const handleSnackClose = () => {
     setOpen(false);
@@ -70,7 +67,7 @@ const FantasyMovieForm: React.FC = () => {
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+      <Typography component="h4" variant="h4">
         Create a Fantasy Movie
       </Typography>
       <Snackbar
@@ -177,6 +174,8 @@ const FantasyMovieForm: React.FC = () => {
           rules={{ required: "Release date is required" }}
           render={({ field }) => (
             <DatePicker
+              // https://stackoverflow.com/questions/64882223/im-having-trouble-with-react-datepicker-position
+              portalId="datepicker"
               placeholderText="Select date"
               onChange={(date) => field.onChange(date)}
               selected={field.value}
@@ -193,7 +192,10 @@ const FantasyMovieForm: React.FC = () => {
           <Controller
             name="runtime"
             control={control}
-            rules={{ required: "Runtime is required" }}
+            rules={{
+              required: "Runtime is required",
+              min: { value: 1, message: "Movie must have a runtime" },
+            }}
             defaultValue={0}
             render={({ field: { onChange, value } }) => (
               <TextField
@@ -204,7 +206,12 @@ const FantasyMovieForm: React.FC = () => {
                 margin="normal"
                 required
                 onChange={onChange}
-                label="Movie runtime"
+                label="Movie runtime (minutes)"
+                InputProps={{
+                  inputProps: {
+                    min: 0,
+                  },
+                }}
               />
             )}
           />
