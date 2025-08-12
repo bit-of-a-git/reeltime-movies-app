@@ -58,7 +58,6 @@ const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
               : img
           }
           alt={`${person.name} profile image`}
-          loading="lazy"
         />
       </Link>
       <CardActions disableSpacing>
