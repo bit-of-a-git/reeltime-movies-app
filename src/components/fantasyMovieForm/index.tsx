@@ -26,8 +26,8 @@ const FantasyMovieForm: React.FC = () => {
       title: "",
       overview: "",
       genres: [],
-      releaseDate: null,
-      runtime: null,
+      releaseDate: undefined,
+      runtime: 0,
       productionCompanies: [],
     },
   };
@@ -63,6 +63,14 @@ const FantasyMovieForm: React.FC = () => {
   const onSubmit: SubmitHandler<FantasyMovieProps> = (movie) => {
     context.addFantasyMovie(movie);
     setOpen(true);
+    reset({
+      title: "",
+      overview: "",
+      genres: [],
+      releaseDate: undefined,
+      runtime: 0,
+      productionCompanies: [],
+    });
   };
 
   return (
@@ -196,7 +204,6 @@ const FantasyMovieForm: React.FC = () => {
               required: "Runtime is required",
               min: { value: 1, message: "Movie must have a runtime" },
             }}
-            defaultValue={0}
             render={({ field: { onChange, value } }) => (
               <TextField
                 id="runtime"
@@ -265,20 +272,6 @@ const FantasyMovieForm: React.FC = () => {
             sx={styles.submit}
           >
             Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            sx={styles.submit}
-            onClick={() => {
-              reset({
-                title: "",
-                overview: "",
-              });
-            }}
-          >
-            Reset
           </Button>
         </Box>
       </form>
