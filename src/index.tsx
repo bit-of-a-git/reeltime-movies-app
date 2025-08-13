@@ -18,6 +18,7 @@ import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
 import FavouritePeoplePage from "./pages/favouritePeoplePage";
 import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
+import UserMovieReviewPage from "./pages/userMovieReviewPage";
 import Spinner from "./components/spinner";
 import TvShowPage from "./pages/tvShowDetailsPage";
 
@@ -127,6 +128,14 @@ const App = () => {
                     element={
                       <ProtectedRoute>
                         <MustWatchPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/my-movie-reviews"
+                    element={
+                      <ProtectedRoute>
+                        <UserMovieReviewPage />
                       </ProtectedRoute>
                     }
                   />

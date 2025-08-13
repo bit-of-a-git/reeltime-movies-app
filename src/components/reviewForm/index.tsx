@@ -16,9 +16,8 @@ import Alert from "@mui/material/Alert";
 const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   const defaultValues = {
     defaultValues: {
-      author: "",
-      review: "",
-      agree: false,
+      title: "",
+      content: "",
       rating: 3,
       movieId: 0,
     },
@@ -50,11 +49,15 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
     review.rating = rating;
     context.addReview(movie, review);
     setOpen(true);
+    reset({
+      title: "",
+      content: "",
+    });
   };
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+      <Typography component="h4" variant="h4">
         Write a review
       </Typography>
       <Snackbar
@@ -71,9 +74,9 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
       </Snackbar>
       <form style={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
         <Controller
-          name="author"
+          name="title"
           control={control}
-          rules={{ required: "Name is required" }}
+          rules={{ required: "Title is required" }}
           defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
@@ -83,15 +86,15 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
               required
               onChange={onChange}
               value={value}
-              id="author"
-              label="Author's name"
+              id="title"
+              label="Review Title"
               autoFocus
             />
           )}
         />
-        {errors.author && (
+        {errors.title && (
           <Typography variant="h6" component="p">
-            {errors.author.message}
+            {errors.title.message}
           </Typography>
         )}
         <Controller
@@ -154,20 +157,6 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
             sx={styles.submit}
           >
             Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            sx={styles.submit}
-            onClick={() => {
-              reset({
-                author: "",
-                content: "",
-              });
-            }}
-          >
-            Reset
           </Button>
         </Box>
       </form>
