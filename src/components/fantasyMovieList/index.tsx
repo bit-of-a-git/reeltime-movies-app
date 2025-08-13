@@ -30,7 +30,7 @@ const FantasyMovieList: React.FC = () => {
           <Box
             key={index}
             mb={2}
-            sx={{ border: 1, borderColor: "primary.info" }}
+            sx={{ border: 1, borderColor: "primary.info", borderRadius: "4px" }}
           >
             <Card>
               <CardContent>
@@ -64,8 +64,8 @@ const FantasyMovieList: React.FC = () => {
                     />
                   </li>
                   {movie.genres.map((genre) => (
-                    <li>
-                      <Chip key={genre} label={genre} />
+                    <li key={`li-${genre}`}>
+                      <Chip key={`chip-${genre}`} label={genre} />
                     </li>
                   ))}
                 </Box>
@@ -78,8 +78,8 @@ const FantasyMovieList: React.FC = () => {
                     />
                   </li>
                   {movie.productionCompanies.map((company) => (
-                    <li>
-                      <Chip key={company} label={company} />
+                    <li key={`li-${company}`}>
+                      <Chip key={`chip-${company}`} label={company} />
                     </li>
                   ))}
                 </Box>
