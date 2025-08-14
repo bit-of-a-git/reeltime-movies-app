@@ -47,7 +47,9 @@ const yearFromFiltering = {
 };
 
 const FavouriteMoviesPage: React.FC = () => {
-  const { favourites: movieIds } = useContext(MoviesContext);
+  const { favourites: movieIds, userReviews } = useContext(MoviesContext);
+  const movieReviewIds = userReviews.map((review) => review.movieId);
+
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
@@ -124,10 +126,11 @@ const FavouriteMoviesPage: React.FC = () => {
           movies={sortedMovies}
           showFooterActions={true}
           action={(movie) => {
+            const isReviewed = movieReviewIds.includes(movie.id);
             return (
               <>
                 <RemoveFromFavourites {...movie} />
-                <WriteReview {...movie} />
+                {!isReviewed && <WriteReview {...movie} />}
               </>
             );
           }}

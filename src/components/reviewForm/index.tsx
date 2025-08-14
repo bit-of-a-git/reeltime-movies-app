@@ -1,4 +1,4 @@
-import React, { useContext, useState, ChangeEvent } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,6 +12,7 @@ import ratings from "./ratingCategories";
 import { BaseMovieProps, Review } from "../../types/interfaces";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { FormControl, InputLabel, Select } from "@mui/material";
 
 const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   const defaultValues = {
@@ -32,12 +33,7 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
 
   const navigate = useNavigate();
   const context = useContext(MoviesContext);
-  const [rating, setRating] = useState(3);
   const [open, setOpen] = useState(false);
-
-  const handleRatingChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(event.target.value));
-  };
 
   const handleSnackClose = () => {
     setOpen(false);
@@ -46,9 +42,6 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
 
   const onSubmit: SubmitHandler<Review> = (review) => {
     review.movieId = movie.id;
-    review.movieTitle = movie.title;
-    review.rating = rating;
-    review.image = movie.poster_path ?? "/no-image/available.jpg";
     context.addReview(movie, review);
     setOpen(true);
     reset({
@@ -128,28 +121,31 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
           </Typography>
         )}
 
-        <Controller
-          control={control}
-          name="rating"
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="select-rating"
-              select
-              variant="outlined"
-              label="Rating Select"
-              value={rating}
-              onChange={handleRatingChange}
-              helperText="Don't forget your rating"
-            >
-              {ratings.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="rating-label">Rating</InputLabel>
+          <Controller
+            control={control}
+            name="rating"
+            rules={{ required: "Rating is required" }}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                id="rating-select"
+                value={value}
+                label="Rating Label Select"
+                labelId="rating-label"
+                onChange={onChange}
+              >
+                {ratings.map((option) => {
+                  return (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          />
+        </FormControl>
 
         <Box>
           <Button
