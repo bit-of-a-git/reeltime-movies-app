@@ -46,7 +46,9 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
 
   const onSubmit: SubmitHandler<Review> = (review) => {
     review.movieId = movie.id;
+    review.movieTitle = movie.title;
     review.rating = rating;
+    review.image = movie.poster_path ?? "/no-image/available.jpg";
     context.addReview(movie, review);
     setOpen(true);
     reset({

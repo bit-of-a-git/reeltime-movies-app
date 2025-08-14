@@ -15,6 +15,7 @@ const PeopleListPageTemplate: React.FC<PeopleListPageTemplateProps> = ({
   title,
   action,
   changePage,
+  showFooterActions = false,
 }) => {
   return (
     <Grid container sx={styles.root}>
@@ -22,7 +23,11 @@ const PeopleListPageTemplate: React.FC<PeopleListPageTemplateProps> = ({
         <Header title={title} changePage={changePage} />
       </Grid>
       <Grid item container spacing={5}>
-        <CastList action={action} people={people}></CastList>
+        <CastList
+          action={action}
+          people={people}
+          showFooterActions={showFooterActions}
+        ></CastList>
       </Grid>
     </Grid>
   );

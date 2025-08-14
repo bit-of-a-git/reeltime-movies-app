@@ -44,6 +44,7 @@ const FavouritePeoplePage: React.FC = () => {
         <PageTemplate
           title="Favourite Cast/Crew"
           people={allFavourites}
+          showFooterActions={true}
           action={(person) => {
             return (
               <>
