@@ -6,6 +6,7 @@ import { TvShowDetailsProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TvShowContext } from "../../contexts/tvShowContext";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -40,15 +41,15 @@ const TvShowHeader: React.FC<TvShowDetailsProps> = (tvShow) => {
         </Typography>
       )}
       {tvShow.homepage && (
-        <a
-          href={tvShow.homepage}
+        <Link
+          to={tvShow.homepage}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Open ${tvShow.name} homepage`}
           title={`Open ${tvShow.name} homepage`}
         >
           <HomeIcon color="primary" fontSize="large" />
-        </a>
+        </Link>
       )}
     </Paper>
   );

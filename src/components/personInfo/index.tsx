@@ -5,6 +5,7 @@ import { PeopleContext } from "../../contexts/peopleContext";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Person } from "../../types/interfaces";
+import { Link } from "react-router-dom";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -91,9 +92,15 @@ export default function PersonalInfo({ person }: { person: Person }) {
           </Typography>
           <Typography variant="body1">
             {/* https://stackoverflow.com/questions/50709625/link-with-target-blank-and-rel-noopener-noreferrer-still-vulnerable */}
-            <a href={person.homepage} target="_blank" rel="noopener noreferrer">
+            <Link
+              to={person.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${person.name}'s homepage`}
+              title={`Open ${person.name}'s homepage`}
+            >
               {person.homepage}
-            </a>
+            </Link>
           </Typography>
         </>
       )}
