@@ -5,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { Person } from "../../types/interfaces";
 import { Link } from "react-router-dom";
@@ -20,12 +19,17 @@ const styles = {
   },
 };
 
-interface ActorCardProps {
+interface PersonCardProps {
   person: Person;
   action: (a: Person) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
-const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
+const PersonCard: React.FC<PersonCardProps> = ({
+  person,
+  action,
+  showFooterActions,
+}) => {
   const { favourites } = useContext(PeopleContext);
   const isFavourite = favourites.includes(person.id);
 
@@ -60,20 +64,20 @@ const ActorCard: React.FC<ActorCardProps> = ({ person, action }) => {
           alt={`${person.name} profile image`}
         />
       </Link>
-      <CardActions disableSpacing>
-        <Grid container alignItems="center">
-          <Grid item xs={6}>
-            {action(person)}
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
-          ></Grid>
-        </Grid>
-      </CardActions>
+      {showFooterActions && (
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            px: "8px",
+            pt: "0px",
+            pb: "4px",
+          }}
+        >
+          {action(person)}
+        </CardActions>
+      )}
     </Card>
   );
 };
 
-export default ActorCard;
+export default PersonCard;

@@ -14,6 +14,7 @@ import { BaseTvShowProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { TvShowContext } from "../../contexts/tvShowContext";
+import { CardActions } from "@mui/material";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -26,9 +27,14 @@ const styles = {
 interface TvShowCardProps {
   tvShow: BaseTvShowProps;
   action: (t: BaseTvShowProps) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
-const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
+const TvShowCard: React.FC<TvShowCardProps> = ({
+  tvShow,
+  action,
+  showFooterActions,
+}) => {
   const { favourites, mustWatch } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
   const isMustWatch = mustWatch.includes(tvShow.id);
@@ -93,6 +99,18 @@ const TvShowCard: React.FC<TvShowCardProps> = ({ tvShow, action }) => {
           </Grid>
         </Grid>
       </CardContent>
+      {showFooterActions && (
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            px: "8px",
+            pt: "0px",
+            pb: "4px",
+          }}
+        >
+          {action(tvShow)}
+        </CardActions>
+      )}
     </Card>
   );
 };

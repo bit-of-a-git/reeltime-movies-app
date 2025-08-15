@@ -77,7 +77,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
+              <CalendarIcon fontSize="inherit" />
               {movie.release_date}
             </Typography>
           </Grid>
@@ -87,7 +87,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
             <Typography variant="h6" component="p">
-              {movie.vote_average} <StarRateIcon fontSize="small" />
+              <StarRateIcon fontSize="inherit" />
             </Typography>
           </Grid>
         </Grid>

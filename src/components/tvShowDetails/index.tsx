@@ -98,12 +98,10 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h5" component="h5" gutterBottom>
         Overview
       </Typography>
-      <Typography variant="h6" component="p">
-        {tvShow.overview}
-      </Typography>
+      <Typography>{tvShow.overview}</Typography>
       <Box component="ul" sx={styles.chipSet}>
         <li>
           <Chip label="Genres" sx={styles.chipLabel} color="primary" />
@@ -204,53 +202,55 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
         <TvShowReviews {...tvShow} />
       </Drawer>
       <>
-        <Accordion
-          disableGutters
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
-          elevation={0}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls="cast-content"
-            id="cast-header"
+        {tvShow.credits.cast.length > 0 && (
+          <Accordion
+            disableGutters
+            expanded={expanded === "panel1"}
+            onChange={handleChange("panel1")}
+            elevation={0}
           >
-            <TheaterComedyOutlinedIcon />
-            <Typography variant="h5">Cast</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={styles.genericBox}>
-              {tvShow.credits.cast.map((actor) => (
-                <Link key={actor.id} to={`/person/${actor.id}`}>
-                  <Card sx={{ ...styles.genericCard, width: 200 }}>
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={styles.cardTitle}
-                    >
-                      {actor.name}
-                    </Typography>
-                    <CardMedia
-                      component="img"
-                      image={
-                        actor.profile_path
-                          ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                          : "/no-image-available.jpg"
-                      }
-                      alt={actor.name}
-                      style={styles.creditsImage}
-                    />
-                    <CardContent>
-                      <Typography variant="body2" style={styles.cardSubtitle}>
-                        {actor.character}
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="cast-content"
+              id="cast-header"
+            >
+              <TheaterComedyOutlinedIcon />
+              <Typography variant="h5">Cast</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={styles.genericBox}>
+                {tvShow.credits.cast.map((actor) => (
+                  <Link key={actor.id} to={`/person/${actor.id}`}>
+                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={styles.cardTitle}
+                      >
+                        {actor.name}
                       </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
+                      <CardMedia
+                        component="img"
+                        image={
+                          actor.profile_path
+                            ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                            : "/no-image-available.jpg"
+                        }
+                        alt={actor.name}
+                        style={styles.creditsImage}
+                      />
+                      <CardContent>
+                        <Typography variant="body2" style={styles.cardSubtitle}>
+                          {actor.character}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
         {tvShow.created_by.length > 0 && (
           <Accordion
             disableGutters

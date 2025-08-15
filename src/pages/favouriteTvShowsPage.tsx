@@ -13,7 +13,6 @@ import TvShowFilterUI, {
   yearFromFilter,
 } from "../components/tvShowFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesTvShow";
-import WriteReview from "../components/cardIcons/writeReviewTvShow";
 import { Typography, Box } from "@mui/material";
 
 const titleFiltering = {
@@ -122,11 +121,11 @@ const FavouriteTvShowsPage: React.FC = () => {
         <PageTemplate
           title="Favourite TV Shows"
           tvShows={sortedTvShows}
+          showFooterActions={true}
           action={(tvShow) => {
             return (
               <>
                 <RemoveFromFavourites {...tvShow} />
-                <WriteReview {...tvShow} />
               </>
             );
           }}

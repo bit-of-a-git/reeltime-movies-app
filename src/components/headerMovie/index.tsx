@@ -6,6 +6,7 @@ import { MovieDetailsProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -40,15 +41,15 @@ const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
         </Typography>
       )}
       {movie.homepage && (
-        <a
-          href={movie.homepage}
+        <Link
+          to={movie.homepage}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Open ${movie.title} homepage`}
           title={`Open ${movie.title} homepage`}
         >
           <HomeIcon color="primary" fontSize="large" />
-        </a>
+        </Link>
       )}
     </Paper>
   );

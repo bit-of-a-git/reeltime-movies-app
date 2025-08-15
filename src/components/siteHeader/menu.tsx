@@ -13,6 +13,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 
 // To implement this menu drawer, I referenced and took code from https://github.com/ki321g/MovieAPP
 // modifying it to suit my app and desired functionality
@@ -85,6 +86,11 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
             label: "Must Watch",
             icon: <PlaylistAddIcon />,
             path: "/my-must-watch-movies",
+          },
+          {
+            label: "My Movie Reviews",
+            icon: <RateReviewIcon />,
+            path: "/my-movie-reviews",
           },
         ]
       : []),
