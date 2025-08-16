@@ -1,13 +1,14 @@
 import React from "react";
-import { auth } from "../../config/firebase";
+import { useAuth } from "../../contexts/authContext";
 import { Navigate } from "react-router-dom";
+import Spinner from "../spinner";
 
 const ProtectedRoute: React.FC<React.PropsWithChildren> = ({ children }) => {
-  if (auth.currentUser) {
-    return children;
-  }
+  const { currentUser, loading } = useAuth();
 
-  return <Navigate to="/login" />;
+  if (loading) return <Spinner />;
+
+  return currentUser ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

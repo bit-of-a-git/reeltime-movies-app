@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import img from "../../images/no-image-available.jpg";
 
 const styles = {
   chipSet: {
@@ -108,7 +109,7 @@ export default function PersonCredits({ person }) {
                             image={
                               credit.poster_path
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
-                                : "/no-image-available.jpg"
+                                : img
                             }
                             alt={credit.title}
                             sx={styles.similarMovieImage}
@@ -155,7 +156,7 @@ export default function PersonCredits({ person }) {
                             image={
                               credit.poster_path
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
-                                : "/no-image-available.jpg"
+                                : img
                             }
                             alt={credit.title}
                             sx={styles.similarMovieImage}
@@ -214,7 +215,7 @@ export default function PersonCredits({ person }) {
                             image={
                               credit.poster_path
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
-                                : "/no-image-available.jpg"
+                                : img
                             }
                             alt={credit.name}
                             sx={styles.similarMovieImage}
@@ -261,7 +262,7 @@ export default function PersonCredits({ person }) {
                             image={
                               credit.poster_path
                                 ? `https://image.tmdb.org/t/p/w200${credit.poster_path}`
-                                : "/no-image-available.jpg"
+                                : img
                             }
                             alt={credit.name}
                             sx={styles.similarMovieImage}

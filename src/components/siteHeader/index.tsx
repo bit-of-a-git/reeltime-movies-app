@@ -1,18 +1,21 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth } from "../../config/firebase";
+import { useAuth } from "../../contexts/authContext";
 import MovieIcon from "@mui/icons-material/Movie";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import SiteMenu from "./menu";
+import { yellow, teal } from "@mui/material/colors";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const styles = {
   title: {
@@ -20,26 +23,61 @@ const styles = {
   },
 };
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: teal[200],
+      dark: teal[300],
+    },
+    secondary: {
+      main: yellow[500],
+      dark: yellow[700],
+    },
+  },
+});
+
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 250;
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { currentUser, logout } = useAuth();
 
-  const authOptions = [
-    ...(auth.currentUser
-      ? [{ label: "Log Out", path: "/logout" }]
-      : [{ label: "Log In", path: "/login" }]),
-  ];
+  const authOptions = currentUser
+    ? [
+        {
+          label: "Log Out",
+          path: "/logout",
+          color: "secondary" as const,
+          icon: LogoutIcon,
+        },
+      ]
+    : [
+        {
+          label: "Log In",
+          path: "/login",
+          color: "primary" as const,
+          icon: LoginIcon,
+        },
+      ];
 
   const toggleDrawer = () => {
     setDrawerOpen((prev) => !prev);
   };
 
-  const handleMenuSelect = (pageURL: string) => {
-    navigate(pageURL);
-    setDrawerOpen(false);
+  const handleMenuSelect = async (pageURL: string) => {
+    if (pageURL === "/logout") {
+      try {
+        await logout();
+        navigate("/");
+      } catch (error) {
+        console.error("Error logging out");
+      }
+    } else {
+      navigate(pageURL);
+      setDrawerOpen(false);
+    }
   };
 
   return (
@@ -71,15 +109,19 @@ const SiteHeader: React.FC = () => {
               <MovieIcon fontSize="large" sx={{ ml: 1 }} />
             </Box>
           </Typography>
-          {authOptions.map((opt) => (
-            <Button
-              key={opt.label}
-              color="inherit"
-              onClick={() => handleMenuSelect(opt.path)}
-            >
-              {opt.label}
-            </Button>
-          ))}
+          <ThemeProvider theme={theme}>
+            {authOptions.map((opt) => (
+              <Button
+                key={opt.label}
+                color={opt.color}
+                variant="contained"
+                onClick={() => handleMenuSelect(opt.path)}
+                endIcon={<opt.icon />}
+              >
+                {opt.label}
+              </Button>
+            ))}
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
       <Offset />

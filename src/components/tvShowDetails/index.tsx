@@ -23,6 +23,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import TvIcon from "@mui/icons-material/Tv";
 import CreateIcon from "@mui/icons-material/Create";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
+import img from "../../images/no-image-available.jpg";
 
 const styles = {
   chipSet: {
@@ -234,7 +235,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         image={
                           actor.profile_path
                             ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={actor.name}
                         style={styles.creditsImage}
@@ -283,7 +284,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         image={
                           creator.profile_path
                             ? `https://image.tmdb.org/t/p/w200${creator.profile_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={creator.name}
                         style={styles.creditsImage}
@@ -335,7 +336,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         image={
                           crewMember.profile_path
                             ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={crewMember.name}
                         style={styles.creditsImage}
@@ -385,7 +386,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         image={
                           tvShow.poster_path
                             ? `https://image.tmdb.org/t/p/w200${tvShow.poster_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={tvShow.name}
                         sx={styles.similarTvShowImage}

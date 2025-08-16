@@ -35,6 +35,7 @@ export interface Credits {
 export interface BasePeopleListProps {
   people: Person[];
   action: (m: Person) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
 export interface PeopleListPageTemplateProps extends BasePeopleListProps {
@@ -93,6 +94,7 @@ export interface Video {
 export interface BaseMovieListProps {
   movies: BaseMovieProps[];
   action: (m: BaseMovieProps) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
 export interface Image {
@@ -120,6 +122,7 @@ export type FilterOption =
 export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
   changePage?: (delta: number) => void;
+  showFooterActions?: boolean;
 }
 
 export interface Genre {
@@ -253,6 +256,7 @@ export interface TvShowDetailsProps extends BaseTvShowProps {
 export interface BaseTvShowListProps {
   tvShows: BaseTvShowProps[];
   action: (t: BaseTvShowProps) => React.ReactNode;
+  showFooterActions?: boolean;
 }
 
 export interface TvShowListPageTemplateProps extends BaseTvShowListProps {
