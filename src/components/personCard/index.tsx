@@ -12,8 +12,6 @@ import Avatar from "@mui/material/Avatar";
 import { PeopleContext } from "../../contexts/peopleContext";
 
 const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -34,7 +32,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
   const isFavourite = favourites.includes(person.id);
 
   return (
-    <Card sx={styles.card}>
+    <Card>
       <CardHeader
         avatar={
           isFavourite ? (
@@ -48,6 +46,11 @@ const PersonCard: React.FC<PersonCardProps> = ({
             {person.name}
           </Typography>
         }
+        sx={{
+          "& .MuiCardHeader-avatar": {
+            marginRight: 0,
+          },
+        }}
       />
       <Link
         to={`/person/${person.id}`}
@@ -55,7 +58,6 @@ const PersonCard: React.FC<PersonCardProps> = ({
       >
         <CardMedia
           component="img"
-          sx={styles.media}
           image={
             person.profile_path
               ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`

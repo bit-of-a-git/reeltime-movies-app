@@ -17,8 +17,7 @@ import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
 
 const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
+  media: { height: 450, objectFit: "contain" },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -65,7 +64,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   };
 
   return (
-    <Card sx={styles.card}>
+    <Card>
       <CardHeader
         avatar={renderAvatar()}
         title={
@@ -73,6 +72,11 @@ const MovieCard: React.FC<MovieCardProps> = ({
             {movie.title}
           </Typography>
         }
+        sx={{
+          "& .MuiCardHeader-avatar": {
+            marginRight: 0,
+          },
+        }}
       />
       <Link to={`/movies/${movie.id}`}>
         <CardMedia
@@ -101,7 +105,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
           >
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="inherit" />
-              {Math.round(movie.vote_average)}/10
+              {Math.round(movie.vote_average * 10) / 10}/10
             </Typography>
           </Grid>
         </Grid>

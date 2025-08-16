@@ -72,7 +72,6 @@ const styles = {
   cardTitle: {
     marginBottom: "5px",
   },
-  cardSubtitle: {},
 };
 
 interface MovieDetailsComponentProps {
@@ -123,7 +122,9 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         )}
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average}/10 (${movie.vote_count} ratings)`}
+          label={`${Math.round(movie.vote_average * 10) / 10}/10 (${
+            movie.vote_count
+          } ratings)`}
         />
         {movie.release_date && (
           <Chip
@@ -228,8 +229,8 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         style={styles.creditsImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {actor.character}
+                        <Typography variant="body2">
+                          {actor.character || "Unknown"}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -280,8 +281,8 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         style={styles.creditsImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {crewMember.job}
+                        <Typography variant="body2">
+                          {crewMember.job || "Unknown"}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -332,8 +333,15 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         sx={styles.similarMovieImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {movie.vote_average}
+                        <Typography variant="body2">
+                          {movie.vote_average > 0 ? (
+                            <>
+                              <StarRate fontSize="inherit" />
+                              {Math.round(movie.vote_average * 10) / 10}/10
+                            </>
+                          ) : (
+                            "N/A"
+                          )}
                         </Typography>
                       </CardContent>
                     </Card>

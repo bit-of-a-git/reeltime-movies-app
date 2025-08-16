@@ -18,8 +18,7 @@ import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
 
 const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
+  media: { height: 450, objectFit: "contain" },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -66,7 +65,7 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
   };
 
   return (
-    <Card sx={styles.card}>
+    <Card>
       <CardHeader
         avatar={renderAvatar()}
         title={
@@ -74,6 +73,11 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
             {tvShow.name}
           </Typography>
         }
+        sx={{
+          "& .MuiCardHeader-avatar": {
+            marginRight: 0,
+          },
+        }}
       />
       <Link to={`/tv/${tvShow.id}`}>
         <CardMedia
@@ -104,7 +108,7 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
               {tvShow.vote_average > 0 ? (
                 <>
                   <StarRateIcon fontSize="inherit" />
-                  {tvShow.vote_average}
+                  {Math.round(tvShow.vote_average * 10) / 10}/10
                 </>
               ) : (
                 "N/A"
