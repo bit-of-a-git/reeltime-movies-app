@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import PersonProfileImage from "../components/personProfileImage";
 import PersonInfo from "../components/personInfo";
 import PersonCredits from "../components/personCredits";
 import { getPerson } from "../api/tmdb-api";
@@ -34,12 +33,7 @@ const PersonDetailsPage = () => {
           <Container maxWidth="lg" sx={{ marginTop: "20px" }}>
             <Grid container spacing={2}>
               <Grid item xs={3.5}>
-                <Paper elevation={5}>
-                  <Box padding={"20px"}>
-                    <PersonProfileImage person={person} borderRadius={"20px"} />
-                    <PersonInfo person={person} />
-                  </Box>
-                </Paper>
+                <PersonInfo person={person} />
               </Grid>
               <Grid item xs={8.5}>
                 <Paper elevation={5}>
