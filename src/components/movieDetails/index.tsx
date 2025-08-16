@@ -20,6 +20,7 @@ import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "@mui/material/Modal";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
+import img from "../../images/no-image-available.jpg";
 
 const styles = {
   chipSet: {
@@ -221,7 +222,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         image={
                           actor.profile_path
                             ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={actor.name}
                         style={styles.creditsImage}
@@ -273,7 +274,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         image={
                           crewMember.profile_path
                             ? `https://image.tmdb.org/t/p/w200${crewMember.profile_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={crewMember.name}
                         style={styles.creditsImage}
@@ -325,7 +326,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                         image={
                           movie.poster_path
                             ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                            : "/no-image-available.jpg"
+                            : img
                         }
                         alt={movie.title}
                         sx={styles.similarMovieImage}

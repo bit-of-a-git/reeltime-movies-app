@@ -80,17 +80,17 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
           {
             label: "Fantasy Movies",
             icon: <AutoAwesomeIcon />,
-            path: "/my-fantasy-movies",
+            path: "/movies/fantasy-movie-maker",
           },
           {
             label: "Must Watch",
             icon: <PlaylistAddIcon />,
-            path: "/my-must-watch-movies",
+            path: "/movies/my-must-watch",
           },
           {
             label: "My Movie Reviews",
             icon: <RateReviewIcon />,
-            path: "/my-movie-reviews",
+            path: "/movies/my-reviews",
           },
         ]
       : []),

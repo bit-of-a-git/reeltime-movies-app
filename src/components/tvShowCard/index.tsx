@@ -14,6 +14,7 @@ import { BaseTvShowProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { TvShowContext } from "../../contexts/tvShowContext";
+import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
 
 const styles = {
@@ -38,23 +39,36 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
   const { favourites, mustWatch } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
   const isMustWatch = mustWatch.includes(tvShow.id);
+  const { currentUser } = useAuth();
+
+  const renderAvatar = () => {
+    if (!currentUser) {
+      return null;
+    }
+
+    if (isFavourite) {
+      return (
+        <Avatar sx={styles.avatar} aria-label="Favourite TV show">
+          <FavoriteIcon />
+        </Avatar>
+      );
+    }
+
+    if (isMustWatch) {
+      return (
+        <Avatar sx={styles.avatar} aria-label="Must-watch TV show">
+          <AddToQueueIcon />
+        </Avatar>
+      );
+    }
+
+    return <Avatar sx={{ bgcolor: "transparent" }}>{action(tvShow)}</Avatar>;
+  };
 
   return (
     <Card sx={styles.card}>
       <CardHeader
-        avatar={
-          isFavourite ? (
-            <Avatar sx={styles.avatar} aria-label="Favourite TV show">
-              <FavoriteIcon />
-            </Avatar>
-          ) : isMustWatch ? (
-            <Avatar sx={styles.avatar} aria-label="Must-watch TV show">
-              <AddToQueueIcon />
-            </Avatar>
-          ) : (
-            <Avatar sx={{ bgcolor: "transparent" }}>{action(tvShow)}</Avatar>
-          )
-        }
+        avatar={renderAvatar()}
         title={
           <Typography variant="h5" component="p" align="center">
             {tvShow.name}

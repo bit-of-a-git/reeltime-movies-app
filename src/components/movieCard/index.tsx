@@ -7,13 +7,13 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseMovieProps } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
 
 const styles = {
@@ -38,23 +38,36 @@ const MovieCard: React.FC<MovieCardProps> = ({
   const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.includes(movie.id);
   const isMustWatch = mustWatch.includes(movie.id);
+  const { currentUser } = useAuth();
+
+  const renderAvatar = () => {
+    if (!currentUser) {
+      return null;
+    }
+
+    if (isFavourite) {
+      return (
+        <Avatar sx={styles.avatar} aria-label="Favourite movie">
+          <FavoriteIcon />
+        </Avatar>
+      );
+    }
+
+    if (isMustWatch) {
+      return (
+        <Avatar sx={styles.avatar} aria-label="Favourite movie">
+          <FavoriteIcon />
+        </Avatar>
+      );
+    }
+
+    return <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>;
+  };
 
   return (
     <Card sx={styles.card}>
       <CardHeader
-        avatar={
-          isFavourite ? (
-            <Avatar sx={styles.avatar} aria-label="Favourite movie">
-              <FavoriteIcon />
-            </Avatar>
-          ) : isMustWatch ? (
-            <Avatar sx={styles.avatar} aria-label="Must-watch movie">
-              <AddToQueueIcon />
-            </Avatar>
-          ) : (
-            <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>
-          )
-        }
+        avatar={renderAvatar()}
         title={
           <Typography variant="h5" component="p" align="center">
             {movie.title}
@@ -88,6 +101,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
           >
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="inherit" />
+              {Math.round(movie.vote_average)}/10
             </Typography>
           </Grid>
         </Grid>

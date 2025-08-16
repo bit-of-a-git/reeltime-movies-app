@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
-import { auth, googleProvider } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authContext";
 import {
   Button,
   Typography,
@@ -28,51 +23,38 @@ import GoogleButton from "react-google-button";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, signup, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [action, setAction] = useState<string | null>("login");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const login = async () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigate("/");
-        console.log(user);
-      })
-      .catch((error) => {
-        setErrorMessage("Error logging in. Please try again");
-      });
+  const handleLogin = async () => {
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("Error logging in. Please try again");
+    }
   };
 
-  const signup = async () => {
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        navigate("/");
-        // ...
-      })
-      .catch((error) => {
-        setErrorMessage("Error signing up. Please try again");
-        // ..
-      });
+  const handleSignup = async () => {
+    try {
+      await signup(email, password);
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("Error signing up. Please try again");
+    }
   };
 
-  const loginWithGoogle = async () => {
-    signInWithPopup(auth, googleProvider)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigate("/");
-        console.log(user);
-      })
-      .catch((error) => {
-        setErrorMessage("Error logging in. Please try again");
-      });
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("Error signing up. Please try again");
+    }
   };
 
   const handleActionChange = () => {
@@ -81,7 +63,7 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-    action === "login" ? await login() : await signup();
+    action === "login" ? await handleLogin() : await handleSignup();
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -176,7 +158,7 @@ const Login = () => {
               {action === "login" ? "Sign Up" : "Log In"}
             </Button>
             <GoogleButton
-              onClick={loginWithGoogle}
+              onClick={handleGoogleLogin}
               style={{ marginTop: "1em", width: "100%" }}
             />
           </Stack>
