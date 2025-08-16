@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-const FantasyMovieList: React.FC = () => {
+const FantasyMovieList = () => {
   const { fantasyMovies } = useContext(MoviesContext);
 
   // Code currently taken and slightly modified from https://github.com/eoinfennessy/movies-app/ to get started. Will be significantly changed later

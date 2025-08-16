@@ -74,7 +74,6 @@ const styles = {
   cardTitle: {
     marginBottom: "5px",
   },
-  cardSubtitle: {},
 };
 
 interface TvShowDetailsComponentProps {
@@ -137,7 +136,9 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
         )}
         <Chip
           icon={<StarRate />}
-          label={`${tvShow.vote_average}/10 (${tvShow.vote_count} ratings)`}
+          label={`${Math.round(tvShow.vote_average * 10) / 10}/10 (${
+            tvShow.vote_count
+          } ratings)`}
         />
         {tvShow.first_air_date && (
           <Chip
@@ -241,8 +242,8 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         style={styles.creditsImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {actor.character}
+                        <Typography variant="body2">
+                          {actor.character || "Unknown"}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -288,12 +289,8 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         }
                         alt={creator.name}
                         style={styles.creditsImage}
+                        sx={{ marginBottom: "20px" }}
                       />
-                      <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {creator.character}
-                        </Typography>
-                      </CardContent>
                     </Card>
                   </Link>
                 ))}
@@ -342,8 +339,8 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         style={styles.creditsImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {crewMember.job}
+                        <Typography variant="body2">
+                          {crewMember.job || "Unknown"}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -392,8 +389,15 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                         sx={styles.similarTvShowImage}
                       />
                       <CardContent>
-                        <Typography variant="body2" style={styles.cardSubtitle}>
-                          {tvShow.vote_average}
+                        <Typography variant="body2">
+                          {tvShow.vote_average > 0 ? (
+                            <>
+                              <StarRate fontSize="inherit" />
+                              {Math.round(tvShow.vote_average * 10) / 10}/10
+                            </>
+                          ) : (
+                            "N/A"
+                          )}
                         </Typography>
                       </CardContent>
                     </Card>

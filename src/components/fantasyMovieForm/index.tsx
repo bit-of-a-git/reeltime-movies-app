@@ -20,7 +20,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getGenres } from "../../api/tmdb-api";
 
-const FantasyMovieForm: React.FC = () => {
+const FantasyMovieForm = () => {
   const defaultValues = {
     defaultValues: {
       title: "",

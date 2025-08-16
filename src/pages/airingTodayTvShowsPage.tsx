@@ -1,8 +1,7 @@
-import React from "react";
 import TvShowListPage from "./tvShowListPage";
 import { getAiringTodayTvShows } from "../api/tmdb-api";
 
-const AiringTodayTvShowsPage: React.FC = () => (
+const AiringTodayTvShowsPage = () => (
   <TvShowListPage
     title="TV Shows Airing Today"
     queryKey="airingTodayTvShows"

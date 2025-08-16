@@ -1,4 +1,3 @@
-import React from "react";
 import PageTemplate from "../components/templateMoviePage";
 import ReviewForm from "../components/reviewForm";
 import { useLocation } from "react-router-dom";
@@ -8,7 +7,7 @@ import Spinner from "../components/spinner";
 import { MovieDetailsProps } from "../types/interfaces";
 import { Typography } from "@mui/material";
 
-const WriteReviewPage: React.FC = () => {
+const WriteReviewPage = () => {
   const location = useLocation();
   const { movieId } = location.state;
   const {

@@ -1,9 +1,8 @@
-import React from "react";
 import MovieListPage from "./movieListPage";
 import { getNowPlayingMovies } from "../api/tmdb-api";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";
 
-const NowPlayingMoviesPage: React.FC = () => (
+const NowPlayingMoviesPage = () => (
   <MovieListPage
     title="Now Playing Movies"
     queryKey="nowPlayingMovies"

@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
@@ -8,7 +7,7 @@ import Spinner from "../components/spinner";
 import { MovieDetailsProps } from "../types/interfaces";
 import { Typography } from "@mui/material";
 
-const MovieDetailsPage: React.FC = () => {
+const MovieDetailsPage = () => {
   const { id } = useParams();
   const {
     data: movie,

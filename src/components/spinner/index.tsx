@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-const CircularIndeterminate: React.FC = () => {
+const CircularIndeterminate = () => {
   return (
     <div style={styles.root}>
       <CircularProgress />

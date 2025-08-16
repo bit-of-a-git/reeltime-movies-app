@@ -1,9 +1,8 @@
-import React from "react";
 import MovieListPage from "./movieListPage";
 import { getDiscoverMovies } from "../api/tmdb-api";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";
 
-const DiscoverMoviesPage: React.FC = () => (
+const DiscoverMoviesPage = () => (
   <MovieListPage
     title="Discover Movies"
     queryKey="discoverMovies"

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import {
   Box,
   Card,
@@ -47,7 +47,7 @@ const styles = {
   },
 };
 
-const UserMovieReviewPage: React.FC = () => {
+const UserMovieReviewPage = () => {
   const { userReviews } = useContext(MoviesContext);
   const reviewedMovieIds = userReviews.map((review) => review.movieId);
 

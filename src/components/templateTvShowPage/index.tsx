@@ -1,13 +1,12 @@
 import React from "react";
 import TvShowHeader from "../headerTvShow";
 import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import { getTvShowImages } from "../../api/tmdb-api";
 import { Image, TvShowDetailsProps } from "../../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
-import { Typography } from "@mui/material";
+import { Card, CardMedia, Typography } from "@mui/material";
+import img from "../../images/no-image-available.jpg";
 
 interface TemplateTvShowPageProps {
   tvShow: TvShowDetailsProps;
@@ -42,18 +41,17 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
 
       <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>
-          <div>
-            <ImageList cols={1}>
-              {tvShowImage && (
-                <ImageListItem key={tvShowImage} cols={1}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${tvShowImage}`}
-                    alt={`Poster for ${tvShow.name}`}
-                  />
-                </ImageListItem>
-              )}
-            </ImageList>
-          </div>
+          <Card elevation={5} sx={{ marginTop: "10px", borderRadius: "20px" }}>
+            <CardMedia
+              component="img"
+              image={
+                tvShowImage
+                  ? `https://image.tmdb.org/t/p/w500${tvShowImage}`
+                  : img
+              }
+              alt={`Poster for ${tvShow.name}`}
+            />
+          </Card>
         </Grid>
 
         <Grid item xs={9}>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
@@ -46,7 +46,7 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const FavouriteMoviesPage: React.FC = () => {
+const FavouriteMoviesPage = () => {
   const { favourites: movieIds, userReviews } = useContext(MoviesContext);
   const movieReviewIds = userReviews.map((review) => review.movieId);
 

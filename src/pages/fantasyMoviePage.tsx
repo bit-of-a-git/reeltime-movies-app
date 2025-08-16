@@ -1,9 +1,8 @@
-import React from "react";
 import FantasyMovieList from "../components/fantasyMovieList";
 import FantasyMovieForm from "../components/fantasyMovieForm";
 import { Container, Grid } from "@mui/material";
 
-const FantasyMoviePage: React.FC = () => {
+const FantasyMoviePage = () => {
   return (
     <Container>
       <Grid container spacing={2}>

@@ -39,7 +39,7 @@ const theme = createTheme({
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 250;
 
-const SiteHeader: React.FC = () => {
+const SiteHeader = () => {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { currentUser, logout } = useAuth();
