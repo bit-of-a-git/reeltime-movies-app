@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import PageTemplate from "../components/templatePeopleListPage";
 import { PeopleContext } from "../contexts/peopleContext";
 import { useQueries } from "react-query";
@@ -7,7 +7,7 @@ import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPerson";
 import { Typography, Box } from "@mui/material";
 
-const FavouritePeoplePage: React.FC = () => {
+const FavouritePeoplePage = () => {
   const { favourites: peopleIds } = useContext(PeopleContext);
 
   // Create an array of queries and run them in parallel.

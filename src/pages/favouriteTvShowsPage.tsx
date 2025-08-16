@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import PageTemplate from "../components/templateTvShowListPage";
 import { TvShowContext } from "../contexts/tvShowContext";
 import { useQueries } from "react-query";
@@ -45,7 +45,7 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const FavouriteTvShowsPage: React.FC = () => {
+const FavouriteTvShowsPage = () => {
   const { favourites: tvShowIds } = useContext(TvShowContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,

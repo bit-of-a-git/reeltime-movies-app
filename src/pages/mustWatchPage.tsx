@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
@@ -45,7 +45,7 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const MustWatchPage: React.FC = () => {
+const MustWatchPage = () => {
   const { mustWatch: movieIds } = useContext(MoviesContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,

@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import TvShowDetails from "../components/tvShowDetails";
 import PageTemplate from "../components/templateTvShowPage";
@@ -8,7 +7,7 @@ import Spinner from "../components/spinner";
 import { TvShowDetailsProps } from "../types/interfaces";
 import { Typography } from "@mui/material";
 
-const TvShowDetailsPage: React.FC = () => {
+const TvShowDetailsPage = () => {
   const { id } = useParams();
   const {
     data: tvShow,

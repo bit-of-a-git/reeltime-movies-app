@@ -1,8 +1,7 @@
-import React from "react";
 import TvShowListPage from "./tvShowListPage";
 import { getPopularTvShows } from "../api/tmdb-api";
 
-const PopularTvShowsPage: React.FC = () => (
+const PopularTvShowsPage = () => (
   <TvShowListPage
     title="Popular TV Shows"
     queryKey="popularTvShows"
