@@ -47,8 +47,8 @@ const yearFromFiltering = {
 };
 
 const FavouriteMoviesPage = () => {
-  const { favourites: movieIds, userReviews } = useContext(MoviesContext);
-  const movieReviewIds = userReviews.map((review) => review.movieId);
+  const { favourites: movieIds, reviews } = useContext(MoviesContext);
+  const movieReviewIds = reviews.map((review) => review.movieId);
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
