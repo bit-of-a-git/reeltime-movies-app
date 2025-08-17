@@ -159,7 +159,6 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
     [currentUser]
   );
 
-  // TODO - do you need both of these? The review is likely enough
   const removeReview = useCallback(
     async (review: Review) => {
       if (!currentUser) return;
@@ -167,6 +166,20 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
       setReviews((prevReviews) =>
         prevReviews.filter((r) => r.movieId !== review.movieId)
       );
+
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        const userData = userDoc.data();
+        const updatedReviews = userData?.reviews.filter(
+          (r: Review) => r.movieId !== review.movieId
+        );
+        await updateDoc(userDocRef, {
+          reviews: updatedReviews,
+        });
+      } catch (error) {
+        console.error("Error removing review:", error);
+      }
     },
     [currentUser]
   );

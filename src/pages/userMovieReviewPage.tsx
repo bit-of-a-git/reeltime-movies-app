@@ -7,6 +7,7 @@ import {
   CardMedia,
   CardHeader,
   Chip,
+  CardActions,
 } from "@mui/material";
 import { MoviesContext } from "../contexts/moviesContext";
 import ratings from "../components/reviewForm/ratingCategories";
@@ -17,6 +18,7 @@ import Header from "../components/headerList";
 import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
+import DeleteReviewIcon from "../components/cardIcons/deleteReview";
 
 const styles = {
   root: {
@@ -27,8 +29,6 @@ const styles = {
   },
   poster: {
     borderRadius: "10px",
-    maxWidth: "33%",
-    margin: "0 auto",
   },
   chipSet: {
     display: "flex",
@@ -48,8 +48,8 @@ const styles = {
 };
 
 const UserMovieReviewPage = () => {
-  const { userReviews } = useContext(MoviesContext);
-  const reviewedMovieIds = userReviews.map((review) => review.movieId);
+  const { reviews } = useContext(MoviesContext);
+  const reviewedMovieIds = reviews.map((review) => review.movieId);
 
   // Create an array of queries and run them in parallel.
   const reviewedMovieQueries = useQueries(
@@ -61,7 +61,7 @@ const UserMovieReviewPage = () => {
     })
   );
 
-  const reviewsWithMovieData = userReviews.map((review, index) => {
+  const reviewsWithMovieData = reviews.map((review, index) => {
     const movieData = reviewedMovieQueries[index].data;
     return {
       ...review,
@@ -76,7 +76,7 @@ const UserMovieReviewPage = () => {
 
   return (
     <>
-      {userReviews.length === 0 ? (
+      {reviews.length === 0 ? (
         <Box mt={6} sx={{ textAlign: "center" }}>
           <Typography variant="h4" gutterBottom>
             You haven't written any movie reviews yet.
@@ -91,7 +91,7 @@ const UserMovieReviewPage = () => {
             <Grid item xs={12}>
               <Header title="My Reviews" />
             </Grid>
-            <Grid container spacing={2} xs={12}>
+            <Grid container spacing={2}>
               {[...reviewsWithMovieData].reverse().map((review, index) => (
                 <Grid item xs={12} md={6} key={index}>
                   <Card sx={styles.card}>
@@ -102,14 +102,27 @@ const UserMovieReviewPage = () => {
                         </Typography>
                       }
                     />
-                    <Link to={`/movies/${review.movieId}`}>
-                      <CardMedia
-                        component="img"
-                        image={`https://image.tmdb.org/t/p/w300${review.image}`}
-                        alt={review.movieTitle}
-                        sx={styles.poster}
-                      />
-                    </Link>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Link to={`/movies/${review.movieId}`}>
+                        <CardMedia
+                          component="img"
+                          image={`https://image.tmdb.org/t/p/w300${review.image}`}
+                          alt={review.movieTitle}
+                          sx={{
+                            ...styles.poster,
+                            maxWidth: "200px",
+                            width: "100%",
+                            height: "auto",
+                          }}
+                        />
+                      </Link>
+                    </Box>
                     <Divider sx={styles.divider} />
                     <Typography variant="h5" align="center">
                       {review.title}
@@ -164,6 +177,16 @@ const UserMovieReviewPage = () => {
                         </Typography>
                       </Link>
                     </Box>
+                    <CardActions
+                      sx={{
+                        justifyContent: "space-between",
+                        px: "8px",
+                        pt: "0px",
+                        pb: "4px",
+                      }}
+                    >
+                      <DeleteReviewIcon {...review} />
+                    </CardActions>
                   </Card>
                 </Grid>
               ))}

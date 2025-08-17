@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 const styles = {
   media: { height: 450, objectFit: "contain" },
@@ -55,7 +56,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
     if (isMustWatch) {
       return (
         <Avatar sx={styles.avatar} aria-label="Favourite movie">
-          <FavoriteIcon />
+          <PlaylistAddIcon />
         </Avatar>
       );
     }

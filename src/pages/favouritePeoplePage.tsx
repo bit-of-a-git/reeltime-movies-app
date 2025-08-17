@@ -34,7 +34,7 @@ const FavouritePeoplePage = () => {
       {allFavourites.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
-            You have no favourite actors yet.
+            You have no favourite people yet.
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Why not browse and add to your list?
