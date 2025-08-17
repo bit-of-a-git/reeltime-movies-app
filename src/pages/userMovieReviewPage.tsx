@@ -24,25 +24,13 @@ const styles = {
   root: {
     backgroundColor: "#bfbfbf",
   },
-  card: {
-    borderRadius: "12px",
-  },
   poster: {
     borderRadius: "10px",
-  },
-  chipSet: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
   },
   divider: {
     marginY: "15px",
     border: 0,
-    height: "3px",
+    height: "2px",
     background: "#d4d4d4ff",
   },
 };
@@ -94,7 +82,7 @@ const UserMovieReviewPage = () => {
             <Grid container spacing={2}>
               {[...reviewsWithMovieData].reverse().map((review, index) => (
                 <Grid item xs={12} md={6} key={index}>
-                  <Card sx={styles.card}>
+                  <Card>
                     <CardHeader
                       title={
                         <Typography variant="h4" align="center">
@@ -102,46 +90,39 @@ const UserMovieReviewPage = () => {
                         </Typography>
                       }
                     />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Link to={`/movies/${review.movieId}`}>
-                        <CardMedia
-                          component="img"
-                          image={`https://image.tmdb.org/t/p/w300${review.image}`}
-                          alt={review.movieTitle}
+                    <Grid container spacing={2} sx={{ p: 1.5 }}>
+                      <Grid item xs={12} sm={4}>
+                        <Link to={`/movies/${review.movieId}`}>
+                          <CardMedia
+                            component="img"
+                            image={`https://image.tmdb.org/t/p/w300${review.image}`}
+                            alt={review.movieTitle}
+                            sx={{
+                              ...styles.poster,
+                            }}
+                          />
+                        </Link>
+                      </Grid>
+                      <Grid item xs={12} sm={8}>
+                        <Typography variant="h5" sx={{ pb: 1 }} gutterBottom>
+                          {review.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
                           sx={{
-                            ...styles.poster,
-                            maxWidth: "200px",
-                            width: "100%",
-                            height: "auto",
+                            whiteSpace: "pre-wrap",
                           }}
-                        />
-                      </Link>
-                    </Box>
+                        >
+                          {review.content}
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Divider sx={styles.divider} />
-                    <Typography variant="h5" align="center">
-                      {review.title}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        whiteSpace: "pre-wrap",
-                        m: 2,
-                      }}
-                    >
-                      {review.content}
-                    </Typography>
                     <Box
                       sx={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        mb: 1.5,
                         gap: 2,
                       }}
                     >
@@ -179,10 +160,10 @@ const UserMovieReviewPage = () => {
                     </Box>
                     <CardActions
                       sx={{
-                        justifyContent: "space-between",
-                        px: "8px",
                         pt: "0px",
                         pb: "4px",
+                        display: "flex",
+                        justifyContent: "flex-end",
                       }}
                     >
                       <DeleteReviewIcon {...review} />

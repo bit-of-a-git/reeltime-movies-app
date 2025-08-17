@@ -1,24 +1,25 @@
-import React, { useState, useCallback } from "react";
-import { BaseTvShowProps, Review } from "../types/interfaces";
+import React, { useState, useCallback, useEffect } from "react";
+import { BaseTvShowProps } from "../types/interfaces";
+import { db } from "../config/firebase";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import { useAuth } from "./authContext";
 
 interface TvShowContextInterface {
   favourites: number[];
   addToFavourites: (tvShow: BaseTvShowProps) => void;
   removeFromFavourites: (tvShow: BaseTvShowProps) => void;
-  addReview: (tvShow: BaseTvShowProps, review: Review) => void;
-  mustWatch: number[];
-  addToMustWatch: (tvShow: BaseTvShowProps) => void;
-  removeFromMustWatch: (tvShow: BaseTvShowProps) => void;
 }
 const initialContextState: TvShowContextInterface = {
   favourites: [],
   addToFavourites: () => {},
   removeFromFavourites: () => {},
-  addReview: () => {},
-
-  mustWatch: [],
-  addToMustWatch: () => {},
-  removeFromMustWatch: () => {},
 };
 
 export const TvShowContext =
@@ -27,45 +28,82 @@ export const TvShowContext =
 const TvShowContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [myReviews, setMyReviews] = useState<Review[]>([]);
-
   const [favourites, setFavourites] = useState<number[]>([]);
+  const { currentUser } = useAuth();
 
-  const [mustWatch, setMustWatch] = useState<number[]>([]);
-
-  const addToFavourites = useCallback((tvShow: BaseTvShowProps) => {
-    setFavourites((prevFavourites) => {
-      if (!prevFavourites.includes(tvShow.id)) {
-        return [...prevFavourites, tvShow.id];
+  useEffect(() => {
+    const loadUserFavourites = async () => {
+      if (!currentUser) {
+        setFavourites([]);
+        return;
       }
-      return prevFavourites;
-    });
-  }, []);
 
-  const removeFromFavourites = useCallback((tvShow: BaseTvShowProps) => {
-    setFavourites((prevFavourites) =>
-      prevFavourites.filter((tId) => tId !== tvShow.id)
-    );
-  }, []);
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
 
-  const addReview = (tvShow: BaseTvShowProps, review: Review) => {
-    setMyReviews({ ...myReviews, [tvShow.id]: review });
-  };
-
-  const addToMustWatch = useCallback((tvShow: BaseTvShowProps) => {
-    setMustWatch((prevMustWatch) => {
-      if (!prevMustWatch.includes(tvShow.id)) {
-        return [...prevMustWatch, tvShow.id];
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setFavourites(userData.favouriteTvShows || []);
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
       }
-      return prevMustWatch;
-    });
-  }, []);
+    };
 
-  const removeFromMustWatch = useCallback((tvShow: BaseTvShowProps) => {
-    setMustWatch((prevMustWatch) =>
-      prevMustWatch.filter((tId) => tId !== tvShow.id)
-    );
-  }, []);
+    loadUserFavourites();
+  }, [currentUser]);
+
+  const addToFavourites = useCallback(
+    async (tvShow: BaseTvShowProps) => {
+      if (!currentUser) return;
+
+      setFavourites((prevFavourites) => {
+        if (!prevFavourites.includes(tvShow.id)) {
+          return [...prevFavourites, tvShow.id];
+        }
+        return prevFavourites;
+      });
+
+      const userDocRef = doc(db, "users", currentUser.uid);
+
+      try {
+        await updateDoc(userDocRef, {
+          favouriteTvShows: arrayUnion(tvShow.id),
+        });
+      } catch (error) {
+        try {
+          await setDoc(userDocRef, {
+            favouriteMovies: [tvShow.id],
+            email: currentUser.email,
+          });
+        } catch (createError) {
+          console.error("Error adding to favourites:", createError);
+        }
+      }
+    },
+    [currentUser]
+  );
+
+  const removeFromFavourites = useCallback(
+    async (tvShow: BaseTvShowProps) => {
+      if (!currentUser) return;
+
+      setFavourites((prevFavourites) =>
+        prevFavourites.filter((tId) => tId !== tvShow.id)
+      );
+
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userDocRef, {
+          favouriteTvShows: arrayRemove(tvShow.id),
+        });
+      } catch (error) {
+        console.error("Error removing from favourites:", error);
+      }
+    },
+    [currentUser]
+  );
 
   return (
     <TvShowContext.Provider
@@ -73,10 +111,6 @@ const TvShowContextProvider: React.FC<React.PropsWithChildren> = ({
         favourites,
         addToFavourites,
         removeFromFavourites,
-        addReview,
-        mustWatch,
-        addToMustWatch,
-        removeFromMustWatch,
       }}
     >
       {children}

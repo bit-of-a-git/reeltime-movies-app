@@ -23,6 +23,7 @@ interface MovieContextInterface {
   removeFromMustWatch: (movie: BaseMovieProps) => void;
   fantasyMovies: FantasyMovieProps[];
   addFantasyMovie: (movie: FantasyMovieProps) => void;
+  removeFantasyMovie: (index: number) => void;
 }
 const initialContextState: MovieContextInterface = {
   favourites: [],
@@ -36,6 +37,7 @@ const initialContextState: MovieContextInterface = {
   removeFromMustWatch: () => {},
   fantasyMovies: [],
   addFantasyMovie: () => {},
+  removeFantasyMovie: () => {},
 };
 
 export const MoviesContext =
@@ -55,6 +57,8 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
       if (!currentUser) {
         setFavourites([]);
         setReviews([]);
+        setMustWatch([]);
+        setFantasyMovies([]);
         return;
       }
 
@@ -67,6 +71,7 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
           setFavourites(userData.favouriteMovies || []);
           setReviews(userData.reviews || []);
           setMustWatch(userData.mustWatchMovies || []);
+          setFantasyMovies(userData.fantasyMovies || []);
         }
       } catch (error) {
         console.error("Error loading user data:", error);
@@ -122,12 +127,11 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
         });
       } catch (error) {
         console.error("Error removing from favourites:", error);
-        setFavourites((prev) => prev.filter((mId) => mId !== movie.id));
       }
     },
     [currentUser]
   );
-  // TODO - do you need both of these? Probably not
+
   const addReview = useCallback(
     async (review: Review) => {
       if (!currentUser) return;
@@ -236,9 +240,60 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
     [currentUser]
   );
 
-  const addFantasyMovie = (movie: FantasyMovieProps) => {
-    setFantasyMovies((prevMovies) => [...prevMovies, movie]);
-  };
+  const addFantasyMovie = useCallback(
+    async (movie: FantasyMovieProps) => {
+      if (!currentUser) return;
+
+      setFantasyMovies((prevMovies) => [movie, ...prevMovies]);
+
+      const userDocRef = doc(db, "users", currentUser.uid);
+
+      try {
+        const userDoc = await getDoc(userDocRef);
+        const userData = userDoc.data();
+        const updatedMovies = [movie, ...(userData?.fantasyMovies || [])];
+        await updateDoc(userDocRef, {
+          fantasyMovies: updatedMovies,
+        });
+      } catch (error) {
+        try {
+          await setDoc(userDocRef, {
+            fantasyMovies: [movie],
+            email: currentUser.email,
+          });
+        } catch (createError) {
+          console.error("Error adding to fantasy movies:", createError);
+        }
+      }
+    },
+    [currentUser]
+  );
+
+  const removeFantasyMovie = useCallback(
+    async (index: number) => {
+      if (!currentUser) return;
+
+      setFantasyMovies((prevMovies) =>
+        prevMovies.filter((_, i) => i !== index)
+      );
+
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        const userData = userDoc.data();
+        const updatedMovies = (userData?.fantasyMovies || []).filter(
+          (_, i) => i !== index
+        );
+
+        await updateDoc(userDocRef, {
+          fantasyMovies: updatedMovies,
+        });
+      } catch (error) {
+        console.error("Error removing fantasy movie:", error);
+      }
+    },
+    [currentUser]
+  );
 
   return (
     <MoviesContext.Provider
@@ -254,6 +309,7 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
         removeFromMustWatch,
         fantasyMovies,
         addFantasyMovie,
+        removeFantasyMovie,
       }}
     >
       {children}

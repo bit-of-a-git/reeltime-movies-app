@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseTvShowProps } from "../../types/interfaces";
@@ -35,9 +34,8 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
   action,
   showFooterActions,
 }) => {
-  const { favourites, mustWatch } = useContext(TvShowContext);
+  const { favourites } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
-  const isMustWatch = mustWatch.includes(tvShow.id);
   const { currentUser } = useAuth();
 
   const renderAvatar = () => {
@@ -49,14 +47,6 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
       return (
         <Avatar sx={styles.avatar} aria-label="Favourite TV show">
           <FavoriteIcon />
-        </Avatar>
-      );
-    }
-
-    if (isMustWatch) {
-      return (
-        <Avatar sx={styles.avatar} aria-label="Must-watch TV show">
-          <AddToQueueIcon />
         </Avatar>
       );
     }
