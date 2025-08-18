@@ -132,8 +132,8 @@ const FavouriteMoviesPage = () => {
             const isReviewed = movieReviewIds.includes(movie.id);
             return (
               <>
-                <RemoveFromFavourites {...movie} />
                 {!isReviewed && <WriteReview {...movie} />}
+                <RemoveFromFavourites {...movie} />
               </>
             );
           }}

@@ -15,6 +15,7 @@ const WriteReviewIcon: React.FC<BaseMovieProps> = (movie) => {
       <IconButton
         aria-label="write review of movie"
         title="Write a review of this movie"
+        sx={{ marginRight: "auto" }}
       >
         <RateReviewIcon color="primary" fontSize="large" />
       </IconButton>
