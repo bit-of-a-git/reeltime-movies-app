@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { TvShowDetailsProps } from "../types/interfaces";
 import { Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const TvShowDetailsPage = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const TvShowDetailsPage = () => {
   } = useQuery<TvShowDetailsProps, Error>(["tvShow", id], () =>
     getTvShow(id || "")
   );
+
+  usePageTitle(tvShow?.name || "Movie Details Page");
 
   if (isLoading) {
     return <Spinner />;

@@ -14,6 +14,7 @@ import TvShowFilterUI, {
 } from "../components/tvShowFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesTvShow";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -46,6 +47,8 @@ const yearFromFiltering = {
 };
 
 const FavouriteTvShowsPage = () => {
+  usePageTitle("Favourite TV Shows");
+
   const { favourites: tvShowIds } = useContext(TvShowContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,

@@ -14,6 +14,7 @@ import MovieFilterUI, {
 } from "../components/movieFilterUI";
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -46,6 +47,8 @@ const yearFromFiltering = {
 };
 
 const MustWatchPage = () => {
+  usePageTitle("Must Watch Movies");
+
   const { mustWatch: movieIds } = useContext(MoviesContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
@@ -121,7 +124,7 @@ const MustWatchPage = () => {
         </Box>
       ) : (
         <PageTemplate
-          title="Must Watch List"
+          title="Must Watch Movies"
           movies={sortedMovies}
           showFooterActions={true}
           action={(movie) => {

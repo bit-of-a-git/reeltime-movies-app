@@ -15,6 +15,7 @@ import MovieFilterUI, {
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
 import WriteReview from "../components/cardIcons/writeReview";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -47,6 +48,8 @@ const yearFromFiltering = {
 };
 
 const FavouriteMoviesPage = () => {
+  usePageTitle("Favourite Movies");
+
   const { favourites: movieIds, reviews } = useContext(MoviesContext);
   const movieReviewIds = reviews.map((review) => review.movieId);
 

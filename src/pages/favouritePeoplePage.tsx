@@ -6,8 +6,11 @@ import { getPerson } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPerson";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const FavouritePeoplePage = () => {
+  usePageTitle("Favourite People");
+
   const { favourites: peopleIds } = useContext(PeopleContext);
 
   // Create an array of queries and run them in parallel.
@@ -42,7 +45,7 @@ const FavouritePeoplePage = () => {
         </Box>
       ) : (
         <PageTemplate
-          title="Favourite Cast/Crew"
+          title="Favourite People"
           people={allFavourites}
           showFooterActions={true}
           action={(person) => {

@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import DeleteReviewIcon from "../components/cardIcons/deleteReview";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const styles = {
   root: {
@@ -36,6 +37,8 @@ const styles = {
 };
 
 const UserMovieReviewPage = () => {
+  usePageTitle("My Movie Reviews");
+
   const { reviews } = useContext(MoviesContext);
   const reviewedMovieIds = reviews.map((review) => review.movieId);
 
