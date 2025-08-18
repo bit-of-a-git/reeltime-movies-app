@@ -19,7 +19,7 @@ const TvShowDetailsPage = () => {
     getTvShow(id || "")
   );
 
-  usePageTitle(tvShow?.name || "Movie Details Page");
+  usePageTitle(tvShow?.name || "TV Show Details Page");
 
   if (isLoading) {
     return <Spinner />;

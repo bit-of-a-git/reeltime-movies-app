@@ -18,7 +18,7 @@ const PersonDetailsPage = () => {
     isError,
   } = useQuery<Person, Error>(["person", id], () => getPerson(id || ""));
 
-  usePageTitle(person?.name || "Person Details Page");
+  usePageTitle(person?.name ?? "Person Details Page");
 
   if (isLoading) {
     return <Spinner />;

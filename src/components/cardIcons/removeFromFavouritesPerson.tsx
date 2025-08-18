@@ -17,7 +17,7 @@ const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
       aria-label="remove from favourites"
       onClick={onUserRequest}
       title="Remove this person from your favourites"
-      sx={{ marginLeft: "auto" }}
+      sx={{ ml: "auto" }}
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

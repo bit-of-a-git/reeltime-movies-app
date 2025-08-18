@@ -186,7 +186,7 @@ const FantasyMovieForm = () => {
           }}
         >
           <Box>
-            <InputLabel id="date-picker-label">Release Date</InputLabel>
+            <InputLabel id="release-date-label">Release Date</InputLabel>
             <Controller
               control={control}
               name="releaseDate"
@@ -198,6 +198,8 @@ const FantasyMovieForm = () => {
                   placeholderText="Select date"
                   onChange={(date) => field.onChange(date)}
                   selected={field.value}
+                  id="release-date-picker"
+                  aria-labelledby="release-date-label"
                 />
               )}
             />
@@ -209,9 +211,7 @@ const FantasyMovieForm = () => {
           </Box>
 
           <Box>
-            <InputLabel id="date-picker-label">
-              Movie Runtime (Minutes)
-            </InputLabel>
+            <InputLabel>Movie Runtime (Minutes)</InputLabel>
             <FormControl fullWidth>
               <Controller
                 name="runtime"

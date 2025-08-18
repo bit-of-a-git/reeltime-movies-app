@@ -41,6 +41,7 @@ export interface BasePeopleListProps {
 export interface PeopleListPageTemplateProps extends BasePeopleListProps {
   title: string;
   changePage?: (delta: number) => void;
+  showArrows?: boolean;
 }
 
 export interface BaseMovieProps {
@@ -123,6 +124,7 @@ export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
   changePage?: (delta: number) => void;
   showFooterActions?: boolean;
+  showArrows?: boolean;
 }
 
 export interface Genre {
@@ -144,9 +146,11 @@ export interface MovieApiResults {
 export interface Review {
   author: string;
   content: string;
-  agree: boolean;
-  rating: number;
+  image: string;
   movieId: number;
+  rating: number;
+  title: string;
+  movieTitle: string;
 }
 
 export interface UpcomingMovies {
@@ -262,6 +266,8 @@ export interface BaseTvShowListProps {
 export interface TvShowListPageTemplateProps extends BaseTvShowListProps {
   title: string;
   changePage?: (delta: number) => void;
+  showFooterActions?: boolean;
+  showArrows?: boolean;
 }
 
 export interface TvShowApiResults {
