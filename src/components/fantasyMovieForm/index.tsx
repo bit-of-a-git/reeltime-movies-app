@@ -19,6 +19,9 @@ import { useQuery } from "react-query";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getGenres } from "../../api/tmdb-api";
+import { NumberField } from "@base-ui-components/react/number-field";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 const FantasyMovieForm = () => {
   const defaultValues = {
@@ -175,59 +178,74 @@ const FantasyMovieForm = () => {
           </Typography>
         )}
 
-        <InputLabel id="date-picker-label">Release Date</InputLabel>
-        <Controller
-          control={control}
-          name="releaseDate"
-          rules={{ required: "Release date is required" }}
-          render={({ field }) => (
-            <DatePicker
-              // https://stackoverflow.com/questions/64882223/im-having-trouble-with-react-datepicker-position
-              portalId="datepicker"
-              placeholderText="Select date"
-              onChange={(date) => field.onChange(date)}
-              selected={field.value}
+        <Box
+          sx={{
+            display: "flex",
+            marginTop: 1,
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <InputLabel id="date-picker-label">Release Date</InputLabel>
+            <Controller
+              control={control}
+              name="releaseDate"
+              rules={{ required: "Release date is required" }}
+              render={({ field }) => (
+                <DatePicker
+                  // https://stackoverflow.com/questions/64882223/im-having-trouble-with-react-datepicker-position
+                  portalId="datepicker"
+                  placeholderText="Select date"
+                  onChange={(date) => field.onChange(date)}
+                  selected={field.value}
+                />
+              )}
             />
-          )}
-        />
-        {errors.releaseDate && (
-          <Typography variant="h6" component="p">
-            {errors.releaseDate.message}
-          </Typography>
-        )}
-
-        <FormControl fullWidth margin="normal">
-          <Controller
-            name="runtime"
-            control={control}
-            rules={{
-              required: "Runtime is required",
-              min: { value: 1, message: "Movie must have a runtime" },
-            }}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                id="runtime"
-                value={value}
-                variant="outlined"
-                type="number"
-                margin="normal"
-                required
-                onChange={onChange}
-                label="Movie runtime (minutes)"
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  },
-                }}
-              />
+            {errors.releaseDate && (
+              <Typography variant="h6" component="p">
+                {errors.releaseDate.message}
+              </Typography>
             )}
-          />
-        </FormControl>
-        {errors.runtime && (
-          <Typography variant="h6" component="p">
-            {errors.runtime.message}
-          </Typography>
-        )}
+          </Box>
+
+          <Box>
+            <InputLabel id="date-picker-label">
+              Movie Runtime (Minutes)
+            </InputLabel>
+            <FormControl fullWidth>
+              <Controller
+                name="runtime"
+                control={control}
+                rules={{
+                  required: "Runtime is required",
+                  min: { value: 1, message: "Movie must have a runtime" },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  // https://base-ui.com/react/components/number-field
+                  <NumberField.Root
+                    value={value}
+                    onValueChange={(newValue) => onChange(newValue)}
+                  >
+                    <NumberField.Group>
+                      <NumberField.Decrement>
+                        <RemoveIcon fontSize="inherit" />
+                      </NumberField.Decrement>
+                      <NumberField.Input />
+                      <NumberField.Increment>
+                        <AddIcon fontSize="inherit" />
+                      </NumberField.Increment>
+                    </NumberField.Group>
+                  </NumberField.Root>
+                )}
+              />
+            </FormControl>
+            {errors.runtime && (
+              <Typography variant="h6" component="p">
+                {errors.runtime.message}
+              </Typography>
+            )}
+          </Box>
+        </Box>
 
         <FormControl fullWidth margin="normal">
           <InputLabel id="production-company-label">
