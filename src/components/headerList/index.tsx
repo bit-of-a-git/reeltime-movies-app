@@ -18,27 +18,36 @@ const styles = {
 interface HeaderProps {
   title: string;
   changePage?: (delta: number) => void;
+  showArrows?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, changePage }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  changePage,
+  showArrows = true,
+}) => {
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton
-        aria-label="go back"
-        onClick={() => changePage && changePage(-1)}
-      >
-        <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
+      {showArrows && (
+        <IconButton
+          aria-label="go back"
+          onClick={() => changePage && changePage(-1)}
+        >
+          <ArrowBackIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      )}
 
-      <Typography variant="h4" component="h4">
+      <Typography variant="h4" component="h4" sx={{ marginBottom: 0.25 }}>
         {title}
       </Typography>
-      <IconButton
-        aria-label="go forward"
-        onClick={() => changePage && changePage(1)}
-      >
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
+      {showArrows && (
+        <IconButton
+          aria-label="go forward"
+          onClick={() => changePage && changePage(1)}
+        >
+          <ArrowForwardIcon color="primary" fontSize="inherit" />
+        </IconButton>
+      )}
     </Paper>
   );
 };

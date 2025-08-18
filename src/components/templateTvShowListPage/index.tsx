@@ -16,11 +16,12 @@ const TvShowListPageTemplate: React.FC<TvShowListPageTemplateProps> = ({
   action,
   changePage,
   showFooterActions = false,
+  showArrows = true,
 }) => {
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
-        <Header title={title} changePage={changePage} />
+        <Header title={title} changePage={changePage} showArrows={showArrows} />
       </Grid>
       <Grid item container spacing={2.5} xs={12}>
         <TvShowList
