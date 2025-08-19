@@ -12,6 +12,7 @@ const DeleteFantasyMovieIcon: React.FC<DeleteFantasyMovieIconProps> = ({
 }) => {
   const context = useContext(MoviesContext);
 
+
   const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFantasyMovie(index);
   };
