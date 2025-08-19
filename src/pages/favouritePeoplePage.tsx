@@ -1,0 +1,65 @@
+import { useContext } from "react";
+import PageTemplate from "../components/templatePeopleListPage";
+import { PeopleContext } from "../contexts/peopleContext";
+import { useQueries } from "react-query";
+import { getPerson } from "../api/tmdb-api";
+import Spinner from "../components/spinner";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPerson";
+import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
+
+const FavouritePeoplePage = () => {
+  usePageTitle("Favourite People");
+
+  const { favourites: peopleIds } = useContext(PeopleContext);
+
+  // Create an array of queries and run them in parallel.
+  const favouritePeopleQueries = useQueries(
+    peopleIds.map((personId) => {
+      return {
+        queryKey: ["person", personId],
+        queryFn: () => getPerson(personId.toString()),
+      };
+    })
+  );
+
+  // Check if any of the parallel queries is still loading.
+  const isLoading = favouritePeopleQueries.some((p) => p.isLoading);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  const allFavourites = favouritePeopleQueries.map((q) => q.data);
+
+  return (
+    <>
+      {allFavourites.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            You have no favourite people yet.
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Why not browse and add to your list?
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Favourite People"
+          people={allFavourites}
+          showFooterActions={true}
+          showArrows={false}
+          action={(person) => {
+            return (
+              <>
+                <RemoveFromFavourites {...person} />
+              </>
+            );
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+export default FavouritePeoplePage;

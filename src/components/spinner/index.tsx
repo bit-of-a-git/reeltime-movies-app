@@ -1,4 +1,3 @@
-import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const styles = {
@@ -11,7 +10,7 @@ const styles = {
   },
 };
 
-const CircularIndeterminate: React.FC = () => {
+const CircularIndeterminate = () => {
   return (
     <div style={styles.root}>
       <CircularProgress />

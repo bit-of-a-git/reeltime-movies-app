@@ -68,6 +68,7 @@ export default {
   runtime: 152,
   spoken_languages: [
     {
+      english_name: "English",
       iso_639_1: "en",
       name: "English",
     },

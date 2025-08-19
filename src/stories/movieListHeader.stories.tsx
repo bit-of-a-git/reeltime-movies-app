@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MovieListHeader from "../components/headerMovieList";
+import Header from "../components/headerList";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
-import React from 'react';
 
 const meta = {
     title: 'Home Page/Header',
-    component: MovieListHeader,
+    component: Header,
     decorators: [
       (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
       (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
     ],
-  } satisfies Meta<typeof MovieListHeader>;
+  } satisfies Meta<typeof Header>;
   
   export default meta;
 
@@ -22,4 +21,3 @@ export const Basic: Story = {
 
 };
 Basic.storyName = "Default";
-

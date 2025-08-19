@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import FilterCard from "../filterMoviesCard";
+import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseMovieProps } from "../../types/interfaces";
-import SortCard from "../../components/sortMoviesCard";
+import { BaseMovieProps, MovieDetailsProps } from "../../types/movies";
+import SortCard from "../../components/sortCard";
+import { Box, Button } from "@mui/material";
 
 export const dateToYear = (dateString: string) => {
   const date = new Date(dateString);
@@ -14,22 +15,37 @@ export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter = (movie: BaseMovieProps, value: string) => {
+export const genreFilter = (
+  movie: BaseMovieProps | MovieDetailsProps,
+  value: string
+): boolean => {
   const genreId = Number(value);
-  const genreIds = movie.genre_ids;
-  return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
+  if (genreId <= 0) return true; // Show all if no valid genre selected
+  if ((movie as BaseMovieProps).genre_ids) {
+    return (movie as BaseMovieProps).genre_ids?.includes(genreId) ?? true;
+  }
+  if ((movie as MovieDetailsProps).genres) {
+    return (movie as MovieDetailsProps).genres.some((g) => g.id === genreId);
+  }
+  return false;
 };
 
-export const minRatingFilter = (movie: BaseMovieProps, value: number) => {
-  return movie.vote_average >= value;
+export const minRatingFilter = (
+  movie: BaseMovieProps,
+  value: string
+): boolean => {
+  return movie.vote_average >= Number(value);
 };
 
-export const yearToFilter = (movie: BaseMovieProps, value: number) => {
-  return dateToYear(movie.release_date) <= value;
+export const yearToFilter = (movie: BaseMovieProps, value: string): boolean => {
+  return dateToYear(movie.release_date) <= Number(value);
 };
 
-export const yearFromFilter = (movie: BaseMovieProps, value: number) => {
-  return dateToYear(movie.release_date) >= value;
+export const yearFromFilter = (
+  movie: BaseMovieProps,
+  value: string
+): boolean => {
+  return dateToYear(movie.release_date) >= Number(value);
 };
 
 const styles = {
@@ -37,9 +53,8 @@ const styles = {
     backgroundColor: "#bfbfbf",
   },
   fab: {
-    marginTop: 8,
     position: "fixed",
-    top: 20,
+    top: 75,
     right: 2,
   },
 };
@@ -47,16 +62,18 @@ const styles = {
 interface MovieFilterUIProps {
   onFilterValuesChange: (f: string, s: string) => void;
   onSortChange: (sortOption: string) => void;
+  onResetFilters: () => void;
   titleFilter: string;
   genreFilter: string;
-  minRatingFilter: number;
-  yearToFilter: number;
-  yearFromFilter: number;
+  minRatingFilter: string;
+  yearToFilter: string;
+  yearFromFilter: string;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   onFilterValuesChange,
   onSortChange,
+  onResetFilters,
   titleFilter,
   genreFilter,
   minRatingFilter,
@@ -78,6 +95,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         variant="extended"
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
+        aria-label="Open filter and sort options"
       >
         Filter/Sort
       </Fab>
@@ -85,6 +103,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
+        aria-label="Filter and sort options drawer"
       >
         <FilterCard
           onUserInput={onFilterValuesChange}
@@ -95,6 +114,16 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
           yearFromFilter={yearFromFilter}
         />
         <SortCard sortOption={sortOption} onSortChange={handleSortChange} />
+        <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+          <Button
+            type="reset"
+            variant="contained"
+            color="secondary"
+            onClick={onResetFilters}
+          >
+            Reset
+          </Button>
+        </Box>
       </Drawer>
     </>
   );

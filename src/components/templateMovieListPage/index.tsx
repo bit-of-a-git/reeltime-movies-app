@@ -1,8 +1,9 @@
 import React from "react";
-import Header from "../headerMovieList";
+import Header from "../headerList";
 import Grid from "@mui/material/Grid";
 import MovieList from "../movieList";
-import { MovieListPageTemplateProps } from "../../types/interfaces";
+import { MovieListPageTemplateProps } from "../../types/movies";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 const styles = {
   root: {
@@ -14,14 +15,23 @@ const MovieListPageTemplate: React.FC<MovieListPageTemplateProps> = ({
   movies,
   title,
   action,
+  changePage,
+  showFooterActions = false,
+  showArrows = true,
 }) => {
+  usePageTitle(title);
+
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
-        <Header title={title} />
+        <Header title={title} changePage={changePage} showArrows={showArrows} />
       </Grid>
-      <Grid item container spacing={5}>
-        <MovieList action={action} movies={movies}></MovieList>
+      <Grid item container spacing={2.5} xs={12}>
+        <MovieList
+          action={action}
+          movies={movies}
+          showFooterActions={showFooterActions}
+        ></MovieList>
       </Grid>
     </Grid>
   );

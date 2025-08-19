@@ -1,4 +1,4 @@
-import React, { useContext, useState, ChangeEvent } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,16 +9,16 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
-import { BaseMovieProps, Review } from "../../types/interfaces";
+import { BaseMovieProps, UserReview as Review } from "../../types/movies";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { FormControl, InputLabel, Select } from "@mui/material";
 
 const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   const defaultValues = {
     defaultValues: {
-      author: "",
-      review: "",
-      agree: false,
+      title: "",
+      content: "",
       rating: 3,
       movieId: 0,
     },
@@ -33,12 +33,7 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
 
   const navigate = useNavigate();
   const context = useContext(MoviesContext);
-  const [rating, setRating] = useState(3);
   const [open, setOpen] = useState(false);
-
-  const handleRatingChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(event.target.value));
-  };
 
   const handleSnackClose = () => {
     setOpen(false);
@@ -47,14 +42,17 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
 
   const onSubmit: SubmitHandler<Review> = (review) => {
     review.movieId = movie.id;
-    review.rating = rating;
-    context.addReview(movie, review);
+    context.addReview(review);
     setOpen(true);
+    reset({
+      title: "",
+      content: "",
+    });
   };
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+      <Typography component="h4" variant="h4">
         Write a review
       </Typography>
       <Snackbar
@@ -71,9 +69,9 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
       </Snackbar>
       <form style={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
         <Controller
-          name="author"
+          name="title"
           control={control}
-          rules={{ required: "Name is required" }}
+          rules={{ required: "Title is required" }}
           defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
@@ -83,15 +81,15 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
               required
               onChange={onChange}
               value={value}
-              id="author"
-              label="Author's name"
+              id="title"
+              label="Review Title"
               autoFocus
             />
           )}
         />
-        {errors.author && (
+        {errors.title && (
           <Typography variant="h6" component="p">
-            {errors.author.message}
+            {errors.title.message}
           </Typography>
         )}
         <Controller
@@ -123,28 +121,31 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
           </Typography>
         )}
 
-        <Controller
-          control={control}
-          name="rating"
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="select-rating"
-              select
-              variant="outlined"
-              label="Rating Select"
-              value={rating}
-              onChange={handleRatingChange}
-              helperText="Don't forget your rating"
-            >
-              {ratings.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="rating-label">Rating</InputLabel>
+          <Controller
+            control={control}
+            name="rating"
+            rules={{ required: "Rating is required" }}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                id="rating-select"
+                value={value}
+                label="Rating Label Select"
+                labelId="rating-label"
+                onChange={onChange}
+              >
+                {ratings.map((option) => {
+                  return (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          />
+        </FormControl>
 
         <Box>
           <Button
@@ -154,20 +155,6 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
             sx={styles.submit}
           >
             Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            sx={styles.submit}
-            onClick={() => {
-              reset({
-                author: "",
-                content: "",
-              });
-            }}
-          >
-            Reset
           </Button>
         </Box>
       </form>

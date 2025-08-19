@@ -1,13 +1,12 @@
-import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { MovieDetailsProps } from "../../types/interfaces";
+import { MovieDetailsProps } from "../../types/movies";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MoviesContext } from "../../contexts/moviesContext";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -23,14 +22,11 @@ const styles = {
 };
 
 const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
-  const favourites = JSON.parse(localStorage.getItem("favourites"));
-  const isFavourite = favourites.some((fav) => fav.id === movie.id);
+  const { favourites } = useContext(MoviesContext);
+  const isFavourite = favourites.includes(movie.id);
 
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton aria-label="go back">
-        <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
       {isFavourite && (
         <Avatar sx={styles.avatar}>
           <FavoriteIcon />
@@ -38,16 +34,23 @@ const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
       )}
       <Typography variant="h4" component="h3">
         {movie.title}
-        {"   "}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary" fontSize="large" />
-        </a>
-        <br />
-        <span>{`${movie.tagline}`} </span>
       </Typography>
-      <IconButton aria-label="go forward">
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
+      {movie.tagline && (
+        <Typography variant="h5" component="h3">
+          {movie.tagline}
+        </Typography>
+      )}
+      {movie.homepage && (
+        <Link
+          to={movie.homepage}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${movie.title} homepage`}
+          title={`Open ${movie.title} homepage`}
+        >
+          <HomeIcon color="primary" fontSize="large" />
+        </Link>
+      )}
     </Paper>
   );
 };

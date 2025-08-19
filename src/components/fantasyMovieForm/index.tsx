@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,20 +14,24 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
 import styles from "./styles";
 import productionCompanies from "./productionCompanies";
-import { FantasyMovieProps, GenreData } from "../../types/interfaces";
+import { FantasyMovieProps } from "../../types/movies";
+import { GenreData } from "../../types/common";
 import { useQuery } from "react-query";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getGenres } from "../../api/tmdb-api";
+import { NumberField } from "@base-ui-components/react/number-field";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
-const FantasyMovieForm: React.FC = () => {
+const FantasyMovieForm = () => {
   const defaultValues = {
     defaultValues: {
       title: "",
       overview: "",
       genres: [],
-      releaseDate: null,
-      runtime: null,
+      releaseDate: undefined,
+      runtime: 0,
       productionCompanies: [],
     },
   };
@@ -51,13 +55,10 @@ const FantasyMovieForm: React.FC = () => {
     return <Spinner />;
   }
   if (isError) {
-    return <h1>{(error as Error).message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   const genres = data?.genres || [];
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
-  }
 
   const handleSnackClose = () => {
     setOpen(false);
@@ -66,11 +67,19 @@ const FantasyMovieForm: React.FC = () => {
   const onSubmit: SubmitHandler<FantasyMovieProps> = (movie) => {
     context.addFantasyMovie(movie);
     setOpen(true);
+    reset({
+      title: "",
+      overview: "",
+      genres: [],
+      releaseDate: undefined,
+      runtime: 0,
+      productionCompanies: [],
+    });
   };
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+      <Typography component="h4" variant="h4">
         Create a Fantasy Movie
       </Typography>
       <Snackbar
@@ -170,50 +179,74 @@ const FantasyMovieForm: React.FC = () => {
           </Typography>
         )}
 
-        <InputLabel id="date-picker-label">Release Date</InputLabel>
-        <Controller
-          control={control}
-          name="releaseDate"
-          rules={{ required: "Release date is required" }}
-          render={({ field }) => (
-            <DatePicker
-              placeholderText="Select date"
-              onChange={(date) => field.onChange(date)}
-              selected={field.value}
+        <Box
+          sx={{
+            display: "flex",
+            marginTop: 1,
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
+            <InputLabel id="release-date-label">Release Date</InputLabel>
+            <Controller
+              control={control}
+              name="releaseDate"
+              rules={{ required: "Release date is required" }}
+              render={({ field }) => (
+                <DatePicker
+                  // https://stackoverflow.com/questions/64882223/im-having-trouble-with-react-datepicker-position
+                  portalId="datepicker"
+                  placeholderText="Select date"
+                  onChange={(date) => field.onChange(date)}
+                  selected={field.value ? new Date(field.value) : null}
+                  id="release-date-picker"
+                  aria-labelledby="release-date-label"
+                />
+              )}
             />
-          )}
-        />
-        {errors.releaseDate && (
-          <Typography variant="h6" component="p">
-            {errors.releaseDate.message}
-          </Typography>
-        )}
-
-        <FormControl fullWidth margin="normal">
-          <Controller
-            name="runtime"
-            control={control}
-            rules={{ required: "Runtime is required" }}
-            defaultValue={0}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                id="runtime"
-                value={value}
-                variant="outlined"
-                type="number"
-                margin="normal"
-                required
-                onChange={onChange}
-                label="Movie runtime"
-              />
+            {errors.releaseDate && (
+              <Typography variant="h6" component="p">
+                {errors.releaseDate.message}
+              </Typography>
             )}
-          />
-        </FormControl>
-        {errors.runtime && (
-          <Typography variant="h6" component="p">
-            {errors.runtime.message}
-          </Typography>
-        )}
+          </Box>
+
+          <Box>
+            <InputLabel>Movie Runtime (Minutes)</InputLabel>
+            <FormControl fullWidth>
+              <Controller
+                name="runtime"
+                control={control}
+                rules={{
+                  required: "Runtime is required",
+                  min: { value: 1, message: "Movie must have a runtime" },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  // https://base-ui.com/react/components/number-field
+                  <NumberField.Root
+                    value={value}
+                    onValueChange={(newValue) => onChange(newValue)}
+                  >
+                    <NumberField.Group>
+                      <NumberField.Decrement>
+                        <RemoveIcon fontSize="inherit" />
+                      </NumberField.Decrement>
+                      <NumberField.Input />
+                      <NumberField.Increment>
+                        <AddIcon fontSize="inherit" />
+                      </NumberField.Increment>
+                    </NumberField.Group>
+                  </NumberField.Root>
+                )}
+              />
+            </FormControl>
+            {errors.runtime && (
+              <Typography variant="h6" component="p">
+                {errors.runtime.message}
+              </Typography>
+            )}
+          </Box>
+        </Box>
 
         <FormControl fullWidth margin="normal">
           <InputLabel id="production-company-label">
@@ -258,20 +291,6 @@ const FantasyMovieForm: React.FC = () => {
             sx={styles.submit}
           >
             Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            sx={styles.submit}
-            onClick={() => {
-              reset({
-                title: "",
-                overview: "",
-              });
-            }}
-          >
-            Reset
           </Button>
         </Box>
       </form>

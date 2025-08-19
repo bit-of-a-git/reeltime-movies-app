@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
-import PersonProfileImage from "../components/personProfileImage";
 import PersonInfo from "../components/personInfo";
 import PersonCredits from "../components/personCredits";
 import { getPerson } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { Person } from "../types/interfaces";
+import { PersonDetails as Person } from "../types/people";
 import { Container, Paper, Grid, Box, Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const PersonDetailsPage = () => {
   const { id } = useParams();
@@ -18,12 +18,14 @@ const PersonDetailsPage = () => {
     isError,
   } = useQuery<Person, Error>(["person", id], () => getPerson(id || ""));
 
+  usePageTitle(person?.name ?? "Person Details Page");
+
   if (isLoading) {
     return <Spinner />;
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
   // Code currently taken and modified from https://github.com/eoinfennessy/movies-app/ to get started. Will be changed later
@@ -34,24 +36,19 @@ const PersonDetailsPage = () => {
           <Container maxWidth="lg" sx={{ marginTop: "20px" }}>
             <Grid container spacing={2}>
               <Grid item xs={3.5}>
-                <Paper elevation={5}>
-                  <Box padding={"20px"}>
-                    <PersonProfileImage person={person} borderRadius={"20px"} />
-                    <PersonInfo person={person} />
-                  </Box>
-                </Paper>
+                <PersonInfo person={person} />
               </Grid>
               <Grid item xs={8.5}>
                 <Paper elevation={5}>
                   <Box padding={"20px"}>
-                    <Typography variant="h4" paddingBottom="20px">
+                    <Typography variant="h4" gutterBottom>
                       Biography
                     </Typography>
                     <Typography
                       variant="body1"
                       style={{ whiteSpace: "pre-line" }}
                     >
-                      {person.biography}
+                      {person.biography || "Unavailable"}
                     </Typography>
                   </Box>
                   <PersonCredits person={person} />

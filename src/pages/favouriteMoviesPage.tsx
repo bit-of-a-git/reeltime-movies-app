@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
@@ -8,26 +8,58 @@ import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
+  minRatingFilter,
+  yearToFilter,
+  yearFromFilter,
 } from "../components/movieFilterUI";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
 import WriteReview from "../components/cardIcons/writeReview";
+import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
+import { BaseMovieProps } from "../types/movies";
 
 const titleFiltering = {
   name: "title",
   value: "",
   condition: titleFilter,
 };
+
 const genreFiltering = {
   name: "genre",
   value: "0",
   condition: genreFilter,
 };
 
-const FavouriteMoviesPage: React.FC = () => {
-  const { favourites: movieIds } = useContext(MoviesContext);
+const minRatingFiltering = {
+  name: "minRating",
+  value: "0",
+  condition: minRatingFilter,
+};
+
+const yearToFiltering = {
+  name: "yearTo",
+  value: new Date().getFullYear().toString(),
+  condition: yearToFilter,
+};
+
+const yearFromFiltering = {
+  name: "yearFrom",
+  value: "1888",
+  condition: yearFromFilter,
+};
+
+const FavouriteMoviesPage = () => {
+  usePageTitle("Favourite Movies");
+
+  const { favourites: movieIds, reviews } = useContext(MoviesContext);
+  const movieReviewIds = reviews.map((review) => review.movieId);
+
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
+    minRatingFiltering,
+    yearToFiltering,
+    yearFromFiltering,
   ]);
 
   // Create an array of queries and run them in parallel.
@@ -41,43 +73,94 @@ const FavouriteMoviesPage: React.FC = () => {
   );
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = favouriteMovieQueries.some((m) => m.isLoading);
+
+  const [sortOption, setSortOption] = useState<string>("none");
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const allFavourites = favouriteMovieQueries.map((q) => q.data);
-  const displayedMovies = allFavourites ? filterFunction(allFavourites) : [];
-
   const changeFilterValues = (type: string, value: string) => {
-    const changedFilter = { name: type, value: value };
-    const updatedFilterSet =
-      type === "title"
-        ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+    const updatedFilterSet = filterValues.map((filter) =>
+      filter.name === type ? { ...filter, value } : filter
+    );
     setFilterValues(updatedFilterSet);
   };
 
+  const sortFunctions: {
+    [key: string]: (a: BaseMovieProps, b: BaseMovieProps) => number;
+  } = {
+    date: (a, b) =>
+      new Date(b.release_date).getTime() - new Date(a.release_date).getTime(),
+    rating: (a, b) => b.vote_average - a.vote_average,
+    popularity: (a, b) => b.popularity - a.popularity,
+  };
+
+  const changeSortOption = (sort: string) => {
+    setSortOption(sort);
+  };
+
+  const handleResetFilters = () => {
+    setFilterValues([
+      { ...titleFiltering },
+      { ...genreFiltering },
+      { ...minRatingFiltering },
+      { ...yearToFiltering },
+      { ...yearFromFiltering },
+    ]);
+  };
+
+  const allFavourites = favouriteMovieQueries.map((q) => q.data);
+  const displayedMovies = allFavourites ? filterFunction(allFavourites) : [];
+
+  const sortedMovies =
+    sortOption === "none"
+      ? displayedMovies
+      : [...displayedMovies].sort(sortFunctions[sortOption]);
+
   return (
     <>
-      <PageTemplate
-        title="Favourite Movies"
-        movies={displayedMovies}
-        action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavourites {...movie} />
-              <WriteReview {...movie} />
-            </>
-          );
-        }}
-      />
+      {sortedMovies.length === 0 ? (
+        <Box sx={{ textAlign: "center", mt: 6 }}>
+          <Typography variant="h4" gutterBottom>
+            {allFavourites.length === 0
+              ? "You have no favourite movies yet."
+              : "No movies match the current filters."}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {allFavourites.length === 0
+              ? "Why not browse and add to your list?"
+              : "Try adjusting or clearing your filters."}
+          </Typography>
+        </Box>
+      ) : (
+        <PageTemplate
+          title="Favourite Movies"
+          movies={sortedMovies}
+          showFooterActions={true}
+          showArrows={false}
+          action={(movie) => {
+            const isReviewed = movieReviewIds.includes(movie.id);
+            return (
+              <>
+                {!isReviewed && <WriteReview {...movie} />}
+                <RemoveFromFavourites {...movie} />
+              </>
+            );
+          }}
+        />
+      )}
 
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        minRatingFilter={filterValues[2].value}
+        yearToFilter={filterValues[3].value}
+        yearFromFilter={filterValues[4].value}
+        onSortChange={changeSortOption}
+        onResetFilters={handleResetFilters}
       />
     </>
   );

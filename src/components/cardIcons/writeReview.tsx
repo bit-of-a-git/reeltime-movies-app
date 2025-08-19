@@ -1,7 +1,8 @@
 import React from "react";
 import RateReviewIcon from "@mui/icons-material/RateReview";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseMovieProps } from "../../types/movies";
 import { Link } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
 
 const WriteReviewIcon: React.FC<BaseMovieProps> = (movie) => {
   return (
@@ -11,7 +12,13 @@ const WriteReviewIcon: React.FC<BaseMovieProps> = (movie) => {
         movieId: movie.id,
       }}
     >
-      <RateReviewIcon color="primary" fontSize="large" />
+      <IconButton
+        aria-label="write review of movie"
+        title="Write a review of this movie"
+        sx={{ marginRight: "auto" }}
+      >
+        <RateReviewIcon color="primary" fontSize="large" />
+      </IconButton>
     </Link>
   );
 };
