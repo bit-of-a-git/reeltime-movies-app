@@ -50,6 +50,8 @@ const FantasyMovieList = () => {
                   <CalendarIcon fontSize="inherit" sx={{ paddingRight: 0.5 }} />
                   {movie.releaseDate instanceof Timestamp
                     ? movie.releaseDate.toDate().toISOString().split("T")[0]
+                    : movie.releaseDate instanceof Date
+                    ? movie.releaseDate.toISOString().split("T")[0]
                     : null}
                 </Typography>
                 <Typography variant="body2">

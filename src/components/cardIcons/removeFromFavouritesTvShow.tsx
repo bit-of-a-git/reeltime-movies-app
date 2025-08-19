@@ -7,8 +7,7 @@ import { BaseTvShowProps } from "../../types/tvShows";
 const RemoveFromFavouritesTvShowIcon: React.FC<BaseTvShowProps> = (tvShow) => {
   const context = useContext(TvShowContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFromFavourites(tvShow);
   };
 
@@ -18,6 +17,7 @@ const RemoveFromFavouritesTvShowIcon: React.FC<BaseTvShowProps> = (tvShow) => {
       onClick={onUserRequest}
       title="Remove this TV show from your favourites"
       sx={{ ml: "auto" }}
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

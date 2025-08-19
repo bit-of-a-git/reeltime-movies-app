@@ -7,8 +7,7 @@ import { BasePersonProps as Person } from "../../types/people";
 const AddToFavouritesPersonIcon: React.FC<Person> = (person) => {
   const context = useContext(PeopleContext);
 
-  const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserSelect = (_: MouseEvent<HTMLButtonElement>) => {
     context.addToFavourites(person);
   };
   return (
@@ -16,6 +15,7 @@ const AddToFavouritesPersonIcon: React.FC<Person> = (person) => {
       aria-label="add to favourites"
       onClick={onUserSelect}
       title="Add this person to your favourites"
+      type="button"
     >
       <FavoriteIcon color="primary" fontSize="large" />
     </IconButton>

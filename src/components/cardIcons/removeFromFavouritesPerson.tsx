@@ -7,8 +7,7 @@ import { BasePersonProps as Person } from "../../types/people";
 const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
   const context = useContext(PeopleContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFromFavourites(person);
   };
 
@@ -18,6 +17,7 @@ const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
       onClick={onUserRequest}
       title="Remove this person from your favourites"
       sx={{ ml: "auto" }}
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

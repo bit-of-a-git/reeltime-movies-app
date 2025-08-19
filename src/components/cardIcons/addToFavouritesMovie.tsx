@@ -7,8 +7,7 @@ import { BaseMovieProps } from "../../types/movies";
 const AddToFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
   const context = useContext(MoviesContext);
 
-  const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserSelect = (_: MouseEvent<HTMLButtonElement>) => {
     context.addToFavourites(movie);
   };
   return (
@@ -16,6 +15,7 @@ const AddToFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
       aria-label="add to favourites"
       onClick={onUserSelect}
       title="Add this movie to your favourites"
+      type="button"
     >
       <FavoriteIcon color="primary" fontSize="large" />
     </IconButton>

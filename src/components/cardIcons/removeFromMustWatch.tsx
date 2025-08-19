@@ -7,8 +7,7 @@ import { BaseMovieProps } from "../../types/movies";
 const RemoveFromMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
   const context = useContext(MoviesContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFromMustWatch(movie);
   };
 
@@ -18,6 +17,7 @@ const RemoveFromMustWatchIcon: React.FC<BaseMovieProps> = (movie) => {
       onClick={onUserRequest}
       title="Remove this movie from your must-watch list"
       sx={{ ml: "auto" }}
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

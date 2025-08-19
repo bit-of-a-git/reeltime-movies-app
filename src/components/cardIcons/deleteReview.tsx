@@ -7,8 +7,7 @@ import { UserReview as Review } from "../../types/movies";
 const DeleteReviewIcon: React.FC<Review> = (review) => {
   const context = useContext(MoviesContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeReview(review);
   };
 
@@ -17,6 +16,7 @@ const DeleteReviewIcon: React.FC<Review> = (review) => {
       aria-label="delete review"
       onClick={onUserRequest}
       title="Delete this review"
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

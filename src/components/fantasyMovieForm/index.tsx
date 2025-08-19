@@ -198,7 +198,7 @@ const FantasyMovieForm = () => {
                   portalId="datepicker"
                   placeholderText="Select date"
                   onChange={(date) => field.onChange(date)}
-                  selected={field.value}
+                  selected={field.value ? new Date(field.value) : null}
                   id="release-date-picker"
                   aria-labelledby="release-date-label"
                 />

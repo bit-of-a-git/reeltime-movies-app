@@ -12,8 +12,7 @@ const DeleteFantasyMovieIcon: React.FC<DeleteFantasyMovieIconProps> = ({
 }) => {
   const context = useContext(MoviesContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFantasyMovie(index);
   };
 
@@ -22,6 +21,7 @@ const DeleteFantasyMovieIcon: React.FC<DeleteFantasyMovieIconProps> = ({
       aria-label="delete fantasy movie"
       onClick={onUserRequest}
       title="Delete this movie"
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

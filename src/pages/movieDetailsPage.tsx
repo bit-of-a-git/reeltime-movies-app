@@ -19,7 +19,7 @@ const MovieDetailsPage = () => {
     getMovie(id || "")
   );
 
-  usePageTitle(movie?.title || "Movie Details Page");
+  usePageTitle(movie?.title ?? "Movie Details Page");
 
   if (isLoading) {
     return <Spinner />;

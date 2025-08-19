@@ -1,4 +1,5 @@
-import { BaseMedia, CommonMediaDetails } from "./common";
+import { BaseMedia, CommonMediaDetails, Company, Videos } from "./common";
+import { CastCredit, CrewCredit } from "./people";
 
 // This is the same as SimilarTvShow
 export interface BaseTvShowProps extends BaseMedia {
@@ -8,7 +9,9 @@ export interface BaseTvShowProps extends BaseMedia {
   original_name: string;
 }
 
-export interface TvShowDetailsProps extends CommonMediaDetails {
+export interface TvShowDetailsProps
+  extends BaseTvShowProps,
+    CommonMediaDetails {
   created_by: {
     id: number;
     credit_id: string;
@@ -35,12 +38,7 @@ export interface TvShowDetailsProps extends CommonMediaDetails {
     still_path: string;
   };
   next_episode_to_air: string;
-  networks: {
-    id: number;
-    logo_path: string;
-    name: string;
-    origin_country: string;
-  };
+  networks: Company[];
   number_of_episodes: number;
   number_of_seasons: number;
   seasons: {
@@ -49,11 +47,17 @@ export interface TvShowDetailsProps extends CommonMediaDetails {
     id: number;
     name: string;
     overview: string;
-    poster_path: string;
+    poster_path: string | null;
     season_number: number;
     vote_average: number;
   };
   type: string;
+  credits?: {
+    cast: CastCredit[];
+    crew: CrewCredit[];
+  };
+  similar: TvShowApiResults;
+  videos?: Videos;
 }
 
 export interface TvShowCastCredit extends BaseTvShowProps {

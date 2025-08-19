@@ -55,7 +55,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
 
     if (isMustWatch) {
       return (
-        <Avatar sx={styles.avatar} aria-label="Must watch movie">
+        <Avatar sx={styles.avatar} aria-label="Must-watch movie">
           <PlaylistAddIcon />
         </Avatar>
       );
