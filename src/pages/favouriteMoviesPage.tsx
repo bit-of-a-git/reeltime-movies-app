@@ -15,6 +15,7 @@ import MovieFilterUI, {
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
 import WriteReview from "../components/cardIcons/writeReview";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -47,8 +48,10 @@ const yearFromFiltering = {
 };
 
 const FavouriteMoviesPage = () => {
-  const { favourites: movieIds, userReviews } = useContext(MoviesContext);
-  const movieReviewIds = userReviews.map((review) => review.movieId);
+  usePageTitle("Favourite Movies");
+
+  const { favourites: movieIds, reviews } = useContext(MoviesContext);
+  const movieReviewIds = reviews.map((review) => review.movieId);
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
@@ -125,12 +128,13 @@ const FavouriteMoviesPage = () => {
           title="Favourite Movies"
           movies={sortedMovies}
           showFooterActions={true}
+          showArrows={false}
           action={(movie) => {
             const isReviewed = movieReviewIds.includes(movie.id);
             return (
               <>
-                <RemoveFromFavourites {...movie} />
                 {!isReviewed && <WriteReview {...movie} />}
+                <RemoveFromFavourites {...movie} />
               </>
             );
           }}

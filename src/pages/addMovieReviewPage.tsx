@@ -6,6 +6,7 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import { MovieDetailsProps } from "../types/interfaces";
 import { Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const WriteReviewPage = () => {
   const location = useLocation();
@@ -17,6 +18,10 @@ const WriteReviewPage = () => {
     isError,
   } = useQuery<MovieDetailsProps, Error>(["movie", movieId], () =>
     getMovie(movieId)
+  );
+
+  usePageTitle(
+    movie?.title ? `Write a review for ${movie.title}` : "Write Review"
   );
 
   if (isLoading) {

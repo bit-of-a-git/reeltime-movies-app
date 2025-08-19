@@ -6,7 +6,6 @@ import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from "./components/siteHeader";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
 import TvShowContextProvider from "./contexts/tvShowContext";
 import PeopleContextProvider from "./contexts/peopleContext";
@@ -184,7 +183,6 @@ const App = () => {
           </MoviesContextProvider>
         </AuthContextProvider>
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

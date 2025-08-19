@@ -1,5 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Person } from "../types/interfaces";
+import { db } from "../config/firebase";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import { useAuth } from "./authContext";
 
 interface PeopleContextInterface {
   favourites: number[];
@@ -19,21 +29,81 @@ const PeopleContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [favourites, setFavourites] = useState<number[]>([]);
+  const { currentUser } = useAuth();
 
-  const addToFavourites = useCallback((person: Person) => {
-    setFavourites((prevFavourites) => {
-      if (!prevFavourites.includes(person.id)) {
-        return [...prevFavourites, person.id];
+  useEffect(() => {
+    const loadUserFavourites = async () => {
+      if (!currentUser) {
+        setFavourites([]);
+        return;
       }
-      return prevFavourites;
-    });
-  }, []);
 
-  const removeFromFavourites = useCallback((person: Person) => {
-    setFavourites((prevFavourites) =>
-      prevFavourites.filter((pId) => pId !== person.id)
-    );
-  }, []);
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setFavourites(userData.favouritePeople || []);
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
+    };
+
+    loadUserFavourites();
+  }, [currentUser]);
+
+  const addToFavourites = useCallback(
+    async (person: Person) => {
+      if (!currentUser) return;
+
+      setFavourites((prevFavourites) => {
+        if (!prevFavourites.includes(person.id)) {
+          return [...prevFavourites, person.id];
+        }
+        return prevFavourites;
+      });
+
+      const userDocRef = doc(db, "users", currentUser.uid);
+
+      try {
+        await updateDoc(userDocRef, {
+          favouritePeople: arrayUnion(person.id),
+        });
+      } catch (error) {
+        try {
+          await setDoc(userDocRef, {
+            favouritePeople: [person.id],
+            email: currentUser.email,
+          });
+        } catch (createError) {
+          console.error("Error adding to favourites:", createError);
+        }
+      }
+    },
+    [currentUser]
+  );
+
+  const removeFromFavourites = useCallback(
+    async (person: Person) => {
+      if (!currentUser) return;
+
+      setFavourites((prevFavourites) =>
+        prevFavourites.filter((pId) => pId !== person.id)
+      );
+
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userDocRef, {
+          favouritePeople: arrayRemove(person.id),
+        });
+      } catch (error) {
+        console.error("Error removing from favourites:", error);
+      }
+    },
+    [currentUser]
+  );
 
   return (
     <PeopleContext.Provider

@@ -6,8 +6,11 @@ import { getPerson } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesPerson";
 import { Typography, Box } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const FavouritePeoplePage = () => {
+  usePageTitle("Favourite People");
+
   const { favourites: peopleIds } = useContext(PeopleContext);
 
   // Create an array of queries and run them in parallel.
@@ -34,7 +37,7 @@ const FavouritePeoplePage = () => {
       {allFavourites.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
-            You have no favourite actors yet.
+            You have no favourite people yet.
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Why not browse and add to your list?
@@ -42,9 +45,10 @@ const FavouritePeoplePage = () => {
         </Box>
       ) : (
         <PageTemplate
-          title="Favourite Cast/Crew"
+          title="Favourite People"
           people={allFavourites}
           showFooterActions={true}
+          showArrows={false}
           action={(person) => {
             return (
               <>

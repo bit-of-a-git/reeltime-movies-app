@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
 import { MoviesContext } from "../../contexts/moviesContext";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
+import DeleteFantasyMovieIcon from "../cardIcons/deleteFantasyMovie";
+import { Timestamp } from "firebase/firestore";
 
 const styles = {
   chipSet: {
@@ -26,7 +28,7 @@ const FantasyMovieList = () => {
     <Box mt={2}>
       <Typography variant="h4">My Fantasy Movies</Typography>
       {fantasyMovies.length > 0 ? (
-        [...fantasyMovies].reverse().map((movie, index) => (
+        fantasyMovies.map((movie, index) => (
           <Box
             key={index}
             mb={2}
@@ -46,7 +48,9 @@ const FantasyMovieList = () => {
                 <Typography variant="body2">
                   {/* https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd */}
                   <CalendarIcon fontSize="inherit" sx={{ paddingRight: 0.5 }} />
-                  {movie.releaseDate?.toISOString().split("T")[0]}
+                  {movie.releaseDate instanceof Timestamp
+                    ? movie.releaseDate.toDate().toISOString().split("T")[0]
+                    : null}
                 </Typography>
                 <Typography variant="body2">
                   <AccessTimeIcon
@@ -82,6 +86,9 @@ const FantasyMovieList = () => {
                       <Chip key={`chip-${company}`} label={company} />
                     </li>
                   ))}
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <DeleteFantasyMovieIcon index={index} />
                 </Box>
               </CardContent>
             </Card>

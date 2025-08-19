@@ -12,6 +12,7 @@ import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { Box, Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -57,6 +58,8 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
   action,
 }) => {
   const [page, setPage] = useState(1);
+
+  usePageTitle(title);
 
   const { data, error, isLoading, isError } = useQuery<MovieApiResults, Error>(
     [queryKey, page],

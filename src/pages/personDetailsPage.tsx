@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { Person } from "../types/interfaces";
 import { Container, Paper, Grid, Box, Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const PersonDetailsPage = () => {
   const { id } = useParams();
@@ -16,6 +17,8 @@ const PersonDetailsPage = () => {
     isLoading,
     isError,
   } = useQuery<Person, Error>(["person", id], () => getPerson(id || ""));
+
+  usePageTitle(person?.name || "Person Details Page");
 
   if (isLoading) {
     return <Spinner />;

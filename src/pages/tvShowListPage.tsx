@@ -13,6 +13,7 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesTvShow";
 import { Box, Typography } from "@mui/material";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const titleFiltering = {
   name: "title",
@@ -56,6 +57,8 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
   fetchFunction,
 }) => {
   const [page, setPage] = useState(1);
+
+  usePageTitle(title);
 
   const { data, error, isLoading, isError } = useQuery<TvShowApiResults, Error>(
     [queryKey, page],

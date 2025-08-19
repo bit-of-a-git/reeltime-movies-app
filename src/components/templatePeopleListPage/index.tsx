@@ -3,6 +3,7 @@ import Header from "../headerList";
 import Grid from "@mui/material/Grid";
 import CastList from "../peopleList";
 import { PeopleListPageTemplateProps } from "../../types/interfaces";
+import { usePageTitle } from "../../hooks/usePageTitle";
 
 const styles = {
   root: {
@@ -16,11 +17,14 @@ const PeopleListPageTemplate: React.FC<PeopleListPageTemplateProps> = ({
   action,
   changePage,
   showFooterActions = false,
+  showArrows = true,
 }) => {
+  usePageTitle(title);
+
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
-        <Header title={title} changePage={changePage} />
+        <Header title={title} changePage={changePage} showArrows={showArrows} />
       </Grid>
       <Grid item container spacing={5}>
         <CastList
