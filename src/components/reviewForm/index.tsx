@@ -9,7 +9,7 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
-import { BaseMovieProps, Review } from "../../types/interfaces";
+import { BaseMovieProps, UserReview as Review } from "../../types/interfaces";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { FormControl, InputLabel, Select } from "@mui/material";

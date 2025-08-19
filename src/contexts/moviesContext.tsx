@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { BaseMovieProps, FantasyMovieProps, Review } from "../types/interfaces";
+import {
+  BaseMovieProps,
+  FantasyMovieProps,
+  UserReview as Review,
+} from "../types/interfaces";
 import { db } from "../config/firebase";
 import {
   doc,

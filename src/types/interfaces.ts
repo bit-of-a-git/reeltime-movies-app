@@ -144,13 +144,18 @@ export interface MovieApiResults {
 }
 
 export interface Review {
+  id: string;
+  content: string;
   author: string;
+}
+
+export interface UserReview {
   content: string;
   image: string;
   movieId: number;
+  movieTitle: string;
   rating: number;
   title: string;
-  movieTitle: string;
 }
 
 export interface UpcomingMovies {
