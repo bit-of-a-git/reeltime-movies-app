@@ -2,7 +2,7 @@ import React, { MouseEvent, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { UserReview as Review } from "../../types/interfaces";
+import { UserReview as Review } from "../../types/movies";
 
 const DeleteReviewIcon: React.FC<Review> = (review) => {
   const context = useContext(MoviesContext);

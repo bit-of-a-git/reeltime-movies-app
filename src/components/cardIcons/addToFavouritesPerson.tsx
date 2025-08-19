@@ -2,7 +2,7 @@ import React, { MouseEvent, useContext } from "react";
 import { PeopleContext } from "../../contexts/peopleContext";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Person } from "../../types/interfaces";
+import { BasePersonProps as Person } from "../../types/people";
 
 const AddToFavouritesPersonIcon: React.FC<Person> = (person) => {
   const context = useContext(PeopleContext);

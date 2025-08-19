@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Person } from "../types/interfaces";
+import { BasePersonProps as Person } from "../types/people";
 import { db } from "../config/firebase";
 import {
   doc,

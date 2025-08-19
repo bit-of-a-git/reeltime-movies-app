@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useMemo } from "react";
-import { FilterOption, GenreData } from "../../types/interfaces";
+import { FilterOption, GenreData } from "../../types/common";
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

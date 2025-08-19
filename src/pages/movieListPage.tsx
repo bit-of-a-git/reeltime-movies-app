@@ -8,7 +8,7 @@ import MovieFilterUI, {
   yearToFilter,
   yearFromFilter,
 } from "../components/movieFilterUI";
-import { MovieApiResults, BaseMovieProps } from "../types/interfaces";
+import { MovieApiResults, BaseMovieProps } from "../types/movies";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { Box, Typography } from "@mui/material";

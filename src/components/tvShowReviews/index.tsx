@@ -9,8 +9,8 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { getTvShowReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../utils";
-
-import { TvShowDetailsProps, Review } from "../../types/interfaces";
+import { TvShowDetailsProps } from "../../types/tvShows";
+import { Review } from "../../types/movies";
 
 const styles = {
   table: {

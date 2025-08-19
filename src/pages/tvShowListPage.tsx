@@ -8,7 +8,7 @@ import TvShowFilterUI, {
   yearToFilter,
   yearFromFilter,
 } from "../components/tvShowFilterUI";
-import { TvShowApiResults, BaseTvShowProps } from "../types/interfaces";
+import { TvShowApiResults, BaseTvShowProps } from "../types/tvShows";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesTvShow";

@@ -2,7 +2,7 @@ import React, { MouseEvent, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PeopleContext } from "../../contexts/peopleContext";
-import { Person } from "../../types/interfaces";
+import { BasePersonProps as Person } from "../../types/people";
 
 const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
   const context = useContext(PeopleContext);

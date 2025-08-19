@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../headerList";
 import Grid from "@mui/material/Grid";
 import TvShowList from "../tvShowList";
-import { TvShowListPageTemplateProps } from "../../types/interfaces";
+import { TvShowListPageTemplateProps } from "../../types/tvShows";
 
 const styles = {
   root: {

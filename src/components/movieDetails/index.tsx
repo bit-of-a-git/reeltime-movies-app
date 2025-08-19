@@ -4,7 +4,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { MovieDetailsProps, Video } from "../../types/interfaces";
+import { MovieDetailsProps } from "../../types/movies";
+import { Video } from "../../types/common";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
@@ -90,7 +91,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -191,7 +192,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         <MovieReviews {...movie} />
       </Drawer>
       <>
-        {movie.credits.cast.length > 0 && (
+        {movie.credits && movie.credits.cast.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel1"}
@@ -240,7 +241,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </AccordionDetails>
           </Accordion>
         )}
-        {movie.credits.crew.length > 0 && (
+        {movie.credits && movie.credits.crew.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel2"}
@@ -292,7 +293,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </AccordionDetails>
           </Accordion>
         )}
-        {movie.similar.results.length > 0 && (
+        {movie.similar && movie.similar.results.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel3"}

@@ -1,4 +1,9 @@
-import { ExpandMore, Movie, Person, TvRounded } from "@mui/icons-material";
+import {
+  ExpandMore,
+  Movie,
+  Person as PersonIcon,
+  TvRounded,
+} from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -12,6 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import img from "../../images/no-image-available.jpg";
+import { PersonDetails } from "../../types/people";
 
 const styles = {
   chipSet: {
@@ -65,11 +71,15 @@ const styles = {
   cardSubtitle: {},
 };
 
-export default function PersonCredits({ person }) {
+interface PersonCreditsProps {
+  person: PersonDetails;
+}
+
+export default function PersonCredits({ person }: PersonCreditsProps) {
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
   return (
@@ -89,7 +99,7 @@ export default function PersonCredits({ person }) {
                 onChange={handleChange("panel0")}
               >
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Person />
+                  <PersonIcon />
                   <Typography variant="h5">As Cast Member</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -136,7 +146,7 @@ export default function PersonCredits({ person }) {
                 onChange={handleChange("panel1")}
               >
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Person />
+                  <PersonIcon />
                   <Typography variant="h5">As Crew Member</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -195,7 +205,7 @@ export default function PersonCredits({ person }) {
                 onChange={handleChange("panel2")}
               >
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Person />
+                  <PersonIcon />
                   <Typography variant="h5">As Cast Member</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -242,7 +252,7 @@ export default function PersonCredits({ person }) {
                 onChange={handleChange("panel3")}
               >
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Person />
+                  <PersonIcon />
                   <Typography variant="h5">As Crew Member</Typography>
                 </AccordionSummary>
                 <AccordionDetails>

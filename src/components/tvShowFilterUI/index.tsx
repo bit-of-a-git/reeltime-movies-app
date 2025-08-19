@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseTvShowProps, TvShowDetailsProps } from "../../types/interfaces";
+import { BaseTvShowProps, TvShowDetailsProps } from "../../types/tvShows";
 import SortCard from "../../components/sortCard";
 import { Box, Button } from "@mui/material";
 

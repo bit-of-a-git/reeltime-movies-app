@@ -23,7 +23,7 @@ export interface BaseMedia {
   original_language: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path: string | null;
   vote_average: number;
   vote_count: number;
 }
@@ -31,23 +31,25 @@ export interface BaseMedia {
 export interface CommonMediaDetails extends BaseMedia {
   genres: Genre[];
   homepage: string;
-  production_companies: {
-    id: number;
-    logo_path: string;
-    name: string;
-    origin_country: string;
-  };
+  production_companies: Company[];
   production_countries: {
     iso_3166_1: string;
     name: string;
-  };
+  }[];
   spoken_languages: {
     english_name: string;
     iso_639_1: string;
     name: string;
-  };
+  }[];
   status: string;
   tagline: string;
+}
+
+export interface Company {
+  id: number;
+  logo_path: string | null;
+  name: string;
+  origin_country: string;
 }
 
 export interface Image {

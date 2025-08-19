@@ -2,7 +2,7 @@ import React, { MouseEvent, useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseMovieProps } from "../../types/movies";
 
 const AddToFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
   const context = useContext(MoviesContext);

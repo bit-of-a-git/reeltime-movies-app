@@ -1,7 +1,7 @@
 import React from "react";
 import Person from "../personCard";
 import Grid from "@mui/material/Grid";
-import { BasePeopleListProps } from "../../types/interfaces";
+import { BasePeopleListProps } from "../../types/people";
 
 const castList: React.FC<BasePeopleListProps> = ({
   people,

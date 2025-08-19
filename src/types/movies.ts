@@ -8,13 +8,18 @@ export interface BaseMovieProps extends BaseMedia {
   video: boolean;
 }
 
-export interface MovieDetailsProps extends CommonMediaDetails {
-  belongs_to_collection: string;
+export interface MovieDetailsProps extends BaseMovieProps, CommonMediaDetails {
+  belongs_to_collection: {
+    id: number;
+    name: string;
+    poster_path: string | null;
+    backdrop_path: string;
+  };
   budget: number;
   imdb_id: string;
   revenue: number;
   runtime: number;
-  credits: {
+  credits?: {
     cast: CastCredit[];
     crew: CrewCredit[];
   };
