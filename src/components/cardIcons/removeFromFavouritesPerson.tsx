@@ -2,13 +2,12 @@ import React, { MouseEvent, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PeopleContext } from "../../contexts/peopleContext";
-import { Person } from "../../types/interfaces";
+import { BasePersonProps as Person } from "../../types/people";
 
 const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
   const context = useContext(PeopleContext);
 
-  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onUserRequest = (_: MouseEvent<HTMLButtonElement>) => {
     context.removeFromFavourites(person);
   };
 
@@ -17,7 +16,8 @@ const RemoveFromFavouritesPersonIcon: React.FC<Person> = (person) => {
       aria-label="remove from favourites"
       onClick={onUserRequest}
       title="Remove this person from your favourites"
-      sx={{ marginLeft: "auto" }}
+      sx={{ ml: "auto" }}
+      type="button"
     >
       <DeleteIcon color="primary" fontSize="large" />
     </IconButton>

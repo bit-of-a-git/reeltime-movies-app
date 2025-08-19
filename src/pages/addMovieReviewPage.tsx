@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import { MovieDetailsProps } from "../types/interfaces";
+import { MovieDetailsProps } from "../types/movies";
 import { Typography } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
 

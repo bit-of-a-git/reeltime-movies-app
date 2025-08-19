@@ -4,7 +4,7 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { MovieDetailsProps } from "../types/interfaces";
+import { MovieDetailsProps } from "../types/movies";
 import { Typography } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
 
@@ -19,7 +19,7 @@ const MovieDetailsPage = () => {
     getMovie(id || "")
   );
 
-  usePageTitle(movie?.title || "Movie Details Page");
+  usePageTitle(movie?.title ?? "Movie Details Page");
 
   if (isLoading) {
     return <Spinner />;

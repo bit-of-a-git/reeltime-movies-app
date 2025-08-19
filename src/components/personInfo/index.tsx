@@ -11,7 +11,7 @@ import AddToFavouritesIcon from "../cardIcons/addToFavouritesPerson";
 import { PeopleContext } from "../../contexts/peopleContext";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Person } from "../../types/interfaces";
+import { BasePersonProps as Person } from "../../types/people";
 import { Link } from "react-router-dom";
 import img from "../../images/no-image-available.jpg";
 import { useAuth } from "../../contexts/authContext";

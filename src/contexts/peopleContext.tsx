@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Person } from "../types/interfaces";
+import { BasePersonProps as Person } from "../types/people";
 import { db } from "../config/firebase";
 import {
   doc,
@@ -45,6 +45,8 @@ const PeopleContextProvider: React.FC<React.PropsWithChildren> = ({
         if (userDoc.exists()) {
           const userData = userDoc.data();
           setFavourites(userData.favouritePeople || []);
+        } else {
+          setFavourites([]);
         }
       } catch (error) {
         console.error("Error loading user data:", error);
@@ -73,10 +75,14 @@ const PeopleContextProvider: React.FC<React.PropsWithChildren> = ({
         });
       } catch (error) {
         try {
-          await setDoc(userDocRef, {
-            favouritePeople: [person.id],
-            email: currentUser.email,
-          });
+          await setDoc(
+            userDocRef,
+            {
+              favouritePeople: [person.id],
+              email: currentUser.email,
+            },
+            { merge: true }
+          );
         } catch (createError) {
           console.error("Error adding to favourites:", createError);
         }

@@ -14,7 +14,8 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
 import styles from "./styles";
 import productionCompanies from "./productionCompanies";
-import { FantasyMovieProps, GenreData } from "../../types/interfaces";
+import { FantasyMovieProps } from "../../types/movies";
+import { GenreData } from "../../types/common";
 import { useQuery } from "react-query";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -186,7 +187,7 @@ const FantasyMovieForm = () => {
           }}
         >
           <Box>
-            <InputLabel id="date-picker-label">Release Date</InputLabel>
+            <InputLabel id="release-date-label">Release Date</InputLabel>
             <Controller
               control={control}
               name="releaseDate"
@@ -197,7 +198,9 @@ const FantasyMovieForm = () => {
                   portalId="datepicker"
                   placeholderText="Select date"
                   onChange={(date) => field.onChange(date)}
-                  selected={field.value}
+                  selected={field.value ? new Date(field.value) : null}
+                  id="release-date-picker"
+                  aria-labelledby="release-date-label"
                 />
               )}
             />
@@ -209,9 +212,7 @@ const FantasyMovieForm = () => {
           </Box>
 
           <Box>
-            <InputLabel id="date-picker-label">
-              Movie Runtime (Minutes)
-            </InputLabel>
+            <InputLabel>Movie Runtime (Minutes)</InputLabel>
             <FormControl fullWidth>
               <Controller
                 name="runtime"

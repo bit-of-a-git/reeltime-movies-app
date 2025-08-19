@@ -20,6 +20,7 @@ import Divider from "@mui/material/Divider";
 import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import DeleteReviewIcon from "../components/cardIcons/deleteReview";
 import { usePageTitle } from "../hooks/usePageTitle";
+import img from "../images/no-image-available.jpg";
 
 const styles = {
   root: {
@@ -80,11 +81,11 @@ const UserMovieReviewPage = () => {
         <>
           <Grid style={styles.root}>
             <Grid item xs={12}>
-              <Header title="My Reviews" />
+              <Header title="My Movie Reviews" />
             </Grid>
             <Grid container spacing={2}>
-              {[...reviewsWithMovieData].reverse().map((review, index) => (
-                <Grid item xs={12} md={6} key={index}>
+              {[...reviewsWithMovieData].reverse().map((review) => (
+                <Grid item xs={12} md={6} key={`${review.movieId}`}>
                   <Card>
                     <CardHeader
                       title={
@@ -98,7 +99,11 @@ const UserMovieReviewPage = () => {
                         <Link to={`/movies/${review.movieId}`}>
                           <CardMedia
                             component="img"
-                            image={`https://image.tmdb.org/t/p/w300${review.image}`}
+                            image={
+                              review.image
+                                ? `https://image.tmdb.org/t/p/w300${review.image}`
+                                : img
+                            }
                             alt={review.movieTitle}
                             sx={{
                               ...styles.poster,

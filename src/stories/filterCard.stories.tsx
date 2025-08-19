@@ -34,6 +34,8 @@ export const Basic: Story = {
     onUserInput: action("filter input"),
     titleFilter: "",
     genreFilter: "All",
+    minRatingFilter: "0",
+    yearToFilter: new Date().getFullYear().toString(),
+    yearFromFilter: "1888",
   },
-};
-Basic.storyName = "Default";
+};Basic.storyName = "Default";

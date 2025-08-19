@@ -4,7 +4,7 @@ import PersonCredits from "../components/personCredits";
 import { getPerson } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { Person } from "../types/interfaces";
+import { PersonDetails as Person } from "../types/people";
 import { Container, Paper, Grid, Box, Typography } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
 
@@ -18,7 +18,7 @@ const PersonDetailsPage = () => {
     isError,
   } = useQuery<Person, Error>(["person", id], () => getPerson(id || ""));
 
-  usePageTitle(person?.name || "Person Details Page");
+  usePageTitle(person?.name ?? "Person Details Page");
 
   if (isLoading) {
     return <Spinner />;

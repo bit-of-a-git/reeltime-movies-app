@@ -6,7 +6,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import img from "../../images/film-poster-placeholder.png";
-import { Person } from "../../types/interfaces";
+import { BasePersonProps as Person } from "../../types/people";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { PeopleContext } from "../../contexts/peopleContext";

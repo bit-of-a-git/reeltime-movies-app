@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../headerList";
 import Grid from "@mui/material/Grid";
 import CastList from "../peopleList";
-import { PeopleListPageTemplateProps } from "../../types/interfaces";
+import { PeopleListPageTemplateProps } from "../../types/people";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
 const styles = {

@@ -9,7 +9,7 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
-import { BaseTvShowProps } from "../../types/interfaces";
+import { BaseTvShowProps } from "../../types/tvShows";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { TvShowContext } from "../../contexts/tvShowContext";

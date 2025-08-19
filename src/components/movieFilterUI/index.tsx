@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import { BaseMovieProps, MovieDetailsProps } from "../../types/interfaces";
+import { BaseMovieProps, MovieDetailsProps } from "../../types/movies";
 import SortCard from "../../components/sortCard";
 import { Box, Button } from "@mui/material";
 
@@ -32,20 +32,20 @@ export const genreFilter = (
 
 export const minRatingFilter = (
   movie: BaseMovieProps,
-  value: number
+  value: string
 ): boolean => {
-  return movie.vote_average >= value;
+  return movie.vote_average >= Number(value);
 };
 
-export const yearToFilter = (movie: BaseMovieProps, value: number): boolean => {
-  return dateToYear(movie.release_date) <= value;
+export const yearToFilter = (movie: BaseMovieProps, value: string): boolean => {
+  return dateToYear(movie.release_date) <= Number(value);
 };
 
 export const yearFromFilter = (
   movie: BaseMovieProps,
-  value: number
+  value: string
 ): boolean => {
-  return dateToYear(movie.release_date) >= value;
+  return dateToYear(movie.release_date) >= Number(value);
 };
 
 const styles = {
@@ -65,9 +65,9 @@ interface MovieFilterUIProps {
   onResetFilters: () => void;
   titleFilter: string;
   genreFilter: string;
-  minRatingFilter: number;
-  yearToFilter: number;
-  yearFromFilter: number;
+  minRatingFilter: string;
+  yearToFilter: string;
+  yearFromFilter: string;
 }
 
 const MovieFilterUI: React.FC<MovieFilterUIProps> = ({

@@ -9,7 +9,7 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
-import { BaseMovieProps } from "../../types/interfaces";
+import { BaseMovieProps } from "../../types/movies";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -55,7 +55,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
 
     if (isMustWatch) {
       return (
-        <Avatar sx={styles.avatar} aria-label="Favourite movie">
+        <Avatar sx={styles.avatar} aria-label="Must-watch movie">
           <PlaylistAddIcon />
         </Avatar>
       );

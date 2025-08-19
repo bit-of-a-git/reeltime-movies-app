@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { BaseMovieProps, FantasyMovieProps, Review } from "../types/interfaces";
+import {
+  BaseMovieProps,
+  FantasyMovieProps,
+  UserReview as Review,
+} from "../types/movies";
 import { db } from "../config/firebase";
 import {
   doc,
@@ -282,7 +286,7 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
         const userDoc = await getDoc(userDocRef);
         const userData = userDoc.data();
         const updatedMovies = (userData?.fantasyMovies || []).filter(
-          (_, i) => i !== index
+          (_: FantasyMovieProps, i: number) => i !== index
         );
 
         await updateDoc(userDocRef, {

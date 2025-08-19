@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { BaseTvShowProps } from "../types/interfaces";
+import { BaseTvShowProps } from "../types/tvShows";
 import { db } from "../config/firebase";
 import {
   doc,

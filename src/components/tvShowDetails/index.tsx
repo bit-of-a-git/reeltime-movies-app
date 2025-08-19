@@ -3,7 +3,8 @@ import Chip from "@mui/material/Chip";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import { TvShowDetailsProps, Video } from "../../types/interfaces";
+import { TvShowDetailsProps } from "../../types/tvShows";
+import { Video } from "../../types/common";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
@@ -92,7 +93,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -204,7 +205,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
         <TvShowReviews {...tvShow} />
       </Drawer>
       <>
-        {tvShow.credits.cast.length > 0 && (
+        {tvShow.credits && tvShow.credits.cast.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel1"}
@@ -298,7 +299,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
             </AccordionDetails>
           </Accordion>
         )}
-        {tvShow.credits.crew.length > 0 && (
+        {tvShow.credits && tvShow.credits.crew.length > 0 && (
           <Accordion
             disableGutters
             expanded={expanded === "panel3"}

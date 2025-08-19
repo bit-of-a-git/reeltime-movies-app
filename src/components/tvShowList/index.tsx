@@ -1,7 +1,7 @@
 import React from "react";
 import TvShow from "../tvShowCard/";
 import Grid from "@mui/material/Grid";
-import { BaseTvShowListProps } from "../../types/interfaces";
+import { BaseTvShowListProps } from "../../types/tvShows";
 
 const TvShowList: React.FC<BaseTvShowListProps> = ({
   tvShows,

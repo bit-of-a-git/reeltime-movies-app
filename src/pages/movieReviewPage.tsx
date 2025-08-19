@@ -8,7 +8,7 @@ const MovieReviewPage = () => {
     state: { movie, review },
   } = useLocation();
 
-  usePageTitle(`${movie.title} Review`);
+  usePageTitle(movie?.title ? `${movie.title} Review` : "Movie Review");
 
   return (
     <PageTemplate movie={movie}>

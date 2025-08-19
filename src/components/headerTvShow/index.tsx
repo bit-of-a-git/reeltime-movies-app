@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { TvShowDetailsProps } from "../../types/interfaces";
+import { TvShowDetailsProps } from "../../types/tvShows";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TvShowContext } from "../../contexts/tvShowContext";
