@@ -29,19 +29,19 @@ const genreFiltering = {
 
 const minRatingFiltering = {
   name: "minRating",
-  value: 0,
+  value: "0",
   condition: minRatingFilter,
 };
 
 const yearToFiltering = {
   name: "yearTo",
-  value: new Date().getFullYear(),
+  value: new Date().getFullYear().toString(),
   condition: yearToFilter,
 };
 
 const yearFromFiltering = {
   name: "yearFrom",
-  value: 1935,
+  value: "1935",
   condition: yearFromFilter,
 };
 
@@ -83,7 +83,7 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
     return <Typography variant="h4">{(error as Error).message}</Typography>;
   }
 
-  const changeFilterValues = (type: string, value: string | number) => {
+  const changeFilterValues = (type: string, value: string) => {
     const updatedFilterSet = filterValues.map((filter) =>
       filter.name === type ? { ...filter, value } : filter
     );
@@ -119,7 +119,7 @@ const TvShowListPage: React.FC<TvShowListPageProps> = ({
 
   const changePage = (delta: number) => {
     const newPage = page + delta;
-    if (newPage > 0 && newPage <= data.total_pages) {
+    if (data && newPage > 0 && newPage <= data.total_pages) {
       setPage(newPage);
     }
   };

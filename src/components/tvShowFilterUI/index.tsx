@@ -35,23 +35,23 @@ export const genreFilter = (
 
 export const minRatingFilter = (
   tvShow: BaseTvShowProps,
-  value: number
+  value: string
 ): boolean => {
-  return tvShow.vote_average >= value;
+  return tvShow.vote_average >= Number(value);
 };
 
 export const yearToFilter = (
   tvShow: BaseTvShowProps,
-  value: number
+  value: string
 ): boolean => {
-  return dateToYear(tvShow.first_air_date) <= value;
+  return dateToYear(tvShow.first_air_date) <= Number(value);
 };
 
 export const yearFromFilter = (
   tvShow: BaseTvShowProps,
-  value: number
+  value: string
 ): boolean => {
-  return dateToYear(tvShow.first_air_date) >= value;
+  return dateToYear(tvShow.first_air_date) >= Number(value);
 };
 
 const styles = {
@@ -72,9 +72,9 @@ interface TvShowFilterUIProps {
   onResetFilters: () => void;
   titleFilter: string;
   genreFilter: string;
-  minRatingFilter: number;
-  yearToFilter: number;
-  yearFromFilter: number;
+  minRatingFilter: string;
+  yearToFilter: string;
+  yearFromFilter: string;
 }
 
 const TvShowFilterUI: React.FC<TvShowFilterUIProps> = ({

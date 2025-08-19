@@ -31,9 +31,9 @@ interface FilterCardProps {
   onUserInput: (f: FilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
-  minRatingFilter: number;
-  yearToFilter: number;
-  yearFromFilter: number;
+  minRatingFilter: string;
+  yearToFilter: string;
+  yearFromFilter: string;
 }
 
 const FilterCard: React.FC<FilterCardProps> = ({

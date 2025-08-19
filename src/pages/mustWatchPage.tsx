@@ -15,6 +15,7 @@ import MovieFilterUI, {
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
 import { Typography, Box } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { BaseMovieProps } from "../types/movies";
 
 const titleFiltering = {
   name: "title",
@@ -30,19 +31,19 @@ const genreFiltering = {
 
 const minRatingFiltering = {
   name: "minRating",
-  value: 0,
+  value: "0",
   condition: minRatingFilter,
 };
 
 const yearToFiltering = {
   name: "yearTo",
-  value: new Date().getFullYear(),
+  value: new Date().getFullYear().toString(),
   condition: yearToFilter,
 };
 
 const yearFromFiltering = {
   name: "yearFrom",
-  value: 1888,
+  value: "1888",
   condition: yearFromFilter,
 };
 
@@ -77,7 +78,7 @@ const MustWatchPage = () => {
     return <Spinner />;
   }
 
-  const changeFilterValues = (type: string, value: string | number) => {
+  const changeFilterValues = (type: string, value: string) => {
     const updatedFilterSet = filterValues.map((filter) =>
       filter.name === type ? { ...filter, value } : filter
     );
@@ -95,6 +96,16 @@ const MustWatchPage = () => {
 
   const changeSortOption = (sort: string) => {
     setSortOption(sort);
+  };
+
+  const handleResetFilters = () => {
+    setFilterValues([
+      { ...titleFiltering },
+      { ...genreFiltering },
+      { ...minRatingFiltering },
+      { ...yearToFiltering },
+      { ...yearFromFiltering },
+    ]);
   };
 
   const allMustWatchList = mustWatchMovieQueries.map((q) => q.data);
@@ -146,6 +157,7 @@ const MustWatchPage = () => {
         yearToFilter={filterValues[3].value}
         yearFromFilter={filterValues[4].value}
         onSortChange={changeSortOption}
+        onResetFilters={handleResetFilters}
       />
     </>
   );

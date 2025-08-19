@@ -28,19 +28,19 @@ const genreFiltering = {
 
 const minRatingFiltering = {
   name: "minRating",
-  value: 0,
+  value: "0",
   condition: minRatingFilter,
 };
 
 const yearToFiltering = {
   name: "yearTo",
-  value: new Date().getFullYear(),
+  value: new Date().getFullYear().toString(),
   condition: yearToFilter,
 };
 
 const yearFromFiltering = {
   name: "yearFrom",
-  value: 1888,
+  value: "1888",
   condition: yearFromFilter,
 };
 
@@ -89,7 +89,7 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
   // Loops through the filterValues array, checking if the filter's name matches the type provided
   // If so, it creates a new filter object. If not, it leaves the filter unchanged. Produces a new
   // array where only the target filter has its value updated.
-  const changeFilterValues = (type: string, value: string | number) => {
+  const changeFilterValues = (type: string, value: string) => {
     const updatedFilterSet = filterValues.map((filter) =>
       filter.name === type ? { ...filter, value } : filter
     );
@@ -126,7 +126,7 @@ const MovieListPage: React.FC<MovieListPageProps> = ({
   // I referred to https://github.com/eoinfennessy/movies-app/ for the pagination
   const changePage = (delta: number) => {
     const newPage = page + delta;
-    if (newPage > 0 && newPage <= data.total_pages) {
+    if (data && newPage > 0 && newPage <= data.total_pages) {
       setPage(newPage);
     }
   };
