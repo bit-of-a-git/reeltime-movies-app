@@ -8,13 +8,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 
 const styles = {
   root: {
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexWrap: "wrap",
     padding: 1.5,
   },
   avatar: {
@@ -57,31 +54,43 @@ const MovieHeader: React.FC<TemplateMovieHeaderProps> = ({ movie, action }) => {
       );
     }
 
-    return <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>;
+    return (
+      <Avatar sx={{ ...styles.avatar, bgcolor: "transparent" }}>
+        {action(movie)}
+      </Avatar>
+    );
   };
 
   return (
     <Paper component="div" sx={styles.root}>
-      {renderAvatar()}
-      <Typography variant="h4" component="h3">
-        {movie.title}
-      </Typography>
-      {movie.tagline && (
-        <Typography variant="h5" component="h3">
-          {movie.tagline}
-        </Typography>
-      )}
-      {movie.homepage && (
-        <Link
-          to={movie.homepage}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Open ${movie.title} homepage`}
-          title={`Open ${movie.title} homepage`}
-        >
-          <HomeIcon color="primary" fontSize="large" />
-        </Link>
-      )}
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item xs={1} sx={{ display: "flex", justifyContent: "center" }}>
+          {renderAvatar()}
+        </Grid>
+        <Grid item xs={10}>
+          <Typography variant="h4" component="h4">
+            {movie.title}
+          </Typography>
+          {movie.tagline && (
+            <Typography variant="h5" component="h5" fontStyle="italic">
+              {movie.tagline}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={1} sx={{ display: "flex", justifyContent: "center" }}>
+          {movie.homepage && (
+            <Link
+              to={movie.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${movie.title} homepage`}
+              title={`Open ${movie.title} homepage`}
+            >
+              <HomeIcon color="primary" fontSize="large" />
+            </Link>
+          )}
+        </Grid>
+      </Grid>
     </Paper>
   );
 };

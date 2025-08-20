@@ -13,7 +13,8 @@ import AuthContextProvider from "./contexts/authContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FantasyMoviePage from "./pages/fantasyMoviePage";
 import PersonDetailsPage from "./pages/personDetailsPage";
-import MustWatchPage from "./pages/mustWatchPage";
+import MustWatchMoviesPage from "./pages/mustWatchMoviesPage";
+import MustWatchTvShowsPage from "./pages/mustWatchTvShowsPage";
 import LoginPage from "./pages/login";
 import ProtectedRoute from "./components/protectedRoute";
 import FavouritePeoplePage from "./pages/favouritePeoplePage";
@@ -140,7 +141,7 @@ const App = () => {
                       path="/movies/my-must-watch"
                       element={
                         <ProtectedRoute>
-                          <MustWatchPage />
+                          <MustWatchMoviesPage />
                         </ProtectedRoute>
                       }
                     />
@@ -172,6 +173,14 @@ const App = () => {
                     <Route
                       path="/tv/top-rated"
                       element={<TopRatedTvShowsPage />}
+                    />
+                    <Route
+                      path="/tv/my-must-watch"
+                      element={
+                        <ProtectedRoute>
+                          <MustWatchTvShowsPage />
+                        </ProtectedRoute>
+                      }
                     />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/" element={<DiscoverMoviesPage />} />

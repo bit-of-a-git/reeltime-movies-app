@@ -12,7 +12,7 @@ import MovieFilterUI, {
   yearToFilter,
   yearFromFilter,
 } from "../components/movieFilterUI";
-import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
+import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatchMovies";
 import { Typography, Box } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
 import { BaseMovieProps } from "../types/movies";
@@ -47,7 +47,7 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const MustWatchPage = () => {
+const MustWatchMoviesPage = () => {
   usePageTitle("Must Watch Movies");
 
   const { mustWatch: movieIds } = useContext(MoviesContext);
@@ -162,4 +162,4 @@ const MustWatchPage = () => {
   );
 };
 
-export default MustWatchPage;
+export default MustWatchMoviesPage;
