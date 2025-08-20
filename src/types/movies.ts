@@ -54,7 +54,6 @@ export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
   changePage?: (delta: number) => void;
   showFooterActions?: boolean;
-  showArrows?: boolean;
 }
 
 export interface MovieApiResults {

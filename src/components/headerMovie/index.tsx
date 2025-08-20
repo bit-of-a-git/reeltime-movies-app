@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { MovieDetailsProps } from "../../types/movies";
+import { BaseMovieProps, MovieDetailsProps } from "../../types/movies";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { Link } from "react-router-dom";
 
@@ -21,17 +22,47 @@ const styles = {
   },
 };
 
-const MovieHeader: React.FC<MovieDetailsProps> = (movie) => {
-  const { favourites } = useContext(MoviesContext);
+interface TemplateMovieHeaderProps {
+  movie: MovieDetailsProps;
+  action: (m: BaseMovieProps) => React.ReactNode;
+}
+
+const MovieHeader: React.FC<TemplateMovieHeaderProps> = ({ movie, action }) => {
+  const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.includes(movie.id);
+  const isMustWatch = mustWatch.includes(movie.id);
+
+  const renderAvatar = () => {
+    if (isFavourite) {
+      return (
+        <Avatar
+          sx={styles.avatar}
+          aria-label="Favourite Movie"
+          title="Added to favourite movies"
+        >
+          <FavoriteIcon />
+        </Avatar>
+      );
+    }
+
+    if (isMustWatch) {
+      return (
+        <Avatar
+          sx={styles.avatar}
+          aria-label="Must-Watch Movie"
+          title="Added to must-watch movies"
+        >
+          <PlaylistAddIcon />
+        </Avatar>
+      );
+    }
+
+    return <Avatar sx={{ bgcolor: "transparent" }}>{action(movie)}</Avatar>;
+  };
 
   return (
     <Paper component="div" sx={styles.root}>
-      {isFavourite && (
-        <Avatar sx={styles.avatar}>
-          <FavoriteIcon />
-        </Avatar>
-      )}
+      {renderAvatar()}
       <Typography variant="h4" component="h3">
         {movie.title}
       </Typography>
