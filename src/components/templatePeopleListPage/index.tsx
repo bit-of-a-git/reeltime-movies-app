@@ -17,16 +17,15 @@ const PeopleListPageTemplate: React.FC<PeopleListPageTemplateProps> = ({
   action,
   changePage,
   showFooterActions = false,
-  showArrows = true,
 }) => {
   usePageTitle(title);
 
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
-        <Header title={title} changePage={changePage} showArrows={showArrows} />
+        <Header title={title} changePage={changePage} />
       </Grid>
-      <Grid item container spacing={5}>
+      <Grid item container spacing={2.5} xs={12}>
         <CastList
           action={action}
           people={people}

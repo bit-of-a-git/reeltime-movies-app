@@ -9,7 +9,7 @@ const TvShowList: React.FC<BaseTvShowListProps> = ({
   showFooterActions = false,
 }) => {
   const tvShowCards = tvShows.map((t) => (
-    <Grid key={t.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+    <Grid key={t.id} item xs={12} sm={6} md={4} lg={3} xl={2.4}>
       <TvShow
         tvShow={t}
         action={action}

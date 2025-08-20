@@ -34,7 +34,7 @@ const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
           <TableRow>
             <TableCell>Author</TableCell>
             <TableCell align="center">Excerpt</TableCell>
-            <TableCell align="right">More</TableCell>
+            <TableCell>More</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

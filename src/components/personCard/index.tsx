@@ -5,13 +5,14 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import img from "../../images/film-poster-placeholder.png";
+import img from "../../images/no-image-available.jpg";
 import { BasePersonProps as Person } from "../../types/people";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { PeopleContext } from "../../contexts/peopleContext";
 
 const styles = {
+  media: { height: 450, objectFit: "contain" },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -36,7 +37,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
       <CardHeader
         avatar={
           isFavourite ? (
-            <Avatar sx={styles.avatar}>
+            <Avatar sx={styles.avatar} aria-label="Favourite Person">
               <FavoriteIcon />
             </Avatar>
           ) : null
@@ -58,6 +59,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
       >
         <CardMedia
           component="img"
+          sx={styles.media}
           image={
             person.profile_path
               ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`

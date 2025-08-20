@@ -48,7 +48,6 @@ const FavouritePeoplePage = () => {
           title="Favourite People"
           people={allFavourites}
           showFooterActions={true}
-          showArrows={false}
           action={(person) => {
             return (
               <>

@@ -79,7 +79,10 @@ const MovieCard: React.FC<MovieCardProps> = ({
           },
         }}
       />
-      <Link to={`/movies/${movie.id}`}>
+      <Link
+        to={`/movies/${movie.id}`}
+        aria-label={`View details for ${movie.title}`}
+      >
         <CardMedia
           component="img"
           sx={styles.media}

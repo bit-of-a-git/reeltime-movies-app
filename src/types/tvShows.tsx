@@ -85,7 +85,6 @@ export interface TvShowListPageTemplateProps extends BaseTvShowListProps {
   title: string;
   changePage?: (delta: number) => void;
   showFooterActions?: boolean;
-  showArrows?: boolean;
 }
 
 export interface TvShowApiResults {

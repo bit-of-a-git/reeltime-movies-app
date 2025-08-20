@@ -139,7 +139,6 @@ const FavouriteMoviesPage = () => {
           title="Favourite Movies"
           movies={sortedMovies}
           showFooterActions={true}
-          showArrows={false}
           action={(movie) => {
             const isReviewed = movieReviewIds.includes(movie.id);
             return (

@@ -69,7 +69,10 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
           },
         }}
       />
-      <Link to={`/tv/${tvShow.id}`}>
+      <Link
+        to={`/tv/${tvShow.id}`}
+        aria-label={`View details for ${tvShow.name}`}
+      >
         <CardMedia
           component="img"
           sx={styles.media}

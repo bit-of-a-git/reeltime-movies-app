@@ -138,7 +138,6 @@ const MustWatchPage = () => {
           title="Must Watch Movies"
           movies={sortedMovies}
           showFooterActions={true}
-          showArrows={false}
           action={(movie) => {
             return (
               <>
