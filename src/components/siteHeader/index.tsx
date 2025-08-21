@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import MovieIcon from "@mui/icons-material/Movie";
@@ -41,6 +41,7 @@ const drawerWidth = 250;
 
 const SiteHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { currentUser, logout } = useAuth();
 
@@ -75,7 +76,7 @@ const SiteHeader = () => {
         console.error("Error logging out");
       }
     } else {
-      navigate(pageURL);
+      navigate(pageURL, { state: { from: location } });
       setDrawerOpen(false);
     }
   };
