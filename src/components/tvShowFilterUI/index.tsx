@@ -59,7 +59,7 @@ const styles = {
     backgroundColor: "#bfbfbf",
   },
   fab: {
-    marginTop: 8,
+    marginTop: 7,
     position: "fixed",
     top: 20,
     right: 2,

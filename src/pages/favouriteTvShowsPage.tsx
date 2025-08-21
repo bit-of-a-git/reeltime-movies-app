@@ -136,7 +136,6 @@ const FavouriteTvShowsPage = () => {
           title="Favourite TV Shows"
           tvShows={sortedTvShows}
           showFooterActions={true}
-          showArrows={false}
           action={(tvShow) => {
             return (
               <>

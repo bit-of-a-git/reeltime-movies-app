@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import {
   Button,
@@ -23,6 +23,7 @@ import GoogleButton from "react-google-button";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, signup, loginWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +34,8 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await login(email, password);
-      navigate("/");
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
     } catch (error) {
       setErrorMessage("Error logging in. Please try again");
     }
@@ -42,7 +44,8 @@ const Login = () => {
   const handleSignup = async () => {
     try {
       await signup(email, password);
-      navigate("/");
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
     } catch (error) {
       setErrorMessage("Error signing up. Please try again");
     }
@@ -51,7 +54,8 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
-      navigate("/");
+      const from = location.state?.from?.pathname || "/movies/my-must-watch";
+      navigate(from, { replace: true });
     } catch (error) {
       setErrorMessage("Error signing up. Please try again");
     }

@@ -9,7 +9,7 @@ const castList: React.FC<BasePeopleListProps> = ({
   showFooterActions = false,
 }) => {
   const castCards = people.map((p) => (
-    <Grid key={p.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+    <Grid key={p.id} item xs={12} sm={6} md={4} lg={3} xl={2.4}>
       <Person
         key={p.id}
         person={p}

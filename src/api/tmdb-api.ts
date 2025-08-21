@@ -92,11 +92,14 @@ export const getTopRatedMovies = (page: number) => {
   return fetchMoviePage("top_rated", page);
 };
 
-export const getMovie = (id: string) => {
+export const getMovie = (id: string, appendToResponse: boolean = false) => {
+  const appendParam = appendToResponse
+    ? "&append_to_response=credits,similar,videos"
+    : "";
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&append_to_response=credits,similar,videos`
+    }${appendParam}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -189,11 +192,14 @@ export const getTopRatedTvShows = (page: number) => {
   return fetchTvShowPage("top_rated", page);
 };
 
-export const getTvShow = (id: string) => {
+export const getTvShow = (id: string, appendToResponse: boolean = false) => {
+  const appendParam = appendToResponse
+    ? "&append_to_response=credits,similar,videos"
+    : "";
   return fetch(
     `https://api.themoviedb.org/3/tv/${id}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&append_to_response=credits,similar,videos`
+    }${appendParam}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -216,11 +222,14 @@ export const getTvShowReviews = (id: string | number) => {
   return getReviews(id, "tv");
 };
 
-export const getPerson = (id: string) => {
+export const getPerson = (id: string, appendToResponse: boolean = false) => {
+  const appendParam = appendToResponse
+    ? "&append_to_response=movie_credits,tv_credits"
+    : "";
   return fetch(
     `https://api.themoviedb.org/3/person/${id}?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&append_to_response=movie_credits,tv_credits`
+    }${appendParam}`
   )
     .then((response) => {
       if (!response.ok) {

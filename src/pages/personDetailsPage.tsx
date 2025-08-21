@@ -16,7 +16,7 @@ const PersonDetailsPage = () => {
     error,
     isLoading,
     isError,
-  } = useQuery<Person, Error>(["person", id], () => getPerson(id || ""));
+  } = useQuery<Person, Error>(["person", id], () => getPerson(id || "", true));
 
   usePageTitle(person?.name ?? "Person Details Page");
 

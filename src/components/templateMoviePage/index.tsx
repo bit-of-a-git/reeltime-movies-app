@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import Spinner from "../spinner";
 import { Card, CardMedia, Typography } from "@mui/material";
 import img from "../../images/no-image-available.jpg";
+import AddToMustWatchIcon from "../cardIcons/addToMustWatchMovie";
 
 interface TemplateMoviePageProps {
   movie: MovieDetailsProps;
@@ -38,7 +39,10 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({
 
   return (
     <>
-      <MovieHeader {...movie} />
+      <MovieHeader
+        movie={movie}
+        action={(movie) => <AddToMustWatchIcon {...movie} />}
+      />
 
       <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>

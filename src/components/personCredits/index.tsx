@@ -20,23 +20,6 @@ import img from "../../images/no-image-available.jpg";
 import { PersonDetails } from "../../types/people";
 
 const styles = {
-  chipSet: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
-  },
-  chipLabel: {
-    margin: 0.5,
-  },
-  fab: {
-    position: "fixed",
-    top: 75,
-    right: 2,
-  },
   genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
@@ -62,13 +45,9 @@ const styles = {
     objectFit: "cover",
     borderRadius: "8px",
   },
-  creditsImage: {
-    borderRadius: "8px",
-  },
   cardTitle: {
     marginBottom: "5px",
   },
-  cardSubtitle: {},
 };
 
 interface PersonCreditsProps {
@@ -125,10 +104,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>
-                            <Typography
-                              variant="body2"
-                              style={styles.cardSubtitle}
-                            >
+                            <Typography variant="body2">
                               {credit.character || "Unknown"}
                             </Typography>
                           </CardContent>
@@ -172,10 +148,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>
-                            <Typography
-                              variant="body2"
-                              style={styles.cardSubtitle}
-                            >
+                            <Typography variant="body2">
                               {credit.job || "Unknown"}
                             </Typography>
                           </CardContent>
@@ -231,10 +204,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>
-                            <Typography
-                              variant="body2"
-                              style={styles.cardSubtitle}
-                            >
+                            <Typography variant="body2">
                               {credit.character || "Unknown"}
                             </Typography>
                           </CardContent>
@@ -278,10 +248,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                             sx={styles.similarMovieImage}
                           />
                           <CardContent>
-                            <Typography
-                              variant="body2"
-                              style={styles.cardSubtitle}
-                            >
+                            <Typography variant="body2">
                               {credit.job || "Unknown"}
                             </Typography>
                           </CardContent>

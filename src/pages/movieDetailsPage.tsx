@@ -16,7 +16,7 @@ const MovieDetailsPage = () => {
     isLoading,
     isError,
   } = useQuery<MovieDetailsProps, Error>(["movie", id], () =>
-    getMovie(id || "")
+    getMovie(id || "", true)
   );
 
   usePageTitle(movie?.title ?? "Movie Details Page");

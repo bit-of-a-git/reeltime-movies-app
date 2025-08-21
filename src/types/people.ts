@@ -62,5 +62,4 @@ export interface BasePeopleListProps {
 export interface PeopleListPageTemplateProps extends BasePeopleListProps {
   title: string;
   changePage?: (delta: number) => void;
-  showArrows?: boolean;
 }
