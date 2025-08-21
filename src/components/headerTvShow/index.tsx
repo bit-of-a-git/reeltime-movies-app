@@ -9,6 +9,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { TvShowContext } from "../../contexts/tvShowContext";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import { useAuth } from "../../contexts/authContext";
 
 const styles = {
   root: {
@@ -31,8 +32,13 @@ const TvShowHeader: React.FC<TemplateTvShowHeaderProps> = ({
   const { favourites, mustWatch } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
   const isMustWatch = mustWatch.includes(tvShow.id);
+  const { currentUser } = useAuth();
 
   const renderAvatar = () => {
+    if (!currentUser) {
+      return null;
+    }
+
     if (isFavourite) {
       return (
         <Avatar

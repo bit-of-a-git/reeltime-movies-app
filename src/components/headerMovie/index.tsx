@@ -9,6 +9,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import { useAuth } from "../../contexts/authContext";
 
 const styles = {
   root: {
@@ -28,8 +29,13 @@ const MovieHeader: React.FC<TemplateMovieHeaderProps> = ({ movie, action }) => {
   const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.includes(movie.id);
   const isMustWatch = mustWatch.includes(movie.id);
+  const { currentUser } = useAuth();
 
   const renderAvatar = () => {
+    if (!currentUser) {
+      return null;
+    }
+
     if (isFavourite) {
       return (
         <Avatar
