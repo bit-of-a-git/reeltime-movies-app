@@ -38,7 +38,7 @@ const styles = {
   },
   fab: {
     position: "fixed",
-    top: 75,
+    top: 145,
     right: 2,
   },
   genericBox: {
