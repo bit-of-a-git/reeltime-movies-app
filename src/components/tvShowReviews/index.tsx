@@ -35,7 +35,7 @@ const TvShowReviews: React.FC<TvShowDetailsProps> = (tvShow) => {
           <TableRow>
             <TableCell>Author</TableCell>
             <TableCell align="center">Excerpt</TableCell>
-            <TableCell align="right">More</TableCell>
+            <TableCell>More</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

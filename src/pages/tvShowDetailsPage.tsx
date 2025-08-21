@@ -16,7 +16,7 @@ const TvShowDetailsPage = () => {
     isLoading,
     isError,
   } = useQuery<TvShowDetailsProps, Error>(["tvShow", id], () =>
-    getTvShow(id || "")
+    getTvShow(id || "", true)
   );
 
   usePageTitle(tvShow?.name || "TV Show Details Page");

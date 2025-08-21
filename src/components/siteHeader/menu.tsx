@@ -73,6 +73,14 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
               { label: "People", path: "/people/favourites" },
             ],
           },
+          {
+            label: "Must Watch",
+            icon: <PlaylistAddIcon />,
+            children: [
+              { label: "Movies", path: "/movies/my-must-watch" },
+              { label: "TV Shows", path: "/tv/my-must-watch" },
+            ],
+          },
         ]
       : []),
     ...(auth.currentUser
@@ -81,11 +89,6 @@ const Menu: React.FC<MenuProps> = ({ handleDrawerToggle }) => {
             label: "Fantasy Movies",
             icon: <AutoAwesomeIcon />,
             path: "/movies/fantasy-movie-maker",
-          },
-          {
-            label: "Must Watch",
-            icon: <PlaylistAddIcon />,
-            path: "/movies/my-must-watch",
           },
           {
             label: "My Movie Reviews",

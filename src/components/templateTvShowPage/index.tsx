@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import Spinner from "../spinner";
 import { Card, CardMedia, Typography } from "@mui/material";
 import img from "../../images/no-image-available.jpg";
+import AddToMustWatchIcon from "../cardIcons/addToMustWatchTvShow";
 
 interface TemplateTvShowPageProps {
   tvShow: TvShowDetailsProps;
@@ -38,7 +39,10 @@ const TemplateTvShowPage: React.FC<TemplateTvShowPageProps> = ({
 
   return (
     <>
-      <TvShowHeader {...tvShow} />
+      <TvShowHeader
+        tvShow={tvShow}
+        action={(tvShow) => <AddToMustWatchIcon {...tvShow} />}
+      />
 
       <Grid container spacing={5} sx={{ p: 1 }}>
         <Grid item xs={3}>

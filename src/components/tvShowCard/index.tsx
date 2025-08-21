@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import { TvShowContext } from "../../contexts/tvShowContext";
 import { useAuth } from "../../contexts/authContext";
 import { CardActions } from "@mui/material";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 const styles = {
   media: { height: 450, objectFit: "contain" },
@@ -34,8 +35,9 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
   action,
   showFooterActions,
 }) => {
-  const { favourites } = useContext(TvShowContext);
+  const { favourites, mustWatch } = useContext(TvShowContext);
   const isFavourite = favourites.includes(tvShow.id);
+  const isMustWatch = mustWatch.includes(tvShow.id);
   const { currentUser } = useAuth();
 
   const renderAvatar = () => {
@@ -47,6 +49,14 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
       return (
         <Avatar sx={styles.avatar} aria-label="Favourite TV show">
           <FavoriteIcon />
+        </Avatar>
+      );
+    }
+
+    if (isMustWatch) {
+      return (
+        <Avatar sx={styles.avatar} aria-label="Must-watch movie">
+          <PlaylistAddIcon />
         </Avatar>
       );
     }
@@ -69,7 +79,10 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
           },
         }}
       />
-      <Link to={`/tv/${tvShow.id}`}>
+      <Link
+        to={`/tv/${tvShow.id}`}
+        aria-label={`View details for ${tvShow.name}`}
+      >
         <CardMedia
           component="img"
           sx={styles.media}

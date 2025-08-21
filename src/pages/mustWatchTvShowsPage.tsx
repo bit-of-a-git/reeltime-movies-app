@@ -1,22 +1,21 @@
 import { useContext, useState } from "react";
-import PageTemplate from "../components/templateMovieListPage";
-import { MoviesContext } from "../contexts/moviesContext";
+import PageTemplate from "../components/templateTvShowListPage";
+import { TvShowContext } from "../contexts/tvShowContext";
 import { useQueries } from "react-query";
-import { getMovie } from "../api/tmdb-api";
+import { getTvShow } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, {
+import TvShowFilterUI, {
   titleFilter,
   genreFilter,
   minRatingFilter,
   yearToFilter,
   yearFromFilter,
-} from "../components/movieFilterUI";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavouritesMovie";
-import WriteReview from "../components/cardIcons/writeReview";
+} from "../components/tvShowFilterUI";
+import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatchTvShows";
 import { Typography, Box } from "@mui/material";
 import { usePageTitle } from "../hooks/usePageTitle";
-import { BaseMovieProps } from "../types/movies";
+import { BaseTvShowProps } from "../types/tvShows";
 
 const titleFiltering = {
   name: "title",
@@ -48,12 +47,10 @@ const yearFromFiltering = {
   condition: yearFromFilter,
 };
 
-const FavouriteMoviesPage = () => {
-  usePageTitle("Favourite Movies");
+const MustWatchPage = () => {
+  usePageTitle("Must Watch TV Shows");
 
-  const { favourites: movieIds, reviews } = useContext(MoviesContext);
-  const movieReviewIds = reviews.map((review) => review.movieId);
-
+  const { mustWatch: tvShowIds } = useContext(TvShowContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     titleFiltering,
     genreFiltering,
@@ -62,18 +59,16 @@ const FavouriteMoviesPage = () => {
     yearFromFiltering,
   ]);
 
-  // Create an array of queries and run them in parallel.
-  const favouriteMovieQueries = useQueries(
-    movieIds.map((movieId) => {
+  const mustWatchTvShowQueries = useQueries(
+    tvShowIds.map((tvShowId) => {
       return {
-        queryKey: ["movie", movieId],
-        queryFn: () => getMovie(movieId.toString()),
+        queryKey: ["tvShow", tvShowId],
+        queryFn: () => getTvShow(tvShowId.toString()),
       };
     })
   );
 
-  // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.some((m) => m.isLoading);
+  const isLoading = mustWatchTvShowQueries.some((t) => t.isLoading);
 
   const [sortOption, setSortOption] = useState<string>("none");
 
@@ -89,10 +84,11 @@ const FavouriteMoviesPage = () => {
   };
 
   const sortFunctions: {
-    [key: string]: (a: BaseMovieProps, b: BaseMovieProps) => number;
+    [key: string]: (a: BaseTvShowProps, b: BaseTvShowProps) => number;
   } = {
     date: (a, b) =>
-      new Date(b.release_date).getTime() - new Date(a.release_date).getTime(),
+      new Date(b.first_air_date).getTime() -
+      new Date(a.first_air_date).getTime(),
     rating: (a, b) => b.vote_average - a.vote_average,
     popularity: (a, b) => b.popularity - a.popularity,
   };
@@ -111,47 +107,47 @@ const FavouriteMoviesPage = () => {
     ]);
   };
 
-  const allFavourites = favouriteMovieQueries.map((q) => q.data);
-  const displayedMovies = allFavourites ? filterFunction(allFavourites) : [];
+  const allMustWatchList = mustWatchTvShowQueries.map((q) => q.data);
+  const displayedTvShows = allMustWatchList
+    ? filterFunction(allMustWatchList)
+    : [];
 
-  const sortedMovies =
+  const sortedTvShows =
     sortOption === "none"
-      ? displayedMovies
-      : [...displayedMovies].sort(sortFunctions[sortOption]);
+      ? displayedTvShows
+      : [...displayedTvShows].sort(sortFunctions[sortOption]);
 
   return (
     <>
-      {sortedMovies.length === 0 ? (
+      {sortedTvShows.length === 0 ? (
         <Box sx={{ textAlign: "center", mt: 6 }}>
           <Typography variant="h4" gutterBottom>
-            {allFavourites.length === 0
-              ? "You have no favourite movies yet."
-              : "No movies match the current filters."}
+            {allMustWatchList.length === 0
+              ? "You have no must-watch TV shows yet."
+              : "No TV shows match the current filters."}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {allFavourites.length === 0
+            {allMustWatchList.length === 0
               ? "Why not browse and add to your list?"
               : "Try adjusting or clearing your filters."}
           </Typography>
         </Box>
       ) : (
         <PageTemplate
-          title="Favourite Movies"
-          movies={sortedMovies}
+          title="Must Watch Movies"
+          tvShows={sortedTvShows}
           showFooterActions={true}
           action={(movie) => {
-            const isReviewed = movieReviewIds.includes(movie.id);
             return (
               <>
-                {!isReviewed && <WriteReview {...movie} />}
-                <RemoveFromFavourites {...movie} />
+                <RemoveFromMustWatch {...movie} />
               </>
             );
           }}
         />
       )}
 
-      <MovieFilterUI
+      <TvShowFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
@@ -165,4 +161,4 @@ const FavouriteMoviesPage = () => {
   );
 };
 
-export default FavouriteMoviesPage;
+export default MustWatchPage;
