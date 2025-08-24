@@ -4,13 +4,14 @@ import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";
+import AuthContextProvider from "../contexts/authContext";
 
 const meta = {
   title: 'Home Page/MovieCard',
   component: MovieCard,
   decorators: [
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
-    (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
+    (Story) => <AuthContextProvider><MoviesContextProvider>{Story()}</MoviesContextProvider></AuthContextProvider>,
   ],
 } satisfies Meta<typeof MovieCard>;
 

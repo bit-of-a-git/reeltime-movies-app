@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import MovieHeader from "../components/headerMovie";
 import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
+import AuthContextProvider from "../contexts/authContext";
 
 import React from 'react';
 
@@ -9,7 +10,7 @@ const meta = {
     title: "Movie Details Page/MovieHeader",
     component: MovieHeader,
     decorators: [
-        (Story: React.FC) => <MemoryRouter initialEntries={["/"]}><Story /></MemoryRouter>,
+        (Story: React.FC) => <AuthContextProvider><MemoryRouter initialEntries={["/"]}><Story /></MemoryRouter></AuthContextProvider>,
     ],
 } satisfies Meta<typeof MovieHeader>;
 export default meta;

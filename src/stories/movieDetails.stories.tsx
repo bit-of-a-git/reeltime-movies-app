@@ -3,13 +3,14 @@ import MovieDetails from "../components/movieDetails";
 import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
+import AuthContextProvider from "../contexts/authContext";
 
 const meta = {
     title: "Movie Details Page/MovieDetails",
     component: MovieDetails,
     decorators: [
         (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
-        (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
+        (Story) => <AuthContextProvider><MoviesContextProvider>{Story()}</MoviesContextProvider></AuthContextProvider>,
       ],
 } satisfies Meta<typeof MovieDetails>;
 export default meta;
