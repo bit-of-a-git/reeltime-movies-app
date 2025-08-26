@@ -46,7 +46,6 @@ const styles = {
     overflowX: "auto",
     overflowY: "hidden",
     whiteSpace: "nowrap",
-    paddingY: "10px",
   },
   genericCard: {
     display: "inline-block",
@@ -60,6 +59,7 @@ const styles = {
       transform: "scale(1.05)",
       boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
     },
+    width: 200,
   },
   similarMovieImage: {
     width: "100%",
@@ -211,7 +211,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {movie.credits.cast.map((actor) => (
                   <Link key={actor.id} to={`/person/${actor.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -263,7 +263,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                     key={crewMember.credit_id}
                     to={`/person/${crewMember.id}`}
                   >
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -314,7 +314,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {movie.similar.results.map((movie) => (
                   <Link key={movie.id} to={`/movies/${movie.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"

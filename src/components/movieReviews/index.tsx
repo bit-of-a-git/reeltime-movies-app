@@ -11,12 +11,6 @@ import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../utils";
 import { MovieDetailsProps, Review } from "../../types/movies";
 
-const styles = {
-  table: {
-    minWidth: 550,
-  },
-};
-
 const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
   const [reviews, setReviews] = useState([]);
 
@@ -29,7 +23,7 @@ const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={styles.table} aria-label="reviews table">
+      <Table sx={{ minWidth: 550 }} aria-label="reviews table">
         <TableHead>
           <TableRow>
             <TableCell>Author</TableCell>

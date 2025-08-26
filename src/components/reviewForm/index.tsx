@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles";
 import ratings from "./ratingCategories";
 import { BaseMovieProps, UserReview as Review } from "../../types/movies";
 import Snackbar from "@mui/material/Snackbar";
@@ -51,12 +50,19 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   };
 
   return (
-    <Box component="div" sx={styles.root}>
+    <Box
+      component="div"
+      sx={{
+        marginTop: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+      }}
+    >
       <Typography component="h4" variant="h4">
         Write a review
       </Typography>
       <Snackbar
-        sx={styles.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
         onClose={handleSnackClose}
@@ -67,7 +73,7 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
           </Typography>
         </Alert>
       </Snackbar>
-      <form style={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Controller
           name="title"
           control={control}
@@ -148,12 +154,7 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
         </FormControl>
 
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            sx={styles.submit}
-          >
+          <Button type="submit" variant="contained" color="primary">
             Submit
           </Button>
         </Box>
