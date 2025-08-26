@@ -39,11 +39,6 @@ const styles = {
   chipLabel: {
     marginRight: 0.5,
   },
-  fab: {
-    position: "fixed",
-    top: 145,
-    right: 2,
-  },
   genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
@@ -149,7 +144,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
           />
         )}
       </Box>
-      <Box sx={styles.chipSet}>
+      <Box sx={{ ...styles.chipSet, gap: 1 }}>
         {trailer && (
           <>
             <Fab
@@ -158,7 +153,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
               onClick={() => setTrailerOpen(true)}
             >
               <YouTubeIcon fontSize="large" />
-              Watch Trailer
+              Trailer
             </Fab>
             <Modal open={trailerOpen} onClose={() => setTrailerOpen(false)}>
               <Box
@@ -188,16 +183,15 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
             </Modal>
           </>
         )}
+        <Fab
+          color="secondary"
+          variant="extended"
+          onClick={() => setDrawerOpen(true)}
+        >
+          <NavigationIcon />
+          Reviews
+        </Fab>
       </Box>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       <Drawer
         anchor="top"
         open={drawerOpen}

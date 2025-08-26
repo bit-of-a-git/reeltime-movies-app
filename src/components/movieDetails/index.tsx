@@ -36,11 +36,6 @@ const styles = {
   chipLabel: {
     marginRight: 0.5,
   },
-  fab: {
-    position: "fixed",
-    top: 145,
-    right: 2,
-  },
   genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
@@ -135,7 +130,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         )}
       </Box>
       {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}
-      <Box sx={styles.chipSet}>
+      <Box sx={{ ...styles.chipSet, gap: 1 }}>
         {trailer && (
           <>
             <Fab
@@ -144,7 +139,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               onClick={() => setTrailerOpen(true)}
             >
               <YouTubeIcon fontSize="large" />
-              Watch Trailer
+              Trailer
             </Fab>
             <Modal open={trailerOpen} onClose={() => setTrailerOpen(false)}>
               <Box
@@ -174,16 +169,15 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </Modal>
           </>
         )}
+        <Fab
+          color="secondary"
+          variant="extended"
+          onClick={() => setDrawerOpen(true)}
+        >
+          <NavigationIcon />
+          Reviews
+        </Fab>
       </Box>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       <Drawer
         anchor="top"
         open={drawerOpen}
