@@ -36,17 +36,11 @@ const styles = {
   chipLabel: {
     marginRight: 0.5,
   },
-  fab: {
-    position: "fixed",
-    top: 75,
-    right: 2,
-  },
   genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
     overflowY: "hidden",
     whiteSpace: "nowrap",
-    paddingY: "10px",
   },
   genericCard: {
     display: "inline-block",
@@ -60,6 +54,7 @@ const styles = {
       transform: "scale(1.05)",
       boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
     },
+    width: 200,
   },
   similarMovieImage: {
     width: "100%",
@@ -135,7 +130,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
         )}
       </Box>
       {/* For the trailer functionality and modal, I referenced and took code from https://github.com/ki321g/MovieAPP */}
-      <Box sx={styles.chipSet}>
+      <Box sx={{ ...styles.chipSet, gap: 1 }}>
         {trailer && (
           <>
             <Fab
@@ -144,7 +139,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               onClick={() => setTrailerOpen(true)}
             >
               <YouTubeIcon fontSize="large" />
-              Watch Trailer
+              Trailer
             </Fab>
             <Modal open={trailerOpen} onClose={() => setTrailerOpen(false)}>
               <Box
@@ -174,16 +169,15 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
             </Modal>
           </>
         )}
+        <Fab
+          color="secondary"
+          variant="extended"
+          onClick={() => setDrawerOpen(true)}
+        >
+          <NavigationIcon />
+          Reviews
+        </Fab>
       </Box>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       <Drawer
         anchor="top"
         open={drawerOpen}
@@ -211,7 +205,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {movie.credits.cast.map((actor) => (
                   <Link key={actor.id} to={`/person/${actor.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -263,7 +257,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
                     key={crewMember.credit_id}
                     to={`/person/${crewMember.id}`}
                   >
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -314,7 +308,7 @@ const MovieDetails: React.FC<MovieDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {movie.similar.results.map((movie) => (
                   <Link key={movie.id} to={`/movies/${movie.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"

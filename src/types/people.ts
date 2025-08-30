@@ -6,7 +6,7 @@ export interface BasePersonProps {
   also_known_as: string[];
   biography: string;
   birthday: string;
-  deathday: string;
+  deathday: string | null;
   gender: number;
   homepage: string;
   id: number;
@@ -15,7 +15,7 @@ export interface BasePersonProps {
   name: string;
   place_of_birth: string;
   popularity: number;
-  profile_path: string;
+  profile_path: string | null;
 }
 
 export interface PersonDetails extends BasePersonProps {
@@ -37,11 +37,10 @@ export interface BaseCredit {
   name: string;
   original_name: string;
   popularity: number;
-  profile_path: string;
+  profile_path: string | null;
 }
 
 export interface CastCredit extends BaseCredit {
-  cast_id: number;
   character: string;
   credit_id: string;
   order: number;

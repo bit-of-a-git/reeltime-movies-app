@@ -20,7 +20,7 @@ export interface MovieDetailsProps extends BaseMovieProps, CommonMediaDetails {
   revenue: number;
   runtime: number;
   credits?: {
-    cast: CastCredit[];
+    cast: (CastCredit & { cast_id: number })[];
     crew: CrewCredit[];
   };
   similar?: MovieApiResults;

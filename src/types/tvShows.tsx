@@ -23,21 +23,8 @@ export interface TvShowDetailsProps
   in_production: boolean;
   languages: string[];
   last_air_date: string;
-  last_episode_to_air: {
-    id: string;
-    name: string;
-    overview: string;
-    vote_average: number;
-    vote_count: number;
-    air_date: string;
-    episode_number: number;
-    production_code: string;
-    runtime: number;
-    season_number: number;
-    show_id: number;
-    still_path: string;
-  };
-  next_episode_to_air: string;
+  last_episode_to_air: Episode;
+  next_episode_to_air: Episode;
   networks: Company[];
   number_of_episodes: number;
   number_of_seasons: number;
@@ -50,7 +37,7 @@ export interface TvShowDetailsProps
     poster_path: string | null;
     season_number: number;
     vote_average: number;
-  };
+  }[];
   type: string;
   credits?: {
     cast: CastCredit[];
@@ -58,6 +45,21 @@ export interface TvShowDetailsProps
   };
   similar: TvShowApiResults;
   videos?: Videos;
+}
+
+export interface Episode {
+  id: number;
+  name: string;
+  overview: string;
+  vote_average: number;
+  vote_count: number;
+  air_date: string;
+  episode_number: number;
+  production_code: string;
+  runtime: number | null;
+  season_number: number;
+  show_id: number;
+  still_path: string | null;
 }
 
 export interface TvShowCastCredit extends BaseTvShowProps {

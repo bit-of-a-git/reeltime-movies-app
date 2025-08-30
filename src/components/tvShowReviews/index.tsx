@@ -12,12 +12,6 @@ import { excerpt } from "../../utils";
 import { TvShowDetailsProps } from "../../types/tvShows";
 import { Review } from "../../types/movies";
 
-const styles = {
-  table: {
-    minWidth: 550,
-  },
-};
-
 const TvShowReviews: React.FC<TvShowDetailsProps> = (tvShow) => {
   const [reviews, setReviews] = useState([]);
 
@@ -30,7 +24,7 @@ const TvShowReviews: React.FC<TvShowDetailsProps> = (tvShow) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={styles.table} aria-label="reviews table">
+      <Table sx={{ minWidth: 550 }} aria-label="reviews table">
         <TableHead>
           <TableRow>
             <TableCell>Author</TableCell>

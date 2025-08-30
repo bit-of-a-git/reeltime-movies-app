@@ -80,7 +80,6 @@ export default function PersonalInfo({ person }: { person: Person }) {
       <Box sx={styles.media}>
         <CardMedia
           component="img"
-          sx={styles.media}
           image={
             person.profile_path
               ? `https://image.tmdb.org/t/p/w500/${person.profile_path}`
