@@ -1,25 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MovieDetails from "../components/movieDetails";
-import { SampleMovie } from "./sampleData";
+import PersonInfo from "../components/personInfo";
+import { SamplePerson } from "./sampleData";
 import { MemoryRouter } from "react-router";
-import MoviesContextProvider from "../contexts/moviesContext";
+import PeopleContextProvider from "../contexts/peopleContext";
 import AuthContextProvider from "../contexts/authContext";
 
 const meta = {
-    title: "Movie Details Page/Details",
-    component: MovieDetails,
+    title: "People/Info",
+    component: PersonInfo,
     decorators: [
         (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
-        (Story) => <AuthContextProvider><MoviesContextProvider>{Story()}</MoviesContextProvider></AuthContextProvider>,
+        (Story) => <AuthContextProvider><PeopleContextProvider>{Story()}</PeopleContextProvider></AuthContextProvider>,
       ],
-} satisfies Meta<typeof MovieDetails>;
+} satisfies Meta<typeof PersonInfo>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
     args: 
     {
-      movie: SampleMovie
+      person: SamplePerson
     }
 };
 Basic.storyName = "Default";

@@ -17,12 +17,6 @@ import { yellow, teal } from "@mui/material/colors";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const styles = {
-  title: {
-    flexGrow: 1,
-  },
-};
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -94,7 +88,7 @@ const SiteHeader = () => {
           >
             <MenuIcon fontSize="large" />
           </IconButton>
-          <Typography variant="h4" sx={styles.title}>
+          <Typography variant="h4" sx={{ flexGrow: 1 }}>
             <Box
               sx={{
                 display: "flex",

@@ -38,6 +38,7 @@ const styles = {
       transform: "scale(1.05)",
       boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
     },
+    width: 200,
   },
   similarMovieImage: {
     width: "100%",
@@ -85,7 +86,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                   <Box sx={styles.genericBox}>
                     {person.movie_credits.cast.map((credit) => (
                       <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
-                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                        <Card sx={styles.genericCard}>
                           <Typography
                             variant="h6"
                             component="div"
@@ -129,7 +130,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                   <Box sx={styles.genericBox}>
                     {person.movie_credits.crew.map((credit) => (
                       <Link key={credit.credit_id} to={`/movies/${credit.id}`}>
-                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                        <Card sx={styles.genericCard}>
                           <Typography
                             variant="h6"
                             component="div"
@@ -185,7 +186,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                   <Box sx={styles.genericBox}>
                     {person.tv_credits.cast.map((credit) => (
                       <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
-                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                        <Card sx={styles.genericCard}>
                           <Typography
                             variant="h6"
                             component="div"
@@ -229,7 +230,7 @@ export default function PersonCredits({ person }: PersonCreditsProps) {
                   <Box sx={styles.genericBox}>
                     {person.tv_credits.crew.map((credit) => (
                       <Link key={credit.credit_id} to={`/tv/${credit.id}`}>
-                        <Card sx={{ ...styles.genericCard, width: 200 }}>
+                        <Card sx={styles.genericCard}>
                           <Typography
                             variant="h6"
                             component="div"

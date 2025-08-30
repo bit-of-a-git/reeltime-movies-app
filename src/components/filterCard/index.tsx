@@ -16,14 +16,11 @@ import Spinner from "../spinner";
 
 const styles = {
   root: {
-    maxWidth: 345,
+    maxWidth: 330,
   },
-  media: { height: 300 },
-
   formControl: {
     margin: 1,
     minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)",
   },
 };
 

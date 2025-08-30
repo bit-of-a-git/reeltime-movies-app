@@ -12,7 +12,6 @@ import FormControl from "@mui/material/FormControl";
 import Spinner from "../spinner";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import styles from "./styles";
 import productionCompanies from "./productionCompanies";
 import { FantasyMovieProps } from "../../types/movies";
 import { GenreData } from "../../types/common";
@@ -78,12 +77,19 @@ const FantasyMovieForm = () => {
   };
 
   return (
-    <Box component="div" sx={styles.root}>
+    <Box
+      component="div"
+      sx={{
+        marginTop: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+      }}
+    >
       <Typography component="h4" variant="h4">
         Create a Fantasy Movie
       </Typography>
       <Snackbar
-        sx={styles.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
         onClose={handleSnackClose}
@@ -92,7 +98,7 @@ const FantasyMovieForm = () => {
           <Typography variant="h4">Thank you for submitting a movie</Typography>
         </Alert>
       </Snackbar>
-      <form style={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Controller
           name="title"
           control={control}
@@ -284,12 +290,7 @@ const FantasyMovieForm = () => {
         )}
 
         <Box>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            sx={styles.submit}
-          >
+          <Button type="submit" variant="contained" color="primary">
             Submit
           </Button>
         </Box>

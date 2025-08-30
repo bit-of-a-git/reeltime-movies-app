@@ -39,11 +39,6 @@ const styles = {
   chipLabel: {
     marginRight: 0.5,
   },
-  fab: {
-    position: "fixed",
-    top: 145,
-    right: 2,
-  },
   genericBox: {
     maxWidth: "100%",
     overflowX: "auto",
@@ -62,6 +57,7 @@ const styles = {
       transform: "scale(1.05)",
       boxShadow: "0 8px 16px rgba(0, 0, 0, 0)",
     },
+    width: 200,
   },
   similarTvShowImage: {
     width: "100%",
@@ -148,7 +144,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
           />
         )}
       </Box>
-      <Box sx={styles.chipSet}>
+      <Box sx={{ ...styles.chipSet, gap: 1 }}>
         {trailer && (
           <>
             <Fab
@@ -157,7 +153,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
               onClick={() => setTrailerOpen(true)}
             >
               <YouTubeIcon fontSize="large" />
-              Watch Trailer
+              Trailer
             </Fab>
             <Modal open={trailerOpen} onClose={() => setTrailerOpen(false)}>
               <Box
@@ -187,16 +183,15 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
             </Modal>
           </>
         )}
+        <Fab
+          color="secondary"
+          variant="extended"
+          onClick={() => setDrawerOpen(true)}
+        >
+          <NavigationIcon />
+          Reviews
+        </Fab>
       </Box>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       <Drawer
         anchor="top"
         open={drawerOpen}
@@ -224,7 +219,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {tvShow.credits.cast.map((actor) => (
                   <Link key={actor.id} to={`/person/${actor.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -273,7 +268,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {tvShow.created_by.map((creator) => (
                   <Link key={creator.id} to={`/person/${creator.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -321,7 +316,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
                     key={crewMember.credit_id}
                     to={`/person/${crewMember.id}`}
                   >
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"
@@ -370,7 +365,7 @@ const TvShowDetails: React.FC<TvShowDetailsComponentProps> = ({
               <Box sx={styles.genericBox}>
                 {tvShow.similar.results.map((tvShow) => (
                   <Link key={tvShow.id} to={`/tv/${tvShow.id}`}>
-                    <Card sx={{ ...styles.genericCard, width: 200 }}>
+                    <Card sx={styles.genericCard}>
                       <Typography
                         variant="h6"
                         component="div"

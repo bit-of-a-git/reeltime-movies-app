@@ -14,7 +14,6 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
-import styles from "./styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import GoogleButton from "react-google-button";
 
@@ -94,9 +93,13 @@ const Login = () => {
           justifyContent: "center",
         }}
       >
-        <Paper elevation={5} style={styles.paper}>
+        <Paper elevation={5} sx={{ padding: "60px", paddingTop: "30px" }}>
           <Stack spacing={2}>
-            <Typography component="h3" variant="h3" sx={styles.title}>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{ textAlign: "center" }}
+            >
               {action === "login" ? "Log In" : "Sign Up"}
             </Typography>
             {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
