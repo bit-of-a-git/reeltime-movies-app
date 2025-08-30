@@ -1,7 +1,7 @@
 
 import type { Meta } from '@storybook/react';
 import MovieList from "../components/movieList";
-import SampleMovie from "./sampleData";
+import { SampleMovie } from "./sampleData";
 import { MemoryRouter } from "react-router";
 
 import AddToFavouritesIcon from "../components/cardIcons/addToFavouritesMovie";

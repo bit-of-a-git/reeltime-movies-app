@@ -3,9 +3,10 @@ import Header from "../components/headerList";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 import AuthContextProvider from '../contexts/authContext';
+import { action } from "@storybook/addon-actions";
 
 const meta = {
-    title: 'Home Page/Header',
+    title: 'Home Page/Movie Header',
     component: Header,
     decorators: [
       (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
@@ -18,7 +19,9 @@ const meta = {
   type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  args:{ title:'Discover Movies'}
-
+  args: {
+    title: 'Discover Movies',
+    changePage: action("changePage"),
+  },
 };
 Basic.storyName = "Default";
