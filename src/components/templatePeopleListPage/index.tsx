@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../headerList";
 import Grid from "@mui/material/Grid";
-import CastList from "../peopleList";
+import PeopleList from "../peopleList";
 import { PeopleListPageTemplateProps } from "../../types/people";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
@@ -26,11 +26,11 @@ const PeopleListPageTemplate: React.FC<PeopleListPageTemplateProps> = ({
         <Header title={title} changePage={changePage} />
       </Grid>
       <Grid item container spacing={2.5} xs={12}>
-        <CastList
+        <PeopleList
           action={action}
           people={people}
           showFooterActions={showFooterActions}
-        ></CastList>
+        ></PeopleList>
       </Grid>
     </Grid>
   );

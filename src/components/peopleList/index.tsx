@@ -3,7 +3,7 @@ import Person from "../personCard";
 import Grid from "@mui/material/Grid";
 import { BasePeopleListProps } from "../../types/people";
 
-const castList: React.FC<BasePeopleListProps> = ({
+const peopleList: React.FC<BasePeopleListProps> = ({
   people,
   action,
   showFooterActions = false,
@@ -21,4 +21,4 @@ const castList: React.FC<BasePeopleListProps> = ({
   return castCards;
 };
 
-export default castList;
+export default peopleList;
