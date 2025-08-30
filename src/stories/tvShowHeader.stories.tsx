@@ -7,7 +7,7 @@ import AuthContextProvider from "../contexts/authContext";
 import React from 'react';
 
 const meta = {
-    title: "Home Page/TvShowHeader",
+    title: "Tv Show Details Page/Header",
     component: TvShowHeader,
     decorators: [
         (Story: React.FC) => <AuthContextProvider><MemoryRouter initialEntries={["/"]}><Story /></MemoryRouter></AuthContextProvider>,

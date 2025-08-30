@@ -6,7 +6,7 @@ import AuthContextProvider from '../contexts/authContext';
 import { action } from "@storybook/addon-actions";
 
 const meta = {
-    title: 'Home Page/Movie Header',
+    title: 'Home Page/Header',
     component: Header,
     decorators: [
       (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
