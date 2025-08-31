@@ -113,3 +113,4 @@ Other sources which were referred to:
 - I used GitHub Copilot to generate commit messages, which I typically changed or added to afterwards. I also used Copilot to generate PR messages.
 - I also used Copilot to debug issues, and occasionally when I ran into a problem I could not find an answer to on Google, I asked Copilot.
 - I used CodeRabbit to review my commits and point out potential issues or suggestions.
+- Whether using Copilot, CodeRabbit, or any other AI tools, I always ensure that I understand the code before I implement it.
