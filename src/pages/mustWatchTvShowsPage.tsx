@@ -134,7 +134,7 @@ const MustWatchPage = () => {
         </Box>
       ) : (
         <PageTemplate
-          title="Must Watch Movies"
+          title="Must Watch TV Shows"
           tvShows={sortedTvShows}
           showFooterActions={true}
           action={(movie) => {
