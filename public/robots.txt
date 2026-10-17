@@ -1,0 +1,7 @@
+# As this site was purely for my degree and is currently just a hobby site,
+# I want to block all search engines, bots, and scrapers.
+# The site does not need to be need to be indexable,
+# just available through the GitHub repo
+
+User-agent: *
+Disallow: /
